@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 import { Section } from "@/components/Section";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import { projects } from "@/lib/projects";
+import PinnedWork from "@/components/PinnedWork";
 
 const skills = [
   {
@@ -150,56 +150,7 @@ export default function Home() {
           </div>
         </Section>
 
-        <Section id="work" num="03" label="What I've built">
-          <h2 className="font-[family-name:var(--font-section)] font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-  Real projects, at the stage they&apos;re actually in.
-</h2>
-          <p className="text-paper-dim max-w-[58ch] mt-4 text-[1.05rem]">
-  Four case studies — a live storefront, a working school project, a promo
-campaign, and one project that&apos;s honestly parked.
-</p>
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/work/${p.slug}`}
-                className="group border-t border-line pt-6 hover:-translate-y-1 transition-transform"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className={`text-[0.7rem] font-semibold px-2.5 py-1 rounded ${
-                      p.status === "live"
-                        ? "bg-gold text-ink"
-                        : p.status === "parked"
-                        ? "bg-rust text-paper"
-                        : "bg-paper-dim text-ink"
-                    }`}
-                  >
-                    {p.statusLabel}
-                  </span>
-                  <span className="text-paper-dim text-[0.75rem]">{p.year}</span>
-                </div>
-                <h3 className="font-display font-semibold text-[1.3rem] leading-tight group-hover:text-gold transition-colors">
-                  {p.title}
-                </h3>
-                <p className="text-paper-dim text-[0.92rem] mt-3">{p.short}</p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {p.stack.map((s) => (
-                    <span
-                      key={s}
-                      className="text-[0.7rem] text-paper-dim border border-line px-2 py-1 rounded"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-                <span className="inline-block mt-5 text-gold text-[0.9rem] border-b border-transparent group-hover:border-gold">
-                  Read case study →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Section>
+        <PinnedWork />
 
         <Section
           id="building"

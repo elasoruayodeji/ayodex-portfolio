@@ -14,6 +14,7 @@ const links = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
 
+  // Lock body scroll when open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -21,6 +22,7 @@ export default function Nav() {
     };
   }, [open]);
 
+  // Escape closes
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -29,87 +31,160 @@ export default function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const close = () => setOpen(false);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-[var(--side)] py-5 backdrop-blur-md bg-gradient-to-b from-ink/80 to-transparent">
-      <Link
-        href="/"
-        onClick={() => setOpen(false)}
-        className="font-[family-name:var(--font-display)] font-bold text-[1.15rem] tracking-wide relative z-[70]"
-      >
-        AYODEX Labs.
-      </Link>
-
-      {/* Desktop nav */}
-      <nav className="hidden md:flex gap-8">
-        {links.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className="text-paper-dim hover:text-[#4D7CFE] transition-colors text-[0.92rem]"
-          >
-            {l.label}
-          </Link>
-        ))}
-      </nav>
-
-      {/* Hamburger — mobile only */}
-      <button
-        onClick={() => setOpen(!open)}
-        aria-label={open ? "Close menu" : "Open menu"}
-        aria-expanded={open}
-        className="md:hidden relative z-[70] w-10 h-10 flex flex-col items-center justify-center gap-[5px]"
-      >
-        <span
-          className={`block w-6 h-[2px] bg-paper transition-transform duration-300 ${
-            open ? "translate-y-[7px] rotate-45" : ""
-          }`}
-        />
-        <span
-          className={`block w-6 h-[2px] bg-paper transition-opacity duration-300 ${
-            open ? "opacity-0" : "opacity-100"
-          }`}
-        />
-        <span
-          className={`block w-6 h-[2px] bg-paper transition-transform duration-300 ${
-            open ? "-translate-y-[7px] -rotate-45" : ""
-          }`}
-        />
-      </button>
-
-      {/* Full-screen overlay — covers everything */}
-      <div
-        onClick={() => setOpen(false)}
-        className={`md:hidden fixed inset-0 z-[55] transition-opacity duration-300 ${
-          open
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
-        style={{ background: "rgba(7, 9, 13, 0.85)" }}
-        aria-hidden="true"
-      />
-
-      {/* Slide-in panel */}
-      <nav
-        className={`md:hidden fixed top-0 right-0 bottom-0 w-[80vw] max-w-[320px] z-[60] pt-24 px-8 flex flex-col gap-6 transition-transform duration-300 ease-out ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+    <>
+      {/* ============ TOP BAR ============ */}
+      <header
+        className="fixed top-0 left-0 right-0 flex items-center justify-between px-[var(--side)] py-5"
         style={{
-          background: "#11141A",
-          borderLeft: "1px solid rgba(245, 247, 250, 0.08)",
-          boxShadow: "-10px 0 40px rgba(0, 0, 0, 0.7)",
+          zIndex: 9998,
+          background:
+            "linear-gradient(to bottom, rgba(7,9,13,0.92), rgba(7,9,13,0))",
+          backdropFilter: "blur(6px)",
         }}
       >
+        <Link
+          href="/"
+          onClick={close}
+          className="font-[family-name:var(--font-display)] font-bold text-[1.15rem] tracking-wide"
+          style={{ color: "#F5F7FA" }}
+        >
+          AYODEX Labs
+        </Link>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex gap-8">
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="text-paper-dim hover:text-[#4D7CFE] transition-colors text-[0.92rem]"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setOpen(!open)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px]"
+          style={{ position: "relative", zIndex: 10000 }}
+        >
+          <span
+            className="block w-6 h-[2px] transition-transform duration-300"
+            style={{
+              background: "#F5F7FA",
+              transform: open
+                ? "translateY(7px) rotate(45deg)"
+                : "translateY(0) rotate(0)",
+            }}
+          />
+          <span
+            className="block w-6 h-[2px] transition-opacity duration-300"
+            style={{
+              background: "#F5F7FA",
+              opacity: open ? 0 : 1,
+            }}
+          />
+          <span
+            className="block w-6 h-[2px] transition-transform duration-300"
+            style={{
+              background: "#F5F7FA",
+              transform: open
+                ? "translateY(-7px) rotate(-45deg)"
+                : "translateY(0) rotate(0)",
+            }}
+          />
+        </button>
+      </header>
+
+      {/* ============ BACKDROP (mobile only, tap to close) ============ */}
+      <div
+        className="md:hidden"
+        onClick={close}
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9999,
+          background: "rgba(0, 0, 0, 0.4)",
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 300ms ease",
+        }}
+      />
+
+      {/* ============ DRAWER (mobile only) ============ */}
+      <nav
+        className="md:hidden flex flex-col"
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: "min(85vw, 320px)",
+          zIndex: 10001,
+          background: "rgba(8, 9, 13, 0.96)",
+          backdropFilter: "blur(12px)",
+          borderLeft: "1px solid rgba(245, 247, 250, 0.08)",
+          boxShadow: "-20px 0 60px rgba(0, 0, 0, 0.7)",
+          paddingTop: "6rem",
+          paddingLeft: "2rem",
+          paddingRight: "2rem",
+          paddingBottom: "2rem",
+          gap: "1.5rem",
+          transform: open ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1)",
+          pointerEvents: open ? "auto" : "none",
+        }}
+      >
+        {/* Close X inside drawer */}
+        <button
+          onClick={close}
+          aria-label="Close menu"
+          className="absolute"
+          style={{
+            top: "1.5rem",
+            right: "1.5rem",
+            width: "2.5rem",
+            height: "2.5rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#F5F7FA",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "1.5rem",
+            lineHeight: 1,
+          }}
+        >
+          ✕
+        </button>
+
         {links.map((l) => (
           <Link
             key={l.href}
             href={l.href}
-            onClick={() => setOpen(false)}
-            className="text-[1.15rem] text-paper hover:text-[#4D7CFE] transition-colors font-[family-name:var(--font-sans)]"
+            onClick={close}
+            style={{
+              color: "#F5F7FA",
+              fontSize: "1.1rem",
+              fontFamily: "var(--font-sans)",
+              textDecoration: "none",
+              paddingTop: "0.25rem",
+              paddingBottom: "0.25rem",
+            }}
           >
             {l.label}
           </Link>
         ))}
       </nav>
-    </header>
+    </>
   );
 }

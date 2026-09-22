@@ -36,7 +36,7 @@ export default function Nav() {
         onClick={() => setOpen(false)}
         className="font-[family-name:var(--font-display)] font-bold text-[1.15rem] tracking-wide relative z-[70]"
       >
-        AYODEX
+        AYODEX Labs.
       </Link>
 
       {/* Desktop nav */}
@@ -45,7 +45,7 @@ export default function Nav() {
           <Link
             key={l.href}
             href={l.href}
-            className="text-paper-dim hover:text-[#315CFF] transition-colors text-[0.92rem]"
+            className="text-paper-dim hover:text-[#4D7CFE] transition-colors text-[0.92rem]"
           >
             {l.label}
           </Link>
@@ -76,27 +76,35 @@ export default function Nav() {
         />
       </button>
 
-      {/* Backdrop */}
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="md:hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-[55]"
-          aria-hidden="true"
-        />
-      )}
+      {/* Full-screen overlay — covers everything */}
+      <div
+        onClick={() => setOpen(false)}
+        className={`md:hidden fixed inset-0 z-[55] transition-opacity duration-300 ${
+          open
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+        style={{ background: "rgba(7, 9, 13, 0.85)" }}
+        aria-hidden="true"
+      />
 
       {/* Slide-in panel */}
       <nav
-        className={`md:hidden fixed top-0 right-0 bottom-0 w-[80vw] max-w-[320px] bg-panel z-[60] pt-24 px-8 flex flex-col gap-6 shadow-[-10px_0_40px_rgba(0,0,0,0.6)] border-l border-line transition-transform duration-400 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${
+        className={`md:hidden fixed top-0 right-0 bottom-0 w-[80vw] max-w-[320px] z-[60] pt-24 px-8 flex flex-col gap-6 transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{
+          background: "#11141A",
+          borderLeft: "1px solid rgba(245, 247, 250, 0.08)",
+          boxShadow: "-10px 0 40px rgba(0, 0, 0, 0.7)",
+        }}
       >
         {links.map((l) => (
           <Link
             key={l.href}
             href={l.href}
             onClick={() => setOpen(false)}
-            className="text-[1.15rem] text-paper hover:text-[#315CFF] transition-colors font-[family-name:var(--font-sans)]"
+            className="text-[1.15rem] text-paper hover:text-[#4D7CFE] transition-colors font-[family-name:var(--font-sans)]"
           >
             {l.label}
           </Link>

@@ -21,12 +21,12 @@ const sans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AYODEX — Tech. Design. Digital Creativity.",
+  title: "AYODEX Labs. — Tech. Design. Digital Creativity.",
   description:
     "I build websites, digital experiences and visual content. Computer Science student. Real projects, honestly presented.",
   metadataBase: new URL("https://ayodex-portfolio.vercel.app"),
   openGraph: {
-    title: "AYODEX — Tech. Design. Digital Creativity.",
+    title: "AYODEX Labs. — Tech. Design. Digital Creativity.",
     description:
       "I build websites, digital experiences and visual content. Real projects, honestly presented.",
     type: "website",

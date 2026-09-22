@@ -19,7 +19,7 @@ export default function Hero() {
             transition={{ duration: 0.9, ease: [0.2, 0.7, 0.2, 1] }}
             className="inline-block"
           >
-            AYODEX
+            AYODEX Labs.
           </motion.span>
         </h1>
 

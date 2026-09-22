@@ -2,10 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-/**
- * Generative background — slow-drifting gold/rust ink on ink-dark.
- * Renders to a canvas that fills its parent. No external assets.
- */
 export default function HeroCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -16,7 +12,6 @@ export default function HeroCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Respect reduced-motion preference
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -41,7 +36,6 @@ export default function HeroCanvas() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Ink blobs — position drifts over time
     type Blob = {
       baseX: number;
       baseY: number;
@@ -53,11 +47,12 @@ export default function HeroCanvas() {
       phase: number;
     };
 
+    // Subtle electric blue + indigo glows
     const palette = [
-      "rgba(227, 166, 47, 0.20)", // gold
-      "rgba(181, 86, 58, 0.16)",  // rust
-      "rgba(227, 166, 47, 0.10)", // gold, lighter
-      "rgba(181, 86, 58, 0.08)",  // rust, lighter
+      "rgba(49, 92, 255, 0.18)",  // electric blue
+      "rgba(109, 93, 251, 0.14)", // indigo
+      "rgba(49, 92, 255, 0.08)",  // blue, lighter
+      "rgba(109, 93, 251, 0.06)", // indigo, lighter
     ];
 
     const blobs: Blob[] = palette.map((color, i) => ({
@@ -77,11 +72,9 @@ export default function HeroCanvas() {
     const draw = (t: number) => {
       const elapsed = t - start;
 
-      // Base fill
-      ctx.fillStyle = "#15120D";
+      ctx.fillStyle = "#07090D";
       ctx.fillRect(0, 0, width, height);
 
-      // Blobs
       ctx.globalCompositeOperation = "lighter";
       for (const b of blobs) {
         const cx =
@@ -93,7 +86,7 @@ export default function HeroCanvas() {
 
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
         grad.addColorStop(0, b.color);
-        grad.addColorStop(1, "rgba(21, 18, 13, 0)");
+        grad.addColorStop(1, "rgba(7, 9, 13, 0)");
 
         ctx.fillStyle = grad;
         ctx.beginPath();
@@ -102,7 +95,6 @@ export default function HeroCanvas() {
       }
       ctx.globalCompositeOperation = "source-over";
 
-      // Subtle grain — drawn occasionally, cheap
       if (!prefersReduced) {
         raf = requestAnimationFrame(draw);
       }

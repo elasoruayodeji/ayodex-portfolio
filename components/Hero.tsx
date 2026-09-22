@@ -12,7 +12,7 @@ export default function Hero() {
       <HeroCanvas />
 
       <div className="wrap relative z-10">
-        <h1 className="font-display font-bold leading-[1.02] tracking-tight text-[clamp(3rem,11vw,7.2rem)]">
+        <h1 className="font-[family-name:var(--font-display)] font-bold leading-[1.02] tracking-tight text-[clamp(3rem,11vw,7.2rem)] text-paper">
           <motion.span
             initial={{ y: "105%" }}
             animate={{ y: 0 }}
@@ -23,11 +23,31 @@ export default function Hero() {
           </motion.span>
         </h1>
 
+        {/* Electric blue line that draws itself */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.6, duration: 1.1, ease: [0.2, 0.7, 0.2, 1] }}
+          style={{ originX: 0 }}
+          className="h-px w-full max-w-[26rem] bg-[#315CFF] mt-6"
+        />
+
+        {/* Primary tagline — blue */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-          className="font-display text-gold mt-4 text-[clamp(1.1rem,2.6vw,1.6rem)]"
+          transition={{ delay: 0.9, duration: 0.8 }}
+          className="font-[family-name:var(--font-display)] text-[#315CFF] mt-6 text-[clamp(1.15rem,2.6vw,1.7rem)] font-medium"
+        >
+          I build. I design. I experiment.
+        </motion.div>
+
+        {/* Supporting line — dim */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.05, duration: 0.8 }}
+          className="text-paper-dim mt-3 text-[0.9rem] tracking-wide"
         >
           Tech. Design. Digital Creativity.
         </motion.div>
@@ -35,8 +55,8 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.95, duration: 0.8 }}
-          className="text-paper-dim max-w-[38rem] mt-7 text-[1.05rem]"
+          transition={{ delay: 1.25, duration: 0.8 }}
+          className="text-paper-dim max-w-[38rem] mt-10 text-[1.05rem]"
         >
           I build websites, digital experiences and visual content — combining
           code, AI-assisted design and hands-on learning to turn ideas into
@@ -46,7 +66,7 @@ export default function Hero() {
 
       <div className="absolute bottom-10 left-[var(--side)] text-paper-dim text-[0.75rem] flex items-center gap-2 tracking-wide">
         <span className="w-7 h-px bg-paper-dim relative overflow-hidden">
-          <span className="absolute inset-0 bg-gold animate-[scan_1.8s_ease-in-out_infinite]" />
+          <span className="absolute inset-0 bg-[#315CFF] animate-[scan_1.8s_ease-in-out_infinite]" />
         </span>
         <span>00:00 — scroll to begin</span>
       </div>

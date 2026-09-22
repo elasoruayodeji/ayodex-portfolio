@@ -108,10 +108,10 @@ export default function Home() {
         </Section>
 
         <Section id="skills" num="02" label="What I actually work with">
-          <h2 className="font-display font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-            Skills, sorted honestly — not everything, and not all at the same
-            level.
-          </h2>
+          <h2 className="font-[family-name:var(--font-section)] font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
+  Skills, sorted honestly — not everything, and not all at the same
+  level.
+</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-9 mt-12">
             {skills.map((col) => (
@@ -151,12 +151,12 @@ export default function Home() {
         </Section>
 
         <Section id="work" num="03" label="What I've built">
-          <h2 className="font-display font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-            Real projects, at the stage they&apos;re actually in.
-          </h2>
+          <h2 className="font-[family-name:var(--font-section)] font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
+  Real projects, at the stage they&apos;re actually in.
+</h2>
           <p className="text-paper-dim max-w-[58ch] mt-4 text-[1.05rem]">
   Four case studies — a live storefront, a working school project, a promo
-  campaign, and one project that&apos;s honestly parked.
+campaign, and one project that&apos;s honestly parked.
 </p>
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((p) => (
@@ -207,9 +207,9 @@ export default function Home() {
           label="Currently building"
           className="bg-panel border-y border-line"
         >
-          <h2 className="font-display font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-            DEX — a desktop AI assistant, still very much in progress.
-          </h2>
+          <h2 className="font-[family-name:var(--font-section)] font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
+  DEX — a desktop AI assistant, still very much in progress.
+</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
             <div>
@@ -251,9 +251,9 @@ export default function Home() {
         </Section>
 
         <Section id="services" num="05" label="How I can help">
-          <h2 className="font-display font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-            Services that match what I&apos;ve actually shipped.
-          </h2>
+          <h2 className="font-display font-bold text-[clamp(2.2rem,6vw,4rem)] max-w-[16ch] leading-[1.05]">
+  Have something to build? Let&apos;s talk.
+</h2>
 
           <div className="mt-12 border-t border-line">
             {services.map(([name, cat]) => (

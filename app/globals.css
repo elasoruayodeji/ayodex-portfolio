@@ -5,28 +5,23 @@
    ============================================ */
 :root {
   /* Core palette */
-  --ink: #15120D;
-  --panel: #1E1810;
-  --panel-2: #241D13;
-  --paper: #F4EEE2;
-  --paper-dim: #B4AB98;
-  --gold: #E3A62F;
-  --rust: #B5563A;
+  --ink: #07090D;
+  --panel: #11141A;
+  --panel-2: #171A22;
+  --paper: #F5F7FA;
+  --paper-dim: #9CA3AF;
+  --gold: #315CFF;       /* primary accent — electric blue */
+  --rust: #6D5DFB;       /* secondary accent — indigo */
 
   /* Lines */
-  --line: rgba(244, 238, 226, 0.14);
-  --line-strong: rgba(244, 238, 226, 0.28);
+  --line: rgba(245, 247, 250, 0.08);
+  --line-strong: rgba(245, 247, 250, 0.16);
 
   /* Layout */
   --maxw: 74rem;
   --side: clamp(1.25rem, 6vw, 5rem);
 }
 
-/* ============================================
-   Tailwind theme bridge
-   Makes Tailwind utilities like `bg-ink`, `text-gold`
-   ============================================ */
-/* Tailwind CSS v4 directive: `@theme` is intentionally non-standard CSS. */
 @theme inline {
   --color-ink: var(--ink);
   --color-panel: var(--panel);
@@ -39,12 +34,10 @@
   --color-line-strong: var(--line-strong);
 
   --font-display: var(--font-display);
+  --font-section: var(--font-section);
   --font-sans: var(--font-sans);
 }
 
-/* ============================================
-   Base
-   ============================================ */
 * {
   box-sizing: border-box;
 }
@@ -66,7 +59,7 @@ body {
 
 ::selection {
   background: var(--gold);
-  color: var(--ink);
+  color: var(--paper);
 }
 
 :focus-visible {
@@ -80,9 +73,6 @@ video {
   display: block;
 }
 
-/* ============================================
-   Utility classes (used across components)
-   ============================================ */
 .wrap {
   max-width: var(--maxw);
   margin: 0 auto;
@@ -98,6 +88,7 @@ video {
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  font-family: var(--font-sans);
 }
 
 .eyebrow .num {
@@ -105,9 +96,11 @@ video {
   font-variant-numeric: tabular-nums;
 }
 
-/* ============================================
-   Reduced motion
-   ============================================ */
+/* Section headings use Sora */
+h2.section-title {
+  font-family: var(--font-section), system-ui, sans-serif;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

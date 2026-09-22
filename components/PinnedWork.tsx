@@ -8,7 +8,63 @@ import { projects } from "@/lib/projects";
 const ACCENT = "#4D7CFE";
 const BG = "#07090D";
 
-// Mobile carousel — swipeable
+// ============================================
+// PROJECT VISUAL — picks image or video
+// ============================================
+const VIDEO_PROJECTS: Record<string, string> = {
+  "hmd-gadgets": "/work/hmd-gadgets/promo.mp4",
+};
+
+function getImageSrc(slug: string) {
+  switch (slug) {
+    case "iceeit":
+      return "/work/iceeit/hero.png";
+    case "ftc-ikoyi":
+      return "/work/ftc-ikoyi/hero.png";
+    case "dex":
+      return "/work/dex/terminal.png";
+    default:
+      return "/work/iceeit/hero.png";
+  }
+}
+
+function ProjectVisual({
+  project,
+  index,
+}: {
+  project: (typeof projects)[number];
+  index: number;
+}) {
+  const videoSrc = VIDEO_PROJECTS[project.slug];
+
+  if (videoSrc) {
+    return (
+      <video
+        src={videoSrc}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload={index === 0 ? "auto" : "metadata"}
+        className="w-full h-full object-cover"
+        aria-label={project.title}
+      />
+    );
+  }
+
+  return (
+    <img
+      src={getImageSrc(project.slug)}
+      alt={project.title}
+      loading={index === 0 ? "eager" : "lazy"}
+      className="w-full h-full object-cover"
+    />
+  );
+}
+
+// ============================================
+// MOBILE — swipe carousel
+// ============================================
 function MobileCarousel() {
   const [index, setIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,7 +73,6 @@ function MobileCarousel() {
     setIndex(Math.max(0, Math.min(projects.length - 1, i)));
   };
 
-  // Swipe handling
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -36,7 +91,6 @@ function MobileCarousel() {
       const t = e.touches[0];
       const dx = t.clientX - startX;
       const dy = t.clientY - startY;
-      // Horizontal intent
       if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
         if (dx < 0) goTo(index + 1);
         else goTo(index - 1);
@@ -61,7 +115,6 @@ function MobileCarousel() {
 
   return (
     <div className="md:hidden select-none">
-      {/* Eyebrow */}
       <div className="eyebrow mb-6">
         <span className="num">03</span>
         <span>What I&apos;ve built</span>
@@ -71,7 +124,6 @@ function MobileCarousel() {
         Selected work.
       </h2>
 
-      {/* Card — swipe container */}
       <div ref={containerRef} className="relative overflow-hidden">
         <motion.div
           key={p.slug}
@@ -80,19 +132,12 @@ function MobileCarousel() {
           transition={{ duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
           className="relative"
         >
-          {/* Visual */}
           <Link href={`/work/${p.slug}`} className="block">
             <div className="aspect-[4/3] bg-panel border border-line rounded-md overflow-hidden relative">
-              <img
-                src={getImage(p.slug)}
-                alt={p.title}
-                className="w-full h-full object-cover"
-                loading={index === 0 ? "eager" : "lazy"}
-              />
+              <ProjectVisual project={p} index={index} />
             </div>
           </Link>
 
-          {/* Info */}
           <div className="mt-6">
             <div className="flex items-center justify-between mb-3">
               <span
@@ -105,7 +150,8 @@ function MobileCarousel() {
                 {p.statusLabel}
               </span>
               <span className="text-paper-dim text-[0.75rem] font-[family-name:var(--font-sans)]">
-                {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+                {String(index + 1).padStart(2, "0")} /{" "}
+                {String(projects.length).padStart(2, "0")}
               </span>
             </div>
 
@@ -137,7 +183,6 @@ function MobileCarousel() {
         </motion.div>
       </div>
 
-      {/* Progress dots */}
       <div className="flex justify-center gap-2 mt-8">
         {projects.map((_, i) => (
           <button
@@ -156,7 +201,9 @@ function MobileCarousel() {
   );
 }
 
-// Desktop pinned cinematic
+// ============================================
+// DESKTOP — pinned cinematic
+// ============================================
 function DesktopPinned() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -171,25 +218,22 @@ function DesktopPinned() {
       style={{ height: `${projects.length * 100}vh` }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        {/* Background glow */}
         <div className="absolute inset-0" style={{ background: BG }} />
         <GlowLayer scrollYProgress={scrollYProgress} />
 
-        {/* Header — pinned at top */}
-        <div className="absolute top-0 left-0 right-0 pt-24 px-[var(--side)] z-20">
+        <div className="absolute top-0 left-0 right-0 pt-28 px-[var(--side)] z-20">
           <div className="max-w-[var(--maxw)] mx-auto">
             <div className="eyebrow">
               <span className="num">03</span>
               <span>What I&apos;ve built</span>
             </div>
-            <h2 className="font-[family-name:var(--font-section)] font-bold text-[1.75rem] leading-[1.1] mt-1">
+            <h2 className="font-[family-name:var(--font-section)] font-bold text-[1.5rem] leading-[1.1] mt-1">
               Selected work.
             </h2>
           </div>
         </div>
 
-        {/* Pinned project slides */}
-        <div className="absolute inset-0 pt-40 pb-16">
+        <div className="absolute inset-0 pt-56 pb-16">
           {projects.map((p, i) => (
             <ProjectSlide
               key={p.slug}
@@ -201,16 +245,20 @@ function DesktopPinned() {
           ))}
         </div>
 
-        {/* Progress indicator bottom */}
         <div className="absolute bottom-8 left-[var(--side)] right-[var(--side)] z-20">
           <div className="max-w-[var(--maxw)] mx-auto flex items-center gap-3">
             <div className="flex-1 h-px bg-line-strong relative overflow-hidden">
               <motion.div
                 className="absolute inset-y-0 left-0"
-                style={{ background: ACCENT, scaleX: scrollYProgress, originX: 0, width: "100%" }}
+                style={{
+                  background: ACCENT,
+                  scaleX: scrollYProgress,
+                  originX: 0,
+                  width: "100%",
+                }}
               />
             </div>
-            <span className="text-paper-dim text-[0.7rem] font-variant-numeric:tabular-nums font-[family-name:var(--font-sans)]">
+            <span className="text-paper-dim text-[0.7rem] font-[family-name:var(--font-sans)]">
               Scroll to advance
             </span>
           </div>
@@ -220,7 +268,11 @@ function DesktopPinned() {
   );
 }
 
-function GlowLayer({ scrollYProgress }: { scrollYProgress: MotionValue<number> }) {
+function GlowLayer({
+  scrollYProgress,
+}: {
+  scrollYProgress: MotionValue<number>;
+}) {
   const x1 = useTransform(scrollYProgress, [0, 1], ["20%", "60%"]);
   const y1 = useTransform(scrollYProgress, [0, 1], ["30%", "70%"]);
   const x2 = useTransform(scrollYProgress, [0, 1], ["70%", "30%"]);
@@ -233,7 +285,8 @@ function GlowLayer({ scrollYProgress }: { scrollYProgress: MotionValue<number> }
         style={{
           left: x1,
           top: y1,
-          background: `radial-gradient(circle, rgba(77,124,254,0.10), transparent 65%)`,
+          background:
+            "radial-gradient(circle, rgba(77,124,254,0.10), transparent 65%)",
           filter: "blur(40px)",
         }}
       />
@@ -242,7 +295,8 @@ function GlowLayer({ scrollYProgress }: { scrollYProgress: MotionValue<number> }
         style={{
           left: x2,
           top: y2,
-          background: `radial-gradient(circle, rgba(109,93,251,0.08), transparent 65%)`,
+          background:
+            "radial-gradient(circle, rgba(109,93,251,0.08), transparent 65%)",
           filter: "blur(40px)",
         }}
       />
@@ -261,15 +315,11 @@ function ProjectSlide({
   total: number;
   scrollYProgress: MotionValue<number>;
 }) {
-  // Each project gets an equal window of the scroll range
   const seg = 1 / total;
   const start = index * seg;
   const end = start + seg;
   const mid = start + seg / 2;
 
-  // Enter: 0 → 1 between [start, start + seg*0.25]
-  // Hold: 1 between [start + seg*0.25, mid]
-  // Exit: 1 → 0 between [mid, end - seg*0.1]
   const enterEnd = start + seg * 0.3;
   const exitStart = mid;
   const exitEnd = end - seg * 0.05;
@@ -301,9 +351,8 @@ function ProjectSlide({
       style={{ opacity, pointerEvents: "none" }}
     >
       <div className="max-w-[var(--maxw)] mx-auto h-full grid grid-cols-12 gap-10 items-center">
-        {/* Left — visual */}
         <motion.div
-          className="col-span-7 h-[60vh] relative"
+          className="col-span-7 h-[64vh] relative"
           style={{ x, scale }}
         >
           <Link
@@ -311,18 +360,12 @@ function ProjectSlide({
             className="block w-full h-full relative group"
             style={{ pointerEvents: "auto" }}
           >
-            <div className="w-full h-full bg-panel border border-line rounded-md overflow-hidden">
-              <img
-                src={getImage(project.slug)}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                loading={index === 0 ? "eager" : "lazy"}
-              />
+            <div className="w-full h-full bg-panel border border-line rounded-md overflow-hidden transition-transform duration-700 group-hover:scale-[1.02]">
+              <ProjectVisual project={project} index={index} />
             </div>
           </Link>
         </motion.div>
 
-        {/* Right — info */}
         <motion.div
           className="col-span-5 flex flex-col justify-center"
           style={{ y: textY }}
@@ -338,7 +381,8 @@ function ProjectSlide({
               {project.statusLabel}
             </span>
             <span className="text-paper-dim text-[0.75rem] font-[family-name:var(--font-sans)]">
-              {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+              {String(index + 1).padStart(2, "0")} /{" "}
+              {String(total).padStart(2, "0")}
             </span>
           </div>
 
@@ -372,22 +416,6 @@ function ProjectSlide({
       </div>
     </motion.div>
   );
-}
-
-// Pick the hero image per project — falls back to gradient panel if missing
-function getImage(slug: string) {
-  switch (slug) {
-    case "iceeit":
-      return "/work/iceeit/hero.png";
-    case "ftc-ikoyi":
-      return "/work/ftc-ikoyi/hero.png";
-    case "hmd-gadgets":
-      return "/work/iceeit/hero.png"; // fallback — HMD has video not image
-    case "dex":
-      return "/work/dex/terminal.png";
-    default:
-      return "/work/iceeit/hero.png";
-  }
 }
 
 export default function PinnedWork() {

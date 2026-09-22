@@ -155,10 +155,9 @@ export default function Home() {
             Real projects, at the stage they&apos;re actually in.
           </h2>
           <p className="text-paper-dim max-w-[58ch] mt-4 text-[1.05rem]">
-            Four case studies — one live build, one system-design proposal, one
-            promo campaign, and one project that&apos;s honestly parked.
-          </p>
-
+  Four case studies — a live storefront, a working school project, a promo
+  campaign, and one project that&apos;s honestly parked.
+</p>
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((p) => (
               <Link

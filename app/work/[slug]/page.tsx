@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     description: project.summary,
     alternates: { canonical: `/work/${project.slug}` },
     openGraph: {
-      title: `${project.name} — AYODEX Labs.`,
+      title: `${project.name} | AYODEX Labs`,
       description: project.summary,
       url: `/work/${project.slug}`,
       images: [{ url: project.cover.src, alt: project.cover.alt }],
@@ -229,7 +229,7 @@ export default async function CaseStudyPage({ params }: Params) {
             </video>
           </div>
           <p className="mt-3 text-[0.8rem] text-muted">
-            Ten-second promotional video — AI-assisted, produced in Gemini.
+            Ten-second promotional video, AI-assisted and produced in Gemini.
           </p>
         </section>
       ) : null}

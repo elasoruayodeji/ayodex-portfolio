@@ -28,10 +28,10 @@ export function SiteFooter() {
                 AY
               </span>
               <span className="brand-word">
-                AYODEX Labs<span className="text-forest">.</span>
+                AYODEX Labs<span className="brand-dot">.</span>
               </span>
             </Link>
-            <p className="serif-note mt-6 max-w-[24ch] text-[1.55rem] italic leading-tight text-forest md:text-[1.8rem]">
+            <p className="accent mt-6 max-w-[24ch] text-[1.7rem] leading-[1.15] text-brand md:text-[2rem]">
               I build. I design. I experiment.
             </p>
             <p className="mt-4 max-w-[34ch] text-[0.9rem] leading-relaxed text-muted">

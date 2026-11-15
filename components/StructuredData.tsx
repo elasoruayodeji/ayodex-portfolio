@@ -35,7 +35,7 @@ export function StructuredData() {
     url: site.url,
     name: `${site.brand}.`,
     description:
-      "Portfolio of Elasoru Solomon Ayodeji — websites, storefronts, web applications and digital experiments.",
+      "Portfolio of Elasoru Solomon Ayodeji: websites, storefronts, web applications and digital experiments.",
     inLanguage: "en",
     publisher: { "@id": `${site.url}/#person` },
     author: { "@id": `${site.url}/#person` },
@@ -62,7 +62,7 @@ export function StructuredData() {
   return (
     <script
       type="application/ld+json"
-      // Content is static, typed data — no user input reaches this string.
+      // Content is static, typed data. No user input reaches this string.
       dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
     />
   );

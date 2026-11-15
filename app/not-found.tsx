@@ -5,7 +5,7 @@ export default function NotFound() {
     <section className="shell flex min-h-[70vh] flex-col justify-center py-20">
       <p className="eyebrow">404</p>
       <h1 className="display mt-4 max-w-[22ch]">
-        This page isn&apos;t here. <span className="italic">Something is.</span>
+        This page isn&apos;t here. Something is.
       </h1>
       <p className="lede mt-6 max-w-[46ch]">
         The link may be old, mistyped, or pointing at a project that moved. The

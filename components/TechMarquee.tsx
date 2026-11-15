@@ -23,13 +23,10 @@ function Group({ hidden = false }: { hidden?: boolean }) {
       {technologies.map((name) => (
         <span
           key={name}
-          className="flex items-center whitespace-nowrap px-5 text-[0.85rem] font-medium tracking-[0.01em] text-ink-soft sm:px-7"
+          className="tech-item"
         >
           {name}
-          <span
-            aria-hidden="true"
-            className="ml-5 h-1 w-1 shrink-0 rounded-full bg-line-strong sm:ml-7"
-          />
+          <span aria-hidden="true" className="tech-dot" />
         </span>
       ))}
     </div>

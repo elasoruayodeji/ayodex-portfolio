@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Hire me",
   description:
-    "Commission a website, storefront or web application from AYODEX Labs. Send a project enquiry — name, category, budget and what the project needs to do.",
+    "Commission a website, storefront or web application from AYODEX Labs. Send a project enquiry with your name, category, budget and what the project needs to do.",
   alternates: { canonical: "/hire" },
   openGraph: {
     title: "Hire AYODEX Labs.",
@@ -22,7 +22,7 @@ const steps = [
   {
     n: "01",
     title: "You send the brief",
-    body: "Fill the form. It opens WhatsApp with everything written out — you review and send it yourself.",
+    body: "Fill the form. It opens WhatsApp with everything written out, and you review and send it yourself.",
   },
   {
     n: "02",
@@ -48,7 +48,7 @@ export default function HirePage() {
         <p className="eyebrow">Hire me</p>
         <div className="mt-4 grid gap-8 md:grid-cols-12">
           <h1 className="display md:col-span-7">
-            Tell me what the project has to <span className="italic">do.</span>
+            Tell me what the project has to do.
           </h1>
           <div className="md:col-span-4 md:col-start-9 md:pb-2">
             <p className="lede">
@@ -56,7 +56,7 @@ export default function HirePage() {
               you have in mind, and how you&apos;d like to be reached.
             </p>
             <p className="mt-4 text-[0.85rem] leading-relaxed text-muted">
-              For anything else — a question, a correction, a hello — the{" "}
+              For anything else, whether a question, a correction or a hello, the{" "}
               <Link href="/contact" className="link-underline text-ink">
                 contact page
               </Link>{" "}

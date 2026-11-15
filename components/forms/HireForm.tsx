@@ -18,8 +18,8 @@ export const projectCategories = [
 
 export const budgetRanges = [
   "Under ₦150,000",
-  "₦150,000 – ₦400,000",
-  "₦400,000 – ₦800,000",
+  "₦150,000 to ₦400,000",
+  "₦400,000 to ₦800,000",
   "₦800,000 and above",
   "Not sure yet",
 ] as const;
@@ -89,7 +89,7 @@ export function HireForm() {
     if (!trimmed.category) next.category = "Choose the closest category.";
     if (!trimmed.description) next.description = "Tell me briefly what the project is.";
     else if (trimmed.description.trim().length < 20)
-      next.description = "A sentence or two is enough — please add a little more.";
+      next.description = "A sentence or two is enough, but please add a little more.";
     if (!trimmed.budget) next.budget = "Pick a range, even if it’s “not sure yet”.";
     if (trimmed.reference && !isUrl(trimmed.reference))
       next.reference = "That doesn’t look like a valid URL.";
@@ -112,7 +112,7 @@ export function HireForm() {
 
   function buildMessage(v: Values) {
     const lines = [
-      "Project enquiry — AYODEX Labs",
+      "Project enquiry: AYODEX Labs",
       "",
       `Name: ${v.name.trim()}`,
       `Email: ${v.email.trim()}`,
@@ -221,7 +221,7 @@ export function HireForm() {
             <option value="">Select an option</option>
             <option value="Yes">Yes, this number has WhatsApp</option>
             <option value="No">No</option>
-            <option value="Different number">A different number — I’ll mention it</option>
+            <option value="Different number">A different number (I’ll mention it)</option>
           </select>
           <FieldError id={`${uid}-whatsapp-error`} message={errors.whatsapp} />
         </div>
@@ -301,9 +301,9 @@ export function HireForm() {
                 <label
                   key={method}
                   htmlFor={id}
-                  className="cursor-pointer border px-3 py-2 text-[0.85rem] transition-colors"
+                  className="cursor-pointer border px-3.5 py-2 text-[0.85rem] transition-colors"
                   style={{
-                    borderRadius: 2,
+                    borderRadius: "var(--r-pill)",
                     borderColor: active ? "var(--ink)" : "var(--line-strong)",
                     background: active ? "var(--ink)" : "transparent",
                     color: active ? "var(--paper)" : "var(--ink)",
@@ -353,7 +353,7 @@ export function HireForm() {
             <p className="text-[0.9rem] font-semibold">WhatsApp has been opened.</p>
             <p className="mt-1 text-[0.85rem] leading-relaxed text-muted">
               Your enquiry is pre-filled in a WhatsApp chat with me. It is{" "}
-              <strong>not sent yet</strong> — review it in WhatsApp and press
+              <strong>not sent yet</strong>. Review it in WhatsApp and press
               send. If the tab was blocked, use the link below.
             </p>
             <a

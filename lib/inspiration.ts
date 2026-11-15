@@ -7,7 +7,7 @@ export type InfluenceEntry = {
   /** One or two sentences on why this matters. Never an endorsement claim. */
   note: string;
   link?: string;
-  /** Legitimate image only — omit rather than substituting a stock portrait. */
+  /** Legitimate image only. Omit rather than substituting a stock portrait. */
   image?: string;
 };
 
@@ -21,7 +21,7 @@ export type Branch = {
 
 /**
  * The inspiration map's data source. Entries are intentionally empty until real
- * ones are supplied — nothing here is invented. Adding an influence is a data
+ * ones are supplied. Nothing here is invented. Adding an influence is a data
  * edit: the map, the mobile rail and the detail panel all read from this array.
  */
 export const branches: Branch[] = [
@@ -36,7 +36,7 @@ export const branches: Branch[] = [
     id: "craft",
     label: "Craft",
     description:
-      "Practices I keep returning to — typography, editing, restraint, revision.",
+      "Practices I keep returning to: typography, editing, restraint, revision.",
     entries: [],
   },
   {
@@ -50,7 +50,7 @@ export const branches: Branch[] = [
     id: "ideas",
     label: "Ideas",
     description:
-      "Principles rather than people — the arguments that shaped my defaults.",
+      "Principles rather than people: the arguments that shaped my defaults.",
     entries: [],
   },
 ];

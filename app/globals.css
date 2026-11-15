@@ -1,74 +1,134 @@
 @import "tailwindcss";
 
 /* ============================================================
-   AYODEX Labs — V2 design system
-   Warm editorial luxury. Forest, sage and citron used sparingly
-   over ivory paper, charcoal ink and stone hairlines.
+   AYODEX Labs design system
+   A professional software developer portfolio: white content
+   surfaces, a burgundy accent, one warm neutral, pill controls.
    ============================================================ */
 
 :root {
-  /* surfaces */
-  --paper: #faf8f3;
+  /* ---- brand: burgundy, the only accent ---- */
+  --brand: #690202;
+  --brand-hover: #7d0a0a;
+  --brand-ink: #7a1414;
+  --brand-soft: #69020214;
+  /* a tint of the brand, for accents that sit on the burgundy band */
+  --brand-tint: #f0d8d8;
+  --brand-line: #6902023d;
+
+  /* ---- text: neutral ink scale ---- */
+  --ink: #1d1d1f;
+  --ink-2: #48484a;
+  --ink-3: #6e6e73;
+  /* decorative only. Below body contrast, never used for text. */
+  --ink-4: #a1a1a6;
+
+  /* ---- surfaces ---- */
   --white: #ffffff;
-  --ivory: #f4f1e7;
-  --ivory-deep: #ebe7da;
-  --stone: #ebe7da;
-  --sage: #d5e6cd;
-  --sage-soft: #edf4e6;
+  --soft: #f5f5f7;
+  --warm: #f7f4f0;
+  --fill: #eff1f4;
+  --fill-hover: #e6e9ee;
 
-  /* text */
-  --ink: #20211e;
-  --ink-soft: #33352f;
-  --muted: #5f6158;
-  /* small metadata must still clear 4.5:1, so "soft" is only marginally lighter */
-  --muted-soft: #6a6b62;
+  /* ---- lines ---- */
+  --hair: #00000014;
+  --hair-soft: #0000000a;
+  --hair-strong: #00000026;
 
-  /* identity */
-  --forest: #2f6249;
-  --forest-deep: #21493a;
-  --forest-soft: #3d7a5c;
-  --citron: #d3e070;
-  --citron-deep: #b3c451;
-
-  /* lines */
-  --line: rgba(32, 33, 30, 0.13);
-  --line-soft: rgba(32, 33, 30, 0.07);
-  --line-strong: rgba(32, 33, 30, 0.3);
-  --line-forest: rgba(47, 98, 73, 0.32);
-
-  /* status */
-  --live: #357a52;
-  --concept: #a3924f;
+  /* ---- status ---- */
+  --live: #690202;
+  --concept: #6e6e73;
 
   --measure: 62ch;
   --shell: 82rem;
   --gutter: clamp(1.25rem, 4.5vw, 4rem);
 
+  /* radii: pills for controls, small fixed radii for cards and fields */
+  --r-pill: 999px;
+  --r-card: 10px;
+  --r-field: 8px;
+  --r-sm: 6px;
+
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /*
+   * Legacy custom-property names, mapped onto the new tokens so the rules
+   * below (written against the previous palette) resolve to burgundy and the
+   * neutral ink scale. Kept in one block: delete it only after rewriting every
+   * var() call below.
+   */
+  --paper: var(--white);
+  --ivory: var(--soft);
+  --ivory-deep: var(--fill);
+  --stone: var(--fill);
+  --sage: var(--brand-soft);
+  --sage-soft: var(--brand-soft);
+  --forest: var(--brand);
+  --forest-deep: var(--brand-ink);
+  --forest-soft: var(--brand-hover);
+  --citron: var(--brand-tint);
+  --citron-deep: var(--brand-tint);
+  --ink-soft: var(--ink-2);
+  --muted: var(--ink-3);
+  --muted-soft: var(--ink-3);
+  --line: var(--hair);
+  --line-soft: var(--hair-soft);
+  --line-strong: var(--hair-strong);
+  --line-forest: var(--brand-line);
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-white: var(--white);
-  --color-ivory: var(--ivory);
-  --color-ivory-deep: var(--ivory-deep);
-  --color-stone: var(--stone);
-  --color-sage: var(--sage);
-  --color-sage-soft: var(--sage-soft);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-line: var(--brand-line);
   --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-muted: var(--muted);
-  --color-muted-soft: var(--muted-soft);
-  --color-forest: var(--forest);
-  --color-forest-deep: var(--forest-deep);
-  --color-citron: var(--citron);
-  --color-line: var(--line);
-  --color-line-soft: var(--line-soft);
-  --color-line-strong: var(--line-strong);
-  --color-line-forest: var(--line-forest);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-white: var(--white);
+  --color-soft: var(--soft);
+  --color-warm: var(--warm);
+  --color-fill: var(--fill);
+  --color-fill-hover: var(--fill-hover);
+  --color-hair: var(--hair);
+  --color-hair-soft: var(--hair-soft);
+  --color-hair-strong: var(--hair-strong);
 
-  --font-serif: var(--font-display), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  /*
+   * One system stack for the whole site. The browser picks the best installed
+   * face: SF Pro on Apple, Segoe UI on Windows, Roboto on Android. Nothing is
+   * downloaded, so there is no font payload and no layout shift.
+   */
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-system);
+  --font-sans: var(--font-system);
+  /* the one expressive face: italic accents only */
+  --font-accent: var(--font-accent-face), Georgia, "Times New Roman", serif;
+
+  /*
+   * Legacy names from the previous palette, kept as aliases so every existing
+   * rule and utility resolves to the new system instead of a stale green.
+   * New work should use the token names above these.
+   */
+  --color-paper: var(--white);
+  --color-ivory: var(--soft);
+  --color-ivory-deep: var(--fill);
+  --color-stone: var(--fill);
+  --color-sage: var(--brand-soft);
+  --color-sage-soft: var(--brand-soft);
+  --color-forest: var(--brand);
+  --color-forest-deep: var(--brand-ink);
+  --color-citron: var(--brand-tint);
+  --color-ink-soft: var(--ink-2);
+  --color-muted: var(--ink-3);
+  --color-muted-soft: var(--ink-3);
+  --color-line: var(--hair);
+  --color-line-soft: var(--hair-soft);
+  --color-line-strong: var(--hair-strong);
+  --color-line-forest: var(--brand-line);
 }
 
 * {
@@ -90,7 +150,6 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
 }
 
 ::selection {
@@ -104,11 +163,23 @@ body {
   border-radius: 1px;
 }
 
+/*
+ * Responsive floor. Grid and flex children default to min-width: auto, so a
+ * wide child (a 1600px screenshot, a long unbroken technology name) stretches
+ * its track and the document with it. Letting every child shrink to zero and
+ * capping replaced elements at their container width means the page can never
+ * be wider than the viewport, on any route.
+ */
+:where(.grid, .flex) > * {
+  min-width: 0;
+}
+
 img,
 video,
 svg {
-  max-width: 100%;
   display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 hr {
@@ -134,71 +205,94 @@ hr {
 /* ---------- typography ---------- */
 
 /*
- * Two faces, two jobs. Instrument Serif carries every editorial voice — the
- * hero, section headings, project names, pull quotes. Manrope carries every
- * functional one — navigation, body, buttons, labels, forms.
- * The serif is never set below 1.25rem and never bold; its contrast comes from
- * size, tight leading and green italic accents, not from weight.
+ * Headings: Geist 600, tight tracking, tight-but-readable leading. Weight and
+ * size carry the hierarchy, not decoration. Body: Manrope 400.
+ * No serif and no italics: emphasis is carried by weight.
  */
 
 .display {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.028em;
-  line-height: 0.94;
-  font-size: clamp(2.85rem, 7.6vw, 5.9rem);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.033em;
+  line-height: 1.02;
+  font-size: clamp(2.05rem, 6.2vw, 4.35rem);
   text-wrap: balance;
   color: var(--ink);
 }
 
 .display-sm {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.022em;
-  line-height: 1.02;
-  font-size: clamp(2.05rem, 3.5vw, 3.1rem);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+  font-size: clamp(1.55rem, 3.1vw, 2.5rem);
   text-wrap: balance;
   color: var(--ink);
 }
 
 .heading {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(1.45rem, 2.1vw, 1.95rem);
-  line-height: 1.12;
-  letter-spacing: -0.015em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 1.7vw, 1.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
-/* Project names, list titles — serif, medium weight optical size. */
+/* Project names and list titles. */
 .title {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(1.4rem, 1.9vw, 1.72rem);
-  line-height: 1.1;
-  letter-spacing: -0.012em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+  color: var(--ink);
 }
 
-/* Small serif used for numerals, tags and one-line notes. */
-.serif-note {
-  font-family: var(--font-serif);
+/* Numerals, years, taglines and short technical notes. */
+.note {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+/*
+ * The one expressive voice: Instrument Serif italic. Used for the motto and a
+ * handful of short phrases, never for a paragraph or a heading's main text.
+ * Sized slightly larger than the sans at the same optical weight, because
+ * serif italics run visually smaller.
+ */
+.accent {
+  font-family: var(--font-accent);
+  font-style: italic;
   font-weight: 400;
   letter-spacing: -0.005em;
-  line-height: 1.25;
 }
 
-/* Green italic is the one recurring typographic accent. */
-.display .italic,
-.display-sm .italic,
-.heading .italic,
-.title .italic {
-  color: var(--forest);
+/* A phrase set in the accent face inside a sans heading. */
+.accent-phrase {
+  font-family: var(--font-accent);
   font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  font-size: 1.06em;
+}
+
+/* Emphasis inside a heading is weight, never italic or colour. */
+.display em:not(.accent-phrase),
+.display-sm em:not(.accent-phrase),
+.heading em:not(.accent-phrase),
+.title em:not(.accent-phrase) {
+  font-style: normal;
+  color: inherit;
+  font-weight: 700;
 }
 
 .eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.715rem;
-  letter-spacing: 0.15em;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--forest);
@@ -206,9 +300,9 @@ hr {
 
 .lede {
   font-family: var(--font-sans);
-  font-size: clamp(1.0625rem, 1.35vw, 1.19rem);
-  line-height: 1.62;
-  letter-spacing: -0.005em;
+  font-size: clamp(1.0625rem, 1.3vw, 1.15rem);
+  line-height: 1.65;
+  letter-spacing: -0.003em;
   color: var(--ink-soft);
   max-width: var(--measure);
 }
@@ -218,21 +312,22 @@ hr {
   color: var(--ink-soft);
   margin-block: 0 1.15em;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.72;
 }
 
 .prose-block > p:last-child {
   margin-bottom: 0;
 }
 
-/* Standing-index numerals: serif, citron-underlined, not bold sans. */
+/* Standing numerals: tabular, small, burgundy. */
 .index-num {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--forest);
-  font-variant-numeric: lining-nums;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---------- links ---------- */
@@ -286,28 +381,30 @@ hr {
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  font-family: var(--font-sans);
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
   font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.005em;
-  padding: 0.82rem 1.4rem;
+  letter-spacing: -0.005em;
+  padding: 0.72rem 1.35rem;
+  min-height: 2.75rem;
   border: 1px solid var(--forest);
-  border-radius: 2px;
+  border-radius: var(--r-pill);
   background: var(--forest);
-  color: var(--paper);
+  color: var(--white);
   text-decoration: none;
   cursor: pointer;
-  transition: background 220ms var(--ease), color 220ms var(--ease),
-    border-color 220ms var(--ease), transform 220ms var(--ease),
-    box-shadow 220ms var(--ease);
+  transition: background 200ms var(--ease), color 200ms var(--ease),
+    border-color 200ms var(--ease), transform 200ms var(--ease),
+    box-shadow 200ms var(--ease);
 }
 
 .btn:hover {
   background: var(--forest-deep);
   border-color: var(--forest-deep);
   color: var(--white);
-  box-shadow: 0 1px 0 0 rgba(32, 33, 30, 0.06);
+  box-shadow: 0 2px 10px -4px rgba(105, 2, 2, 0.28);
 }
 
 .btn:active {
@@ -317,18 +414,19 @@ hr {
 
 .btn-outline {
   background: transparent;
-  color: var(--forest);
-  border-color: var(--line-forest);
+  color: var(--forest-deep);
+  border-color: rgba(105, 2, 2, 0.28);
 }
 
 .btn-outline:hover {
-  background: var(--sage);
-  color: var(--forest-deep);
+  background: var(--forest);
+  color: var(--white);
   border-color: var(--forest);
+  box-shadow: 0 2px 10px -4px rgba(105, 2, 2, 0.24);
 }
 
 .btn-quiet {
-  background: transparent;
+  background: var(--white);
   color: var(--ink);
   border-color: var(--line-strong);
 }
@@ -336,7 +434,7 @@ hr {
 .btn-quiet:hover {
   background: var(--ink);
   border-color: var(--ink);
-  color: var(--paper);
+  color: var(--white);
 }
 
 .btn[disabled],
@@ -347,8 +445,9 @@ hr {
 }
 
 .btn-sm {
-  padding: 0.6rem 1rem;
+  padding: 0.45rem 1rem;
   font-size: 0.8125rem;
+  min-height: 2.25rem;
 }
 
 /* ---------- panels / surfaces ---------- */
@@ -364,23 +463,43 @@ hr {
   border: 1px solid var(--line-soft);
 }
 
-/* White card on a sage or ivory band, to keep screenshots untinted. */
+/* White card on a soft or warm band, to keep screenshots untinted. */
 .card-lift {
   background: var(--white);
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-card);
   transition: border-color 240ms var(--ease), box-shadow 240ms var(--ease);
 }
 
 .card-lift:hover {
   border-color: var(--line-forest);
-  box-shadow: 0 2px 0 -1px rgba(47, 98, 73, 0.14);
+  box-shadow: 0 2px 0 -1px rgba(105, 2, 2, 0.12);
 }
 
+/*
+ * Screenshot frame. A hairline border plus a two-step shadow: the card lifts
+ * just enough to separate from a soft or warm surface without looking like a
+ * floating appliance.
+ */
 .frame {
   position: relative;
+  max-width: 100%;
   overflow: hidden;
-  background: var(--ivory);
-  border: 1px solid var(--line);
+  background: var(--fill);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-card);
+  box-shadow:
+    0 1px 2px rgba(29, 29, 31, 0.04),
+    0 8px 24px -18px rgba(29, 29, 31, 0.22);
+  transition: box-shadow 260ms var(--ease), border-color 260ms var(--ease);
+}
+
+a:hover > .frame,
+.frame:hover {
+  border-color: var(--brand-line);
+  box-shadow:
+    0 1px 2px rgba(29, 29, 31, 0.05),
+    0 14px 32px -20px rgba(105, 2, 2, 0.28);
 }
 
 .frame img {
@@ -424,8 +543,8 @@ hr {
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--line-strong);
-  border-radius: 2px;
-  padding: 0.7rem 0.85rem;
+  border-radius: var(--r-field);
+  padding: 0.7rem 0.9rem;
   transition: border-color 180ms var(--ease), background 180ms var(--ease);
 }
 
@@ -446,7 +565,7 @@ hr {
   outline: none;
   border-color: var(--forest);
   background: var(--white);
-  box-shadow: 0 0 0 3px rgba(47, 98, 73, 0.15);
+  box-shadow: 0 0 0 3px rgba(105, 2, 2, 0.12);
 }
 
 .textarea {
@@ -469,8 +588,8 @@ hr {
 .input[aria-invalid="true"],
 .select[aria-invalid="true"],
 .textarea[aria-invalid="true"] {
-  border-color: #8c3a2b;
-  background: #fdf6f4;
+  border-color: var(--brand);
+  background: var(--brand-soft);
   box-shadow: 0 0 0 3px rgba(140, 58, 43, 0.09);
 }
 
@@ -478,7 +597,7 @@ hr {
   font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #8c3a2b;
+  color: var(--brand-ink);
   margin: 0;
 }
 
@@ -496,25 +615,27 @@ hr {
   backdrop-filter: saturate(140%) blur(10px);
 }
 
-/* Nav link with a green rule that grows on hover — the site-wide active cue. */
+/* Nav link with a brand rules that grows on hover: the site-wide active cue. */
 .nav-link {
   position: relative;
   color: var(--muted);
   text-decoration: none;
-  transition: color 200ms var(--ease);
+  font-weight: 500;
+  transition: color 180ms var(--ease);
 }
 
 .nav-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0.55rem;
-  height: 1px;
+  bottom: 0.4rem;
+  height: 2px;
   width: 100%;
+  border-radius: 2px;
   background: var(--forest);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 280ms var(--ease);
+  transition: transform 240ms var(--ease);
 }
 
 .nav-link:hover {
@@ -530,34 +651,123 @@ hr {
   color: var(--ink);
 }
 
-/* ---------- marquee ---------- */
+/* Homepage showcase: single column on phones, three even columns from 1024px. */
+.hero-work-grid {
+  display: grid;
+  gap: 2.5rem 2rem;
+  margin-top: 3rem;
+}
 
+@media (min-width: 1024px) {
+  .hero-work-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+}
+
+/* ---------- technology strip ---------- */
+
+/*
+ * Below 768px the marquee becomes a static wrapped rail: the full list is
+ * visible, inside the viewport, with no horizontal scroll and no animation
+ * competing with reading. The moving version is desktop-only, where there is
+ * room for it.
+ */
+
+/* Mobile: wrapped static rail, fully visible, never wider than the screen. */
 .marquee {
   overflow: hidden;
   position: relative;
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 6rem,
-    #000 calc(100% - 6rem),
-    transparent
-  );
+  max-width: 100%;
 }
 
 .marquee-track {
   display: flex;
-  width: max-content;
-  animation: marquee-scroll 58s linear infinite;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 0;
+  width: 100%;
 }
 
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
+.tech-item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+}
+
+.tech-dot {
+  width: 3px;
+  height: 3px;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  background: var(--line-strong);
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .tech-item {
+    padding-inline: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .tech-dot {
+    margin-left: 1.25rem;
+  }
 }
 
 .marquee-group {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  flex-shrink: 0;
+  justify-content: center;
+  width: 100%;
+}
+
+/* the duplicated half of the loop is only needed by the moving version */
+.marquee-group[aria-hidden="true"] {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .marquee {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6rem,
+      #000 calc(100% - 6rem),
+      transparent
+    );
+  }
+
+  .marquee-track {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    width: max-content;
+    animation: marquee-scroll 58s linear infinite;
+  }
+
+  .marquee-group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .marquee-group[aria-hidden="true"] {
+    display: flex;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
 }
 
 @keyframes marquee-scroll {
@@ -628,33 +838,54 @@ hr {
   padding-bottom: clamp(2rem, 4vw, 2.75rem);
 }
 
-/* Full-bleed sage band. Used for one section per page at most. */
-.band-sage {
-  background: var(--sage-soft);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
+/*
+ * Section rhythm. White carries the important content; soft grey marks a
+ * change of subject; warm neutral appears at most twice per page, where a
+ * section should feel quieter than the one above it. Every band is separated
+ * by a hairline, so the alternation reads as structure, not as stripes.
+ */
+.band-sage,
 .band-ivory {
-  background: var(--ivory);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  background: var(--soft);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
 }
 
-/* Small tag / filter chip. Neutral by default, forest when selected. */
+.band-warm {
+  background: var(--warm);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+
+/*
+ * Faint dot grid. A single 22px lattice at very low contrast: enough to give a
+ * large surface some texture at close range, invisible at a glance. Masked so
+ * it fades out before it reaches text.
+ */
+.dot-field {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(29, 29, 31, 0.14) 0.8px,
+    transparent 0.9px
+  );
+  background-size: 22px 22px;
+  background-position: center top;
+}
+
+/* Small tag / filter chip. Neutral by default, burgundy when selected. */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.15rem;
+  gap: 0.3rem;
   border: 1px solid var(--line-strong);
-  border-radius: 2px;
-  padding: 0.22rem 0.6rem;
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
+  border-radius: var(--r-pill);
+  padding: 0.25rem 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--muted);
-  background: transparent;
+  letter-spacing: -0.005em;
+  color: var(--ink-soft);
+  background: var(--white);
   white-space: nowrap;
 }
 
@@ -664,11 +895,12 @@ hr {
   background: var(--sage);
 }
 
-/* Closing call-to-action panel: white card with a citron edge. */
+/* Closing call-to-action panel: white card with a burgundy edge. */
 .cta-panel {
   position: relative;
   background: var(--white);
   border: 1px solid var(--line);
+  border-radius: var(--r-card);
   overflow: hidden;
 }
 
@@ -679,68 +911,84 @@ hr {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: var(--citron);
+  background: var(--brand);
 }
 
 /* Band with hairline rules top and bottom, no fill change. */
 .band-y {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
 }
 
-/* Forest band for the strongest editorial section on a page. */
+/*
+ * The one deep band per page, now burgundy. It is a deliberate full stop in
+ * the scroll, not a competing brand colour, and it carries white text.
+ */
 .band-forest {
-  background: var(--forest);
-  color: var(--paper);
+  background: var(--brand);
+  color: var(--white);
 }
 
 .eyebrow-invert,
 .band-forest .eyebrow {
-  color: var(--citron);
+  color: var(--brand-tint);
 }
 
-/* Numerals and rules inside the forest band take the citron accent. */
 .band-forest .index-num {
-  color: var(--citron);
+  color: var(--brand-tint);
 }
 
-/* serif headings inside the forest band must invert too */
 .band-forest .display-sm,
 .band-forest .display,
 .band-forest .title,
 .band-forest .heading {
-  color: var(--paper);
+  color: var(--white);
 }
 
 /* ---------- brand mark ---------- */
 
 .brand-mark {
   display: flex;
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 2rem;
+  height: 2rem;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--forest);
-  border-radius: 1px;
-  background: var(--sage-soft);
-  color: var(--forest-deep);
-  font-family: var(--font-serif);
-  font-size: 0.7rem;
-  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  border-radius: var(--r-sm);
+  background: var(--forest);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   line-height: 1;
-  transition: background 240ms var(--ease), color 240ms var(--ease);
+  transition: background 220ms var(--ease), transform 220ms var(--ease);
 }
 
 a:hover > .brand-mark {
-  background: var(--forest);
-  color: var(--paper);
+  background: var(--forest-deep);
+  transform: translateY(-1px);
 }
 
+/* The wordmark has to outrank the nav links, not read as one of them. */
 .brand-word {
-  font-family: var(--font-serif);
-  font-size: 1.08rem;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1;
   color: var(--ink);
+  white-space: nowrap;
+}
+
+.brand-word .brand-dot {
+  color: var(--forest);
+}
+
+@media (min-width: 768px) {
+  .brand-word {
+    font-size: 1.125rem;
+  }
 }
 
 /* ---------- footer ---------- */
@@ -748,8 +996,8 @@ a:hover > .brand-mark {
 .site-footer {
   border-top: 1px solid var(--line);
   background: var(--ivory);
-  /* fine sage rule above, a quiet identity cue */
-  box-shadow: inset 0 1px 0 0 rgba(213, 230, 205, 0.95);
+  /* fine brand rule above, a quiet identity cue */
+  box-shadow: inset 0 1px 0 0 rgba(105, 2, 2, 0.1);
 }
 
 /* ---------- hero composition ---------- */
@@ -761,15 +1009,43 @@ a:hover > .brand-mark {
 }
 
 /*
- * A single soft sage field behind the portrait side. Clipped to the section,
- * so it can never cause horizontal scrolling.
+ * Hero atmosphere. Two layers, both clipped to the section so neither can
+ * cause horizontal scrolling:
+ *   1. a faint dot lattice, strongest at the top edge and fading out
+ *   2. a wide burgundy radial glow behind the portrait side
+ * Both are low enough in contrast that no text or the portrait ever sits on
+ * a busy field.
  */
+.hero-shell {
+  overflow: clip;
+}
+
+.hero-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(29, 29, 31, 0.16) 0.8px,
+    transparent 0.9px
+  );
+  background-size: 22px 22px;
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    rgba(0, 0, 0, 0.55) 42%,
+    transparent 78%
+  );
+}
+
 .hero-wash {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(46%, 34rem);
+  width: min(58%, 46rem);
   overflow: hidden;
   z-index: -1;
   pointer-events: none;
@@ -778,47 +1054,118 @@ a:hover > .brand-mark {
 .hero-wash::before {
   content: "";
   position: absolute;
-  inset: 12% -20% 8% 10%;
+  inset: -18% -12% -10% 4%;
   border-radius: 50%;
   background: radial-gradient(
-    circle at 60% 40%,
-    rgba(213, 230, 205, 0.9) 0%,
-    rgba(237, 244, 230, 0.55) 55%,
-    transparent 72%
+    circle at 58% 42%,
+    rgba(105, 2, 2, 0.1) 0%,
+    rgba(105, 2, 2, 0.05) 46%,
+    transparent 70%
   );
 }
 
+/* On phones the glow centres behind the portrait instead of off-canvas. */
+@media (max-width: 767px) {
+  .hero-wash {
+    inset: 0;
+    width: auto;
+  }
+
+  .hero-wash::before {
+    inset: 2% 6% 40% 6%;
+    background: radial-gradient(
+      circle at 50% 30%,
+      rgba(105, 2, 2, 0.09) 0%,
+      rgba(105, 2, 2, 0.04) 50%,
+      transparent 72%
+    );
+  }
+}
+
+/*
+ * Mobile reading order: portrait, role label, headline, description, buttons.
+ * Desktop keeps headline-left / portrait-right. The order is set here rather
+ * than by duplicating markup, so there is one hero and one set of copy.
+ */
 .hero-grid {
-  display: grid;
-  gap: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .hero-copy {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero-copy > .lede {
+  margin-top: 1.25rem;
+}
+
+.hero-copy > .hero-actions {
+  margin-top: 1.75rem;
 }
 
 .hero-title {
   /* keeps the last line from orphaning on narrow phones */
   text-wrap: pretty;
+  margin-top: 0.85rem;
+  /* long words wrap instead of pushing the layout wider */
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Hero actions: full-width stack on narrow phones, side by side once there is room. */
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.hero-actions .hero-btn {
+  width: 100%;
+}
+
+@media (min-width: 420px) {
+  .hero-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-actions .hero-btn {
+    width: auto;
+  }
 }
 
 .hero-figure {
-  /* on mobile the portrait sits above the foot note, not beside the headline */
+  /* the portrait leads on mobile, directly below the navigation */
+  order: -1;
   display: flex;
   justify-content: center;
-  padding-top: 0.5rem;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
   .hero-grid {
+    display: grid;
     grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
     align-items: center;
     gap: 3rem;
   }
 
   .hero-figure {
+    order: 0;
     justify-content: flex-end;
-    padding-top: 0;
   }
 }
 
@@ -918,12 +1265,12 @@ a:hover > .brand-mark {
   background: var(--ivory-deep);
   border: var(--ring) solid var(--line-forest);
   /* the fine outer ring, drawn outside the crop */
-  box-shadow: 0 0 0 8px var(--paper), 0 0 0 9px rgba(47, 98, 73, 0.2);
+  box-shadow: 0 0 0 8px var(--paper), 0 0 0 9px rgba(105, 2, 2, 0.16);
 }
 
 @media (min-width: 768px) {
   .portrait-disc {
-    box-shadow: 0 0 0 10px var(--paper), 0 0 0 11px rgba(47, 98, 73, 0.2);
+    box-shadow: 0 0 0 10px var(--paper), 0 0 0 11px rgba(105, 2, 2, 0.16);
   }
 }
 
@@ -943,14 +1290,14 @@ a:hover > .brand-mark {
   justify-content: center;
   background: radial-gradient(
       120% 120% at 32% 22%,
-      #f8f6ee 0%,
-      var(--sage) 46%,
-      #c3d9b8 100%
+      var(--white) 0%,
+      var(--brand-soft) 46%,
+      #f0dcdc 100%
     );
 }
 
 .portrait-initials {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: calc(var(--size) * 0.42);
   line-height: 1;
   letter-spacing: -0.03em;
@@ -974,7 +1321,7 @@ a:hover > .brand-mark {
 }
 
 .portrait-caption-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(0.85rem, calc(var(--size) * 0.062), 1.05rem);
   line-height: 1.2;
   color: var(--forest-deep);
@@ -990,7 +1337,7 @@ a:hover > .brand-mark {
   opacity: 0.75;
 }
 
-/* One citron dot, offset bottom-left — the small expressive detail. */
+/* One brand-tint dot, offset bottom-left: the small expressive detail. */
 .portrait-dot {
   position: absolute;
   width: calc(var(--size) * 0.13);
@@ -1000,7 +1347,7 @@ a:hover > .brand-mark {
   bottom: 3%;
   left: -4%;
   border: 3px solid var(--paper);
-  box-shadow: 0 0 0 1px rgba(47, 98, 73, 0.16);
+  box-shadow: 0 0 0 1px rgba(105, 2, 2, 0.14);
   z-index: 2;
 }
 

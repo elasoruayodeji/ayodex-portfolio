@@ -53,13 +53,13 @@ export function SiteHeader() {
           <Link
             href="/"
             className="group flex min-h-11 items-center gap-2.5 no-underline"
-            aria-label="AYODEX Labs — home"
+            aria-label="AYODEX Labs home"
           >
             <span aria-hidden="true" className="brand-mark">
               AY
             </span>
             <span className="brand-word">
-              AYODEX Labs<span className="text-forest">.</span>
+              AYODEX Labs<span className="brand-dot">.</span>
             </span>
           </Link>
 
@@ -98,8 +98,7 @@ export function SiteHeader() {
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? "Close menu" : "Open menu"}
-              className="relative flex h-10 w-10 items-center justify-center border border-line-strong"
-              style={{ borderRadius: 1 }}
+              className="relative flex h-11 w-11 items-center justify-center rounded-full border border-line-strong text-ink transition-colors duration-200 hover:border-forest hover:text-forest"
             >
               <span
                 aria-hidden="true"

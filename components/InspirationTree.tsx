@@ -89,7 +89,7 @@ export function InspirationTree() {
               <div>
                 <p className="brand-word text-[1.05rem]">AYODEX Labs</p>
                 <p className="text-[0.75rem] text-muted">
-                  Root — the practice these influences shaped
+                  Root: the practice these influences shaped
                 </p>
               </div>
             </div>
@@ -125,7 +125,7 @@ export function InspirationTree() {
                   className="group flex w-full items-center justify-between gap-4 border-b border-line py-3.5 text-left"
                 >
                   <span className="flex items-baseline gap-3">
-                    <span className="font-[family-name:var(--font-serif)] text-[1.25rem] leading-none">
+                    <span className="font-[family-name:var(--font-display)] text-[1.25rem] leading-none">
                       {branch.label}
                     </span>
                     <span className="text-[0.7rem] tabular-nums text-muted-soft">
@@ -191,7 +191,7 @@ export function InspirationTree() {
                     </ul>
                   ) : (
                     <p className="mt-3 border-l border-dashed border-line-strong pl-4 text-[0.8rem] leading-relaxed text-muted-soft">
-                      No entries yet — this branch is waiting for real content,
+                      No entries yet. This branch is waiting for real content,
                       not placeholders.
                     </p>
                   )}
@@ -213,7 +213,7 @@ export function InspirationTree() {
             />
             <p className="brand-word text-[1rem]">AYODEX Labs</p>
             <p className="text-[0.75rem] text-muted">
-              Root — influences below shaped this practice
+              Root: influences below shaped this practice
             </p>
           </li>
 
@@ -233,7 +233,7 @@ export function InspirationTree() {
                   className="flex w-full items-center justify-between gap-4 border-b border-line py-3 text-left"
                 >
                   <span className="flex items-baseline gap-2">
-                    <span className="font-[family-name:var(--font-serif)] text-[1.15rem] leading-none">
+                    <span className="font-[family-name:var(--font-display)] text-[1.15rem] leading-none">
                       {branch.label}
                     </span>
                     <span className="text-[0.7rem] text-muted-soft">
@@ -307,7 +307,7 @@ export function InspirationTree() {
                     </ul>
                   ) : (
                     <p className="mt-2 border-l border-dashed border-line-strong pl-3 text-[0.8rem] leading-relaxed text-muted-soft">
-                      No entries yet — waiting for real content.
+                      No entries yet. Waiting for real content.
                     </p>
                   )}
                 </div>

@@ -3,14 +3,14 @@ import { Portrait } from "@/components/Portrait";
 import { TechMarquee } from "@/components/TechMarquee";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/Reveal";
-import { featuredProjects, projects } from "@/lib/projects";
+import { featuredProjects } from "@/lib/projects";
 import { site, whatsappLink } from "@/lib/site";
 
 const services = [
   {
     n: "01",
     title: "Websites",
-    body: "Business, corporate, personal and landing pages — designed around your content, built to load fast and hold up on a phone.",
+    body: "Business, corporate, personal and landing pages, designed around your content, built to load fast and hold up on a phone.",
     tags: ["Marketing sites", "Portfolios", "Landing pages"],
   },
   {
@@ -22,7 +22,7 @@ const services = [
   {
     n: "03",
     title: "Web applications",
-    body: "Interfaces for tools that need more than a page — data views, forms, dashboards, and the state management underneath them.",
+    body: "Interfaces for tools that need more than a page: data views, forms, dashboards, and the state management underneath them.",
     tags: ["React & Next.js", "TypeScript", "Dashboards"],
   },
   {
@@ -49,8 +49,8 @@ const approach = [
 ];
 
 export default function HomePage() {
-  const [lead, ...rest] = featuredProjects;
-  const other = projects.filter((p) => !p.featured).slice(0, 3);
+  /* Exactly three: the homepage is a showcase, not an index. */
+  const showcase = featuredProjects.slice(0, 3);
 
   return (
     <>
@@ -65,26 +65,26 @@ export default function HomePage() {
               Independent developer · {site.location}
             </p>
 
-            <h1 className="display hero-title mt-6">
+            <h1 className="display hero-title">
               I build websites and
-              <br className="hidden sm:block" /> digital work that has to
-              <span className="italic"> hold up.</span>
+              <br className="hidden sm:block" /> digital work that has to{" "}
+              <em className="accent-phrase">hold up.</em>
             </h1>
 
-            <p className="lede mt-7">
-              I&apos;m {site.name.split(" ")[0]} — building as{" "}
+            <p className="lede">
+              I&apos;m {site.name.split(" ")[0]}, building as{" "}
               <strong className="font-semibold text-ink">AYODEX Labs</strong>.
               Storefronts, corporate sites, web applications and the odd
               experiment. Careful typography, working interfaces, and nothing
               claimed that isn&apos;t true.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Link href="/work" className="btn">
+            <div className="hero-actions">
+              <Link href="/work" className="btn hero-btn">
                 See selected work
                 <span aria-hidden="true">→</span>
               </Link>
-              <Link href="/hire" className="btn btn-outline">
+              <Link href="/hire" className="btn btn-outline hero-btn">
                 Start a project
               </Link>
             </div>
@@ -96,7 +96,7 @@ export default function HomePage() {
         </div>
 
         <div className="hero-foot">
-          <p className="serif-note text-[1.2rem] italic text-forest">
+          <p className="accent text-[1.35rem] leading-tight text-brand">
             {site.tagline}
           </p>
           <p className="text-[0.8rem] text-muted">
@@ -125,45 +125,22 @@ export default function HomePage() {
                 Projects, presented at the stage they&apos;re actually in.
               </h2>
             </div>
-            <Link href="/work" className="link-quiet text-[0.875rem] font-medium">
-              All projects <span aria-hidden="true">→</span>
+            <Link href="/work" className="btn btn-quiet btn-sm shrink-0">
+              View all projects
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-x-8 gap-y-14 lg:grid-cols-12">
-          <Reveal className="lg:col-span-7">
-            <ProjectCard
-              project={lead}
-              priority
-              sizes="(min-width: 1024px) 54vw, 100vw"
-            />
-          </Reveal>
-
-          <div className="flex flex-col gap-12 lg:col-span-5 lg:pt-24">
-            {rest.slice(0, 2).map((project, i) => (
-              <Reveal key={project.slug} delay={80 + i * 60}>
-                <ProjectCard
-                  project={project}
-                  sizes="(min-width: 1024px) 38vw, 100vw"
-                />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-16 grid gap-x-8 gap-y-10 border-t border-line pt-12 md:grid-cols-3">
-          {other.map((project) => (
-            <Reveal key={project.slug}>
-              <Link href={`/work/${project.slug}`} className="group block min-h-11 no-underline">
-                <span className="eyebrow">{project.tag}</span>
-                <h3 className="title mt-2 text-[1.22rem]">
-                  <span className="link-underline">{project.name}</span>
-                </h3>
-                <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
-                  {project.summary}
-                </p>
-              </Link>
+        {/* One per row on phones, three even columns on wide screens. */}
+        <div className="hero-work-grid">
+          {showcase.map((project, i) => (
+            <Reveal key={project.slug} delay={i * 70}>
+              <ProjectCard
+                project={project}
+                priority={i === 0}
+                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 88vw, 92vw"
+              />
             </Reveal>
           ))}
         </div>
@@ -171,7 +148,7 @@ export default function HomePage() {
 
       {/* ---------- about ---------- */}
       <section
-        className="band-sage py-20 md:py-28"
+        className="band-warm py-20 md:py-28"
         aria-labelledby="about-heading"
       >
         <div className="shell grid gap-12 md:grid-cols-12 md:gap-8">
@@ -199,7 +176,7 @@ export default function HomePage() {
                 </p>
                 <p>
                   My background is technical rather than agency-trained. I
-                  learned by shipping things that had real constraints — a
+                  learned by shipping things that had real constraints: a
                   storefront that needed product video, a research tool that had
                   to be honest about prediction error, a feedback system for a
                   school with no server budget.
@@ -216,7 +193,7 @@ export default function HomePage() {
                   <div key={label}>
                     <dt className="sr-only">{label}</dt>
                     <dd>
-                      <span className="serif-note block text-[1.9rem] leading-none text-forest">
+                      <span className="note block text-[1.9rem] leading-none text-forest">
                         {value}
                       </span>
                       <span className="mt-1.5 block text-[0.75rem] uppercase tracking-[0.1em] text-muted">
@@ -277,7 +254,7 @@ export default function HomePage() {
             <Link href="/hire" className="link-accent font-medium">
               Describe it anyway
             </Link>{" "}
-            — the enquiry form has a category for that.
+            The enquiry form has a category for that.
           </p>
         </Reveal>
       </section>
@@ -335,7 +312,7 @@ export default function HomePage() {
                 </Link>
                 <a
                   href={whatsappLink(
-                    "Hi Ayodeji — I found AYODEX Labs and wanted to ask about a project.",
+                    "Hi Ayodeji, I found AYODEX Labs and wanted to ask about a project.",
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -391,7 +368,7 @@ export default function HomePage() {
 
         <Reveal>
           <div className="mt-16 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-baseline sm:justify-between">
-            <p className="font-[family-name:var(--font-serif)] text-[clamp(1.6rem,3.4vw,2.4rem)] leading-tight">
+            <p className="font-[family-name:var(--font-display)] text-[clamp(1.6rem,3.4vw,2.4rem)] leading-tight">
               I build. I design. I experiment.
             </p>
             <p className="text-[0.8rem] uppercase tracking-[0.14em] text-muted">

@@ -20,7 +20,7 @@ export function StatusPill({ status }: { status: ProjectStatus }) {
   return (
     <span
       className={`inline-flex items-center gap-2 border px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.12em] ${styles[status]}`}
-      style={{ borderRadius: 2 }}
+      style={{ borderRadius: "var(--r-pill)" }}
     >
       <span
         aria-hidden="true"

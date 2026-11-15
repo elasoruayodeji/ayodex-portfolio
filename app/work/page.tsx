@@ -7,10 +7,10 @@ import { projects } from "@/lib/projects";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Case studies from AYODEX Labs — a stock research platform, a streetwear storefront, a corporate concept site, an apartment website, a desktop AI experiment and more.",
+    "Case studies from AYODEX Labs: a stock research platform, a streetwear storefront, a corporate concept site, an apartment website, a desktop AI experiment and more.",
   alternates: { canonical: "/work" },
   openGraph: {
-    title: "Work — AYODEX Labs.",
+    title: "Work | AYODEX Labs",
     description:
       "Selected projects with verified detail: what each one does, what was built, and where it stands.",
     url: "/work",
@@ -32,11 +32,11 @@ export default function WorkPage() {
         <p className="eyebrow">Work</p>
         <div className="mt-4 grid items-end gap-6 md:grid-cols-12">
           <h1 className="display md:col-span-8">
-            Seven projects, described <span className="italic">accurately.</span>
+            Seven projects, described accurately.
           </h1>
           <p className="lede md:col-span-4 md:pb-2">
-            Every entry lists its real status — live, concept, paused or
-            undeployed — and only the technology that is actually in the
+            Every entry lists its real status (live, concept, paused or
+            undeployed) and only the technology that is actually in the
             repository.
           </p>
         </div>
@@ -60,7 +60,7 @@ export default function WorkPage() {
           ))}
         </div>
         <p className="mt-2 text-[0.75rem] text-muted-soft">
-          Every project is on this page — the list is short enough to read in
+          Every project is on this page. The list is short enough to read in
           one sitting.
         </p>
       </section>

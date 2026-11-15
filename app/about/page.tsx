@@ -10,10 +10,10 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Elasoru Solomon Ayodeji — independent developer and creative technologist in Nigeria. How I work, what I build, and the technology behind it.",
+    "Elasoru Solomon Ayodeji, independent developer and creative technologist in Nigeria. How I work, what I build, and the technology behind it.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About — AYODEX Labs.",
+    title: "About | AYODEX Labs",
     description:
       "Independent developer and creative technologist. Design, front end, and the systems behind the screen.",
     url: "/about",
@@ -72,10 +72,10 @@ const timeline = [
   {
     year: "2025",
     title: "First real builds",
-    body: "The FTC feedback system — a school project rebuilt as an actual web application with its own submission pipeline. Then DEX, a desktop voice assistant experiment.",
+    body: "The FTC feedback system, a school project rebuilt as an actual web application with its own submission pipeline. Then DEX, a desktop voice assistant experiment.",
   },
   {
-    year: "2025—2026",
+    year: "2025–2026",
     title: "Storefronts and clients' problems",
     body: "ICEEIT: cart, wishlist, product video, nine routes, and a checkout honest about its limits. Promotional work for a gadget business in Computer Village.",
   },
@@ -87,7 +87,7 @@ const timeline = [
   {
     year: "Now",
     title: "AYODEX Labs, version two",
-    body: "This site — a rebuild from scratch around a quieter, more editorial identity, with every project described at the stage it is actually in.",
+    body: "This site, a rebuild from scratch around a clearer, more editorial identity, with every project described at the stage it is actually in.",
   },
 ];
 
@@ -98,7 +98,7 @@ export default function AboutPage() {
         <p className="eyebrow">About</p>
         <div className="about-hero-grid">
           <h1 className="display">
-            I build the whole visible <span className="italic">thing.</span>
+            I build the whole visible thing.
           </h1>
           <div className="about-hero-figure">
             <Portrait />
@@ -108,7 +108,7 @@ export default function AboutPage() {
         <div className="mt-10 grid gap-8 md:grid-cols-12">
           <div className="md:col-span-7">
             <p className="lede">
-              {site.name} — a developer and creative technologist working from{" "}
+              {site.name}, a developer and creative technologist working from{" "}
               {site.location}. What I do sits between design and engineering:
               layout, type, components, state, and the small decisions that
               decide whether an interface feels considered or assembled.
@@ -155,13 +155,13 @@ export default function AboutPage() {
                 Each of those forced a decision I would not have made from a
                 course: cut a feature, choose a smaller tool, admit a limitation
                 in the interface. That is the part of development I find
-                interesting — not the library choice, but the trade.
+                interesting: not the library choice, but the trade.
               </p>
               <p>
                 I work alone, which means I do the design, the front end, the
                 data plumbing and the copy. It also means I only take on what I
                 can finish. When something is unfinished, the work says so
-                plainly — there is a project on this site labelled{" "}
+                plainly. There is a project on this site labelled{" "}
                 <em>Paused</em>, and it is labelled that for a reason.
               </p>
             </div>
@@ -219,12 +219,12 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      <section className="band-ivory py-16 md:py-20">
+      <section className="band-warm py-16 md:py-20">
         <div className="shell">
           <Reveal>
             <h2 className="eyebrow">Capabilities</h2>
             <p className="display-sm mt-3 max-w-[24ch]">
-              What I actually use — verified by the projects on this site.
+              What I actually use, verified by the projects on this site.
             </p>
           </Reveal>
           <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">

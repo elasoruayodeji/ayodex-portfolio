@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
 
+/**
+ * Project preview: cover, title, one-sentence summary, the stack actually used,
+ * and a single clear destination. The whole card is one link.
+ */
 export function ProjectCard({
   project,
   priority = false,
@@ -29,22 +33,31 @@ export function ProjectCard({
         </div>
 
         <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-line pt-3">
-          <span className="flex items-baseline gap-2.5">
-            <span className="index-num">{project.year}</span>
-            <span className="eyebrow">{project.tag}</span>
-          </span>
-          <span className="text-[0.72rem] uppercase tracking-[0.1em] text-muted-soft">
-            Case study
-          </span>
+          <span className="eyebrow">{project.tag}</span>
+          <span className="index-num">{project.year}</span>
         </div>
+
         <h3 className="title mt-2.5">
           <span className="link-underline">{project.name}</span>
         </h3>
+
         <p className="mt-2 max-w-[46ch] text-[0.925rem] leading-relaxed text-muted">
           {project.summary}
         </p>
-        <p className="mt-3 inline-flex items-center gap-1.5 text-[0.85rem] font-medium text-forest">
-          Read case study
+
+        <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="Technology">
+          {project.stack.slice(0, 4).map((tech) => (
+            <li key={tech} className="chip">
+              {tech}
+            </li>
+          ))}
+          {project.stack.length > 4 ? (
+            <li className="chip">+{project.stack.length - 4}</li>
+          ) : null}
+        </ul>
+
+        <p className="mt-4 inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-forest">
+          View case study
           <span
             aria-hidden="true"
             className="transition-transform duration-300 group-hover:translate-x-1"

@@ -26,20 +26,51 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   the dev server's HMR websocket does not survive the preview proxy, so client
   components appear inert in dev.
 
-## Visual refinement pass (branch `portfolio-v2`)
+## Current design system (replaces the earlier serif/green pass)
 
-- Type roles: `.display` / `.display-sm` / `.title` / `.index-num` = Instrument
-  Serif; everything else Manrope. Never set the serif bold or below 1.25rem.
-  Green italics (`.display .italic`) are the one recurring type accent.
-- Botanicals: `--forest` buttons/links/eyebrows, `--sage` bands and fields,
-  `--citron` only on dark forest. One accent band per page.
-- Hero portrait is a true circle: `--size` + `aspect-ratio: 1/1` on both
-  `.portrait` and `.portrait-disc`. At 1024 the column is narrower than
-  23.5rem, so the disc sizes to the column — do not remove the aspect ratio or
-  it becomes an ellipse.
-- `--muted-soft` is a *text* colour and must stay ≥4.5:1; it is not a
-  decorative tint. A full-page contrast sweep is the check to re-run after
-  touching colour tokens.
+- **Type:** one system stack for everything (`--font-system`: SF Pro on Apple,
+  Segoe UI on Windows, Roboto on Android). No webfont payload for UI text.
+  Weights carry hierarchy: 700 `.display`/`.display-sm`, 600 `.heading`/`.title`,
+  500 metadata, 400 body.
+- **One expressive face:** `Instrument_Serif` italic only, via `next/font`, as
+  `--font-accent`. Used for the motto ("I build. I design. I experiment.") in
+  hero + footer and `hold up.` in the headline, via `.accent`/`.accent-phrase`.
+  Do not expand it to headings or paragraphs. `.display em` is reset to upright
+  bold *except* `.accent-phrase`, so an `<em>` in a heading is weight, not serif.
+- **Colour:** burgundy is the only accent: `--brand #690202`,
+  `--brand-hover #7d0a0a`, `--brand-ink #7a1414`, `--brand-soft #69020214`,
+  plus `--brand-tint`/`--brand-line` for on-burgundy text and hairlines.
+  Neutrals: `--ink #1d1d1f`, `--ink-2 #48484a`, `--ink-3 #6e6e73`,
+  `--ink-4 #a1a1a6` (decorative only, never text), `--white`, `--soft #f5f5f7`,
+  `--warm #f7f4f0`, `--fill #eff1f4`, `--hair #00000014`.
+  **No green, blue, orange, rust or gold.** `--ink-4` must not be used for copy.
+- **Legacy aliases:** one block at the end of `:root` and in `@theme` maps the
+  old names (`--forest`, `--sage`, `--citron`, `--muted`, `--line-*`) onto the
+  new tokens so existing rules keep working. Repoint new work at the new names;
+  delete the alias block only after rewriting every `var()` call.
+- **Surface rhythm:** white carries content; `.band-sage`/`.band-ivory` are the
+  soft grey; `.band-warm` is the warm neutral (at most twice per page);
+  `.band-forest` is the one burgundy band per page, carrying white text.
+- **Hero depth:** `.hero-shell::before` is a masked dot lattice,
+  `.hero-wash::before` a burgundy radial glow (about 5% strength). Both are
+  clipped to the section. Keep them faint: they must never sit behind text.
+- **Cards:** `.frame` uses `--fill` plus a hairline and a two-step shadow, and
+  lifts on hover. Do not add glassmorphism or large decorative shapes.
+
+## Responsive rules learned the hard way
+
+- **Never put a fixed intrinsic width inside an implicit grid/flex track.**
+  Screenshots declared at 1600px stretched single-column tracks and made the
+  whole page scroll sideways at every mobile width. The fix is
+  `:where(.grid, .flex) > * { min-width: 0 }` plus `img { max-width: 100% }`.
+- Do **not** reintroduce `overflow-x: hidden` on `body`; it hides the symptom.
+  Verify with `document.documentElement.scrollWidth === clientWidth` per route.
+- Mobile hero order is CSS-only (`.hero-figure { order: -1 }`), so there is one
+  copy of the hero markup. Portrait sits directly under the nav.
+- Below 768px the technology strip is a static wrapped rail; the marquee
+  animation is desktop-only.
+- Tested widths: 320, 390, 430, 768, 1440. All 15 routes return 200 (404 route
+  returns 404) with zero overflow.
 
 ## GitHub push status (audited)
 

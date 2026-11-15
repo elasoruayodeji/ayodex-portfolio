@@ -46,10 +46,10 @@ export const projects: Project[] = [
     tag: "Fintech",
     year: "2026",
     summary:
-      "A stock research workspace for the Nigerian Exchange — exploration, screening, forecasting and backtesting, with the data source always visible.",
+      "A stock research workspace for the Nigerian Exchange, with exploration, screening, forecasting and backtesting, and the data source always visible.",
     purpose:
-      "Retail research on the NGX is scattered across screenshots, spreadsheets and hearsay. PREDICTA pulls market data into one workspace where a stock can be explored, screened, forecast and then honestly evaluated — including when the forecast is wrong.",
-    role: "Solo build — product design, front end, forecasting engine, API proxy",
+      "Retail research on the NGX is scattered across screenshots, spreadsheets and hearsay. PREDICTA pulls market data into one workspace where a stock can be explored, screened, forecast and then honestly evaluated, including when the forecast is wrong.",
+    role: "Solo build: product design, front end, forecasting engine, API proxy",
     stack: [
       "React 18",
       "TypeScript",
@@ -61,7 +61,7 @@ export const projects: Project[] = [
     features: [
       "Stock explorer across 146 NGX equities with price history charts",
       "Screener with volatility, return and data-quality filters",
-      "Market movers — gainers, losers, most active, highest volatility",
+      "Market movers: gainers, losers, most active, highest volatility",
       "Forecasting workspace with five models, from persistence to gradient boosting",
       "Model laboratory running walk-forward backtests with chronological splits",
       "Anomaly detection on unusual price and volume behaviour",
@@ -92,7 +92,7 @@ export const projects: Project[] = [
     decisions: [
       {
         title: "Uncertainty is part of the interface",
-        body: "Forecasts are presented with approximate intervals and a visible model name, and the README documents the rules the engine follows — chronological train/test separation, no data leakage, and clear provenance for every dataset. A forecast that hides its source is worse than no forecast.",
+        body: "Forecasts are presented with approximate intervals and a visible model name, and the README documents the rules the engine follows: chronological train/test separation, no data leakage, and clear provenance for every dataset. A forecast that hides its source is worse than no forecast.",
       },
       {
         title: "Keys never reach the browser",
@@ -100,7 +100,7 @@ export const projects: Project[] = [
       },
       {
         title: "Demo data is labelled as demo data",
-        body: "The app supports three data sources — live NGX, CSV import and synthetic sample data — and tags whichever one is active, so a chart is never silently invented.",
+        body: "The app supports three data sources (live NGX, CSV import and synthetic sample data) and tags whichever one is active, so a chart is never silently invented.",
       },
     ],
   },
@@ -109,11 +109,11 @@ export const projects: Project[] = [
     name: "ICEEIT",
     category: "E-commerce · Streetwear",
     tag: "E-commerce",
-    year: "2025—2026",
+    year: "2025–2026",
     summary:
       "A sub-zero streetwear storefront: six products, real cart and wishlist state, product video, and a checkout that is honest about being a demo.",
     purpose:
-      "The brand had photography and a visual language but no online home. Generic store templates flattened both. The brief was a storefront that reads like the label — cold, editorial, product-first — with shopping mechanics that actually hold state.",
+      "The brand had photography and a visual language but no online home. Generic store templates flattened both. The brief was a storefront that reads like the label: cold, editorial and product-first, with shopping mechanics that actually hold state.",
     role: "Design, front end, brand direction",
     stack: ["React 19", "Vite", "React Router", "Plain CSS", "localStorage"],
     features: [
@@ -128,7 +128,7 @@ export const projects: Project[] = [
     ],
     status: "Live",
     statusNote:
-      "Storefront is live and fully browsable. Checkout is a demo — card and bank payment are not connected, and the site says so.",
+      "Storefront is live and fully browsable. Checkout is a demo, so card and bank payment are not connected, and the site says so.",
     liveUrl: "https://iceeit.vercel.app",
     repoUrl: "https://github.com/elasoruayodeji/iceeit",
     featured: true,
@@ -154,7 +154,7 @@ export const projects: Project[] = [
         src: "/images/work/iceeit/mobile-1.jpg",
         alt: "ICEEIT storefront on a mobile phone, showing the hero and product feed",
         ratio: 828 / 1792,
-        caption: "The same storefront on a phone — 414px wide",
+        caption: "The same storefront on a phone, 414px wide",
       },
     ],
     decisions: [
@@ -179,10 +179,10 @@ export const projects: Project[] = [
     tag: "Corporate",
     year: "2026",
     summary:
-      "A nine-page corporate site for a multidisciplinary engineering firm — a self-initiated concept built to test how far editorial restraint can carry a B2B brand.",
+      "A nine-page corporate site for a multidisciplinary engineering firm. A self-initiated concept built to test how far editorial restraint can carry a B2B brand.",
     purpose:
       "Engineering companies usually present themselves with stock cranes and stockier type. This concept asks the opposite question: can a serious infrastructure firm feel considered, quiet and expensive on screen, without a single photograph of a hard hat?",
-    role: "Self-initiated concept — design, content architecture, front end",
+    role: "Self-initiated concept: design, content architecture, front end",
     stack: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
     features: [
       "Nine pages: home, about, services, projects, process, insights, careers, contact and legal",
@@ -194,7 +194,7 @@ export const projects: Project[] = [
     ],
     status: "Concept build",
     statusNote:
-      "Live demonstration site. VANTAGE Engineering Group is a fictional company created for this concept — no people, projects or contract values shown are real.",
+      "Live demonstration site. VANTAGE Engineering Group is a fictional company created for this concept. No people, projects or contract values shown are real.",
     liveUrl: "https://vantage-engineering-group-limited.vercel.app",
     repoUrl: "https://github.com/elasoruayodeji/vantage-engineering-group",
     featured: true,
@@ -214,7 +214,7 @@ export const projects: Project[] = [
     decisions: [
       {
         title: "Content architecture before decoration",
-        body: "Services, projects, team members and articles each have their own interface in a single content module. Adding a service is a data edit, not a page rebuild — which is what a real corporate site needs to stay maintainable.",
+        body: "Services, projects, team members and articles each have their own interface in a single content module. Adding a service is a data edit, not a page rebuild, which is what a real corporate site needs to stay maintainable.",
       },
       {
         title: "Honesty as a design constraint",
@@ -229,7 +229,7 @@ export const projects: Project[] = [
     tag: "Hospitality",
     year: "2026",
     summary:
-      "A calm, image-led website for a two-bedroom apartment in Gbagada, Lagos — gallery, amenities, location and a WhatsApp booking path.",
+      "A calm, image-led website for a two-bedroom apartment in Gbagada, Lagos. Gallery, amenities, location and a WhatsApp booking path.",
     purpose:
       "Short-let apartments are sold on trust: what the rooms actually look like, where the building sits, and how quickly someone answers. The site needed to put real photographs first and make a booking enquiry take one tap.",
     role: "Design and front-end build",
@@ -249,7 +249,7 @@ export const projects: Project[] = [
     repoUrl: "https://github.com/elasoruayodeji/Tolu-space-2-apartment-",
     featured: true,
     relationship:
-      "Engagement type not confirmed — no client claim is made on this page.",
+      "Engagement type not confirmed, so no client claim is made on this page.",
     cover: {
       src: "/images/work/tolu-space/01.jpg",
       alt: "Tolu's Space homepage showing the apartment interior with a warm, editorial layout",
@@ -274,10 +274,10 @@ export const projects: Project[] = [
     tag: "AI experiment",
     year: "2025",
     summary:
-      "A Windows desktop assistant with a floating orb instead of a chat window — wake word, speech recognition, command routing, spoken reply.",
+      "A Windows desktop assistant with a floating orb instead of a chat window. Wake word, speech recognition, command routing and spoken reply.",
     purpose:
       "Most AI tools assume you will open a browser and type. DEX was an attempt to find out what a desktop assistant feels like when it lives on the desktop: always present, summoned by voice, and able to act rather than only answer.",
-    role: "Solo build — interaction design, desktop UI, voice pipeline",
+    role: "Solo build: interaction design, desktop UI, voice pipeline",
     stack: ["Python", "PySide6", "Vosk", "Groq"],
     features: [
       "Floating, always-on-top orb interface built with PySide6",
@@ -305,7 +305,7 @@ export const projects: Project[] = [
     decisions: [
       {
         title: "A shape, not a chat box",
-        body: "The orb exists to make the assistant feel ambient. It is small, draggable and stays out of the way until it is spoken to — a deliberate contrast with full-panel chat interfaces.",
+        body: "The orb exists to make the assistant feel ambient. It is small, draggable and stays out of the way until it is spoken to, a deliberate contrast with full-panel chat interfaces.",
       },
       {
         title: "Stopping was the honest option",
@@ -323,7 +323,7 @@ export const projects: Project[] = [
       "A student feedback portal that replaced a paper suggestion box with a validated form writing straight into a shared spreadsheet.",
     purpose:
       "Feedback at Federal Training Centre, Ikoyi arrived on paper and disappeared into a box. There was no timestamp, no way to sort by topic, and no way to submit anonymously.",
-    role: "Solo build — interface, front end, submission pipeline",
+    role: "Solo build: interface, front end, submission pipeline",
     stack: ["HTML", "CSS", "JavaScript", "Google Apps Script", "Google Sheets"],
     features: [
       "Custom feedback form with validated, structured inputs",
@@ -351,7 +351,7 @@ export const projects: Project[] = [
       },
       {
         title: "States, not just a submit button",
-        body: "Loading, success, failure and reset were designed up front. The first feedback system of this kind usually fails at exactly that point — the user presses send and nothing tells them whether it worked.",
+        body: "Loading, success, failure and reset were designed up front. The first feedback system of this kind usually fails at exactly that point: the user presses send and nothing tells them whether it worked.",
       },
     ],
   },
@@ -362,9 +362,9 @@ export const projects: Project[] = [
     tag: "Promo",
     year: "2025",
     summary:
-      "Promotional visuals and a ten-second AI-assisted video for a buy–sell–swap gadget business in Ikeja Computer Village.",
+      "Promotional visuals and a ten-second AI-assisted video for a buy, sell and swap gadget business in Ikeja Computer Village.",
     purpose:
-      "The business does three things — buys, sells and swaps — plus a physical location. All of that had to land inside a few seconds of social video that would survive a feed scroll.",
+      "The business buys, sells and swaps, and has a physical location. All of that had to land inside a few seconds of social video that would survive a feed scroll.",
     role: "Concept, copy, visual direction, AI-assisted production",
     stack: ["Gemini", "Canva", "Promotional copy"],
     features: [
@@ -386,7 +386,7 @@ export const projects: Project[] = [
     decisions: [
       {
         title: "Reprompt rather than settle",
-        body: "The first generation had the wrong pacing and buried the offer. Rewriting the prompt with sharper constraints — service, location, timing — produced something usable.",
+        body: "The first generation had the wrong pacing and buried the offer. Rewriting the prompt with sharper constraints (service, location, timing) produced something usable.",
       },
     ],
   },

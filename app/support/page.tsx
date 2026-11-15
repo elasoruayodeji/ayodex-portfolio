@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Support independent development at AYODEX Labs by voluntary bank transfer. Moniepoint · ELASORU SOLOMON AYODEJI · 8075690088.",
   alternates: { canonical: "/support" },
   openGraph: {
-    title: "Support — AYODEX Labs.",
+    title: "Support | AYODEX Labs",
     description:
       "Voluntary support for independent development work. Bank transfer details, clearly stated.",
     url: "/support",
@@ -29,7 +29,7 @@ export default function SupportPage() {
         <p className="eyebrow">Support</p>
         <div className="mt-4 grid gap-8 md:grid-cols-12">
           <h1 className="display md:col-span-7">
-            If the work has been <span className="italic">useful</span>, you can
+            If the work has been useful, you can
             put something back.
           </h1>
           <div className="md:col-span-4 md:col-start-9 md:pb-2">
@@ -46,7 +46,7 @@ export default function SupportPage() {
           <div className="md:col-span-6">
             <h2 className="heading">Bank transfer</h2>
             <p className="mt-2 max-w-[50ch] text-[0.9rem] leading-relaxed text-muted">
-              Nigeria only. Transfers are made from your own banking app — this
+              Nigeria only. Transfers are made from your own banking app. This
               page cannot see, confirm or verify them.
             </p>
 
@@ -64,7 +64,7 @@ export default function SupportPage() {
               <div className="flex items-center justify-between gap-6 border-b border-line py-4">
                 <dt className="eyebrow">Account number</dt>
                 <dd className="flex items-center gap-3">
-                  <span className="serif-note text-[1.2rem] tabular-nums tracking-[0.04em] text-forest-deep">
+                  <span className="note text-[1.2rem] tabular-nums tracking-[0.04em] text-forest-deep">
                     {site.bank.accountNumber}
                   </span>
                   <CopyButton value={site.bank.accountNumber} label="Copy number" />
@@ -92,9 +92,9 @@ export default function SupportPage() {
                 <li
                   key={tier}
                   className="border border-line bg-paper px-4 py-3 text-center"
-                  style={{ borderRadius: 2 }}
+                  style={{ borderRadius: "var(--r-card)" }}
                 >
-                  <span className="font-[family-name:var(--font-serif)] text-[1.4rem] leading-none">
+                  <span className="font-[family-name:var(--font-display)] text-[1.4rem] leading-none">
                     {tier}
                   </span>
                 </li>
@@ -106,7 +106,7 @@ export default function SupportPage() {
                 "Open your banking app and start a transfer to the account above.",
                 "Enter any amount you choose, and add “AYODEX support” as the narration if you like.",
                 "Approve the transfer as you would any other. It completes inside your bank, not here.",
-                "If you want a reply, send me the reference on WhatsApp — otherwise it is entirely anonymous.",
+                "If you want a reply, send me the reference on WhatsApp. Otherwise it is entirely anonymous.",
               ].map((step, i) => (
                 <li key={step} className="flex gap-3 text-[0.875rem] leading-relaxed text-ink-soft">
                   <span className="text-[0.7rem] tabular-nums text-muted-soft">

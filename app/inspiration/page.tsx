@@ -6,10 +6,10 @@ import { branches, totalEntries } from "@/lib/inspiration";
 export const metadata: Metadata = {
   title: "Inspiration",
   description:
-    "A working map of the people, craft, works and ideas that shape how AYODEX Labs builds — organised as branches rather than a list.",
+    "A working map of the people, craft, works and ideas that shape how AYODEX Labs builds, organised as branches rather than a list.",
   alternates: { canonical: "/inspiration" },
   openGraph: {
-    title: "Inspiration — AYODEX Labs.",
+    title: "Inspiration | AYODEX Labs",
     description:
       "A relationship map of influences: people, craft, works and ideas. Honest, editable, and free of invented names.",
     url: "/inspiration",
@@ -24,11 +24,11 @@ export default function InspirationPage() {
         <p className="eyebrow">Inspiration</p>
         <div className="mt-4 grid gap-8 md:grid-cols-12">
           <h1 className="display md:col-span-8">
-            A map of what shaped the <span className="italic">work.</span>
+            A map of what shaped the work.
           </h1>
           <div className="md:col-span-4 md:pb-2">
             <p className="lede">
-              Four branches — people, craft, works and ideas — each holding the
+              Four branches (people, craft, works and ideas), each holding the
               influences I keep returning to, and one honest sentence about why.
             </p>
           </div>
@@ -64,7 +64,7 @@ export default function InspirationPage() {
                 <p>
                   Work that is edited. A page with three things on it, each one
                   necessary, says more than a page with thirty. The same is true
-                  of code — the best version of a component is usually the
+                  of code: the best version of a component is usually the
                   smaller one.
                 </p>
                 <p>

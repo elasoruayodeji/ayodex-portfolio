@@ -91,3 +91,21 @@ system, responsive strategy, motion rules and accessibility decisions.
 ## Footer
 
 Powered by AYODEX Labs.
+
+## Publishing a static copy
+
+The share link is a plain static export — no server, no image optimiser.
+
+```bash
+NEXT_PUBLIC_SITE_URL="https://<share-host>" npm run build:static
+```
+
+Output lands in `out/` (already `.gitignore`d) with `trailingSlash: true`, so
+every route is a real `.../index.html` and deep links resolve on any static
+host. Images are served unoptimised at their already-compressed source sizes,
+and the OG image plus apple icon are copied to `public/og.png` and
+`public/apple-touch-icon.png` so they survive the export.
+
+What works on the static copy: all pages, navigation, the inspiration map,
+form validation and the WhatsApp handoff, the support copy button.
+`/sitemap.xml` and `/robots.txt` are generated from `NEXT_PUBLIC_SITE_URL`.

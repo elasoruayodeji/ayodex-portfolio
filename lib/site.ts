@@ -22,7 +22,7 @@ export const site = {
     accountName: "ELASORU SOLOMON AYODEJI",
     accountNumber: "8075690088",
   },
-  url: "https://ayodex-portfolio.vercel.app",
+  url: process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://ayodex-portfolio.vercel.app",
   footer: "Powered by AYODEX Labs.",
 } as const;
 

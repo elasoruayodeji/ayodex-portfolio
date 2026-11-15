@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     description:
       "Project enquiries for websites, storefronts and web applications. Send the brief through a structured form that opens in WhatsApp.",
     url: "/hire",
+    images: ["/og.png"],
   },
 };
 

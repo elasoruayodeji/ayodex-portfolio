@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     description:
       "Voluntary support for independent development work. Bank transfer details, clearly stated.",
     url: "/support",
+    images: ["/og.png"],
   },
 };
 

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     description:
       "Selected projects with verified detail: what each one does, what was built, and where it stands.",
     url: "/work",
+    images: ["/og.png"],
   },
 };
 

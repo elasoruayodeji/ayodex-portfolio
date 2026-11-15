@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     description:
       "Questions, corrections or a hello. Email, WhatsApp, or a message that opens in WhatsApp for you to send.",
     url: "/contact",
+    images: ["/og.png"],
   },
 };
 

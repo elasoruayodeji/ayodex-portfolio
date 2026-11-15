@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     description:
       "Independent developer and creative technologist. Design, front end, and the systems behind the screen.",
     url: "/about",
+    images: ["/og.png"],
   },
 };
 

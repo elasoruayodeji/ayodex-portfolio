@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     description:
       "A relationship map of influences: people, craft, works and ideas. Honest, editable, and free of invented names.",
     url: "/inspiration",
+    images: ["/og.png"],
   },
 };
 

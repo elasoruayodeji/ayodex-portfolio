@@ -1,351 +1,297 @@
 "use client";
 
+import Image from "next/image";
 import { useId, useState } from "react";
-import {
-  branches,
-  totalEntries,
-  type BranchId,
-  type InfluenceEntry,
-} from "@/lib/inspiration";
+import { branches, type InfluenceEntry } from "@/lib/inspiration";
 
-type Selected = { branch: BranchId; entryId: string | null };
+/**
+ * The inspiration tree.
+ *
+ * One SVG carries the drawing (roots, trunk, branches, twigs, leaves) and each
+ * inspiration portrait is an HTML button positioned over its branch tip with
+ * CSS percentages. That split keeps the artwork as vector paths that can be
+ * drawn with stroke-dashoffset, while the portraits stay real focusable
+ * buttons with real links inside them.
+ *
+ * Growth is driven by one CSS custom property per stroke, `--len`, holding
+ * each path's own `getTotalLength()`. A shared keyframe animates
+ * stroke-dashoffset from that length to zero, so every limb unfolds at its own
+ * scale and the timing reads as growth rather than a wipe.
+ *
+ * Geometry lives in a fixed 1000x620 viewBox. Desktop shows the whole frame;
+ * mobile swaps to a shorter frame and a per-branch rail layout (see the CSS),
+ * so nothing has to be shrunk into illegibility.
+ */
 
-function findEntry(selected: Selected | null) {
-  if (!selected) return null;
-  const branch = branches.find((b) => b.id === selected.branch);
-  if (!branch || !selected.entryId) return null;
-  return branch.entries.find((e) => e.id === selected.entryId) ?? null;
-}
+type Tip = {
+  /** Anchor in viewBox units where the portrait centre should sit. */
+  x: number;
+  y: number;
+  entry: InfluenceEntry;
+  branchId: string;
+  /** Which way the label reads on desktop. */
+  align: "left" | "right" | "centre";
+  delay: number;
+};
 
-function DetailPanel({
-  entry,
-  branchLabel,
-  emptyHint,
-}: {
-  entry: InfluenceEntry | null;
-  branchLabel: string;
-  emptyHint: string;
-}) {
+/* Trunk centreline, shared by the trunk path and its branches. */
+const TRUNK_X = 500;
+const TRUNK_BASE = 470;
+
+/**
+ * Each branch is drawn as a quadratic curve leaving the trunk and ending at a
+ * tip. `tip` is where the portrait sits, so the curve visibly arrives at it.
+ */
+const limbs = [
+  {
+    id: "left",
+    d: `M ${TRUNK_X} 392 C 372 372, 268 340, 212 268`,
+    tip: { x: 212, y: 268 },
+    twigs: [
+      "M 300 356 C 272 316, 250 300, 214 296",
+      "M 356 372 C 344 330, 322 306, 296 288",
+    ],
+  },
+  {
+    id: "right",
+    d: `M ${TRUNK_X} 352 C 628 336, 730 306, 786 236`,
+    tip: { x: 786, y: 236 },
+    twigs: [
+      "M 700 306 C 722 268, 740 250, 784 254",
+      "M 640 328 C 656 292, 678 274, 706 262",
+    ],
+  },
+  {
+    id: "centre",
+    d: `M ${TRUNK_X} 300 C 500 236, 502 190, 500 128`,
+    tip: { x: 500, y: 128 },
+    twigs: [
+      "M 500 216 C 462 196, 442 182, 430 158",
+      "M 500 176 C 536 158, 556 142, 568 118",
+    ],
+  },
+] as const;
+
+/** Small leaves scattered along the limbs: x, y, rotation, size. */
+const leaves = [
+  [258, 262, -28, 1], [292, 300, 12, 0.85], [330, 322, -8, 0.7],
+  [742, 232, 22, 1], [706, 268, -14, 0.85], [664, 296, 8, 0.7],
+  [466, 128, -30, 0.9], [534, 132, 26, 0.9], [500, 96, 4, 0.7],
+  [430, 152, -40, 0.6], [572, 116, 34, 0.6],
+];
+
+const roots = [
+  "M 500 470 C 470 496, 424 508, 372 522",
+  "M 500 470 C 530 496, 576 508, 628 522",
+  "M 500 470 C 500 500, 498 520, 500 546",
+  "M 424 509 C 392 518, 360 536, 336 556",
+  "M 576 509 C 608 518, 640 536, 664 556",
+];
+
+export function InspirationTree({ me }: { me?: string | null }) {
+  const uid = useId().replace(/[:]/g, "");
+  const [open, setOpen] = useState<string | null>(null);
+
+  const tips: Tip[] = limbs.map((limb, i) => {
+    const branch = branches.find((b) => b.side === limb.id)!;
+    return {
+      x: limb.tip.x,
+      y: limb.tip.y,
+      entry: branch.entries[0],
+      branchId: branch.id,
+      align: limb.id === "left" ? "left" : limb.id === "right" ? "right" : "centre",
+      delay: 1.5 + i * 0.35,
+    };
+  });
+
   return (
-    <div className="border-t border-line pt-5">
-      <p className="eyebrow">{entry ? "Selected influence" : branchLabel}</p>
-      {entry ? (
-        <>
-          <h3 className="title mt-2 text-[1.25rem]">{entry.name}</h3>
-          <p className="mt-0.5 text-[0.8rem] uppercase tracking-[0.1em] text-muted-soft">
-            {entry.role}
-          </p>
-          <p className="mt-4 max-w-[44ch] text-[0.925rem] leading-relaxed text-ink-soft">
-            {entry.note}
-          </p>
-          {entry.link ? (
-            <a
-              href={entry.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-underline mt-4 inline-block text-[0.85rem] font-medium"
-            >
-              {entry.link.replace(/^https?:\/\//, "")}
-              <span aria-hidden="true" className="ml-1">
-                ↗
-              </span>
-            </a>
-          ) : null}
-        </>
-      ) : (
-        <p className="mt-3 max-w-[42ch] text-[0.9rem] leading-relaxed text-muted">
-          {emptyHint}
-        </p>
-      )}
-    </div>
-  );
-}
+    <div className={`tree tree--${uid}`}>
+      {/* ---------- the drawing ---------- */}
+      <div className="tree-canvas" aria-hidden="true">
+        <svg
+          viewBox="0 0 1000 620"
+          className="tree-svg"
+          preserveAspectRatio="xMidYMid meet"
+          role="presentation"
+        >
+          <defs>
+            <linearGradient id={`${uid}-trunk`} x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0" stopColor="var(--brand)" stopOpacity="0.78" />
+              <stop offset="1" stopColor="var(--brand)" stopOpacity="0.95" />
+            </linearGradient>
+            <radialGradient id={`${uid}-ground`} cx="50%" cy="50%" r="50%">
+              <stop offset="0" stopColor="var(--brand)" stopOpacity="0.1" />
+              <stop offset="1" stopColor="var(--brand)" stopOpacity="0" />
+            </radialGradient>
+          </defs>
 
-export function InspirationTree() {
-  const uid = useId();
-  const [selected, setSelected] = useState<Selected | null>(null);
-  const [openBranch, setOpenBranch] = useState<BranchId | null>(null);
-
-  const activeEntry = findEntry(selected);
-  const activeBranch =
-    branches.find((b) => b.id === selected?.branch) ?? branches[0];
-
-  const emptyHint =
-    totalEntries === 0
-      ? "This branch is empty on purpose. Real influences will be added here with a name, what they do, and one honest sentence about why they matter."
-      : "Select an entry on the left to read why it is here.";
-
-  return (
-    <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-      {/* ---------- tree (desktop) ---------- */}
-      <div className="hidden lg:col-span-7 lg:block">
-        <ol className="relative">
-          {/* root */}
-          <li className="relative pl-0">
-            <div className="flex items-center gap-4">
-              <span aria-hidden="true" className="brand-mark h-9 w-9 text-[0.72rem]">
-                AY
-              </span>
-              <div>
-                <p className="brand-word text-[1.05rem]">AYODEX Labs</p>
-                <p className="text-[0.75rem] text-muted">
-                  Root: the practice these influences shaped
-                </p>
-              </div>
-            </div>
-            <span
-              aria-hidden="true"
-              className="absolute left-[1.08rem] top-11 h-8 w-px bg-line-strong"
-            />
-          </li>
-
-          {branches.map((branch, branchIndex) => {
-            const isLast = branchIndex === branches.length - 1;
-            const isOpen = openBranch === branch.id;
-            return (
-              <li key={branch.id} className="relative pl-12">
-                {/* trunk continuation */}
-                {!isLast ? (
-                  <span
-                    aria-hidden="true"
-                    className="absolute left-[1.08rem] top-0 bottom-0 w-px bg-line-strong"
-                  />
-                ) : null}
-                {/* branch connector */}
-                <span
-                  aria-hidden="true"
-                  className="absolute left-[1.08rem] top-5 h-px w-7 bg-line-strong"
-                />
-
-                <button
-                  type="button"
-                  onClick={() => setOpenBranch(isOpen ? null : branch.id)}
-                  aria-expanded={isOpen}
-                  aria-controls={`${uid}-${branch.id}`}
-                  className="group flex w-full items-center justify-between gap-4 border-b border-line py-3.5 text-left"
-                >
-                  <span className="flex items-baseline gap-3">
-                    <span className="font-[family-name:var(--font-display)] text-[1.25rem] leading-none">
-                      {branch.label}
-                    </span>
-                    <span className="text-[0.7rem] tabular-nums text-muted-soft">
-                      {branch.entries.length}
-                    </span>
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="text-[0.8rem] text-muted transition-transform duration-300"
-                    style={{ transform: isOpen ? "rotate(45deg)" : "none" }}
-                  >
-                    +
-                  </span>
-                </button>
-
-                <div id={`${uid}-${branch.id}`} hidden={!isOpen}>
-                  <p className="mt-3 max-w-[46ch] text-[0.85rem] leading-relaxed text-muted">
-                    {branch.description}
-                  </p>
-
-                  {branch.entries.length > 0 ? (
-                    <ul className="mt-3">
-                      {branch.entries.map((entry) => {
-                        const active =
-                          selected?.branch === branch.id &&
-                          selected.entryId === entry.id;
-                        return (
-                          <li key={entry.id} className="relative pl-7">
-                            <span
-                              aria-hidden="true"
-                              className="absolute left-[0.42rem] top-0 bottom-0 w-px bg-line"
-                            />
-                            <span
-                              aria-hidden="true"
-                              className="absolute left-[0.28rem] top-[0.95rem] h-[5px] w-[5px] rounded-full"
-                              style={{
-                                background: active
-                                  ? "var(--forest)"
-                                  : "var(--line-strong)",
-                              }}
-                            />
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setSelected({ branch: branch.id, entryId: entry.id })
-                              }
-                              aria-pressed={active}
-                              className="w-full py-2 text-left"
-                            >
-                              <span
-                                className="text-[0.9rem] font-medium"
-                                style={{ color: active ? "var(--forest)" : undefined }}
-                              >
-                                {entry.name}
-                              </span>
-                              <span className="ml-2 text-[0.75rem] text-muted-soft">
-                                {entry.role}
-                              </span>
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <p className="mt-3 border-l border-dashed border-line-strong pl-4 text-[0.8rem] leading-relaxed text-muted-soft">
-                      No entries yet. This branch is waiting for real content,
-                      not placeholders.
-                    </p>
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-
-      {/* ---------- mobile rail ---------- */}
-      <div className="lg:hidden">
-        <ol className="relative border-l border-line pl-6">
-          <li className="relative -ml-6 mb-6 pl-6">
-            <span
-              aria-hidden="true"
-              className="absolute left-0 top-2 h-2 w-2 rounded-full bg-forest"
-              style={{ transform: "translateX(-4.5px)" }}
-            />
-            <p className="brand-word text-[1rem]">AYODEX Labs</p>
-            <p className="text-[0.75rem] text-muted">
-              Root: influences below shaped this practice
-            </p>
-          </li>
-
-          {branches.map((branch) => {
-            const isOpen = openBranch === branch.id;
-            return (
-              <li key={branch.id} className="relative pb-2 pl-1">
-                <span
-                  aria-hidden="true"
-                  className="absolute -left-6 top-4 h-px w-4 bg-line-strong"
-                />
-                <button
-                  type="button"
-                  onClick={() => setOpenBranch(isOpen ? null : branch.id)}
-                  aria-expanded={isOpen}
-                  aria-controls={`${uid}-m-${branch.id}`}
-                  className="flex w-full items-center justify-between gap-4 border-b border-line py-3 text-left"
-                >
-                  <span className="flex items-baseline gap-2">
-                    <span className="font-[family-name:var(--font-display)] text-[1.15rem] leading-none">
-                      {branch.label}
-                    </span>
-                    <span className="text-[0.7rem] text-muted-soft">
-                      {branch.entries.length}
-                    </span>
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="text-[0.8rem] text-muted transition-transform duration-300"
-                    style={{ transform: isOpen ? "rotate(45deg)" : "none" }}
-                  >
-                    +
-                  </span>
-                </button>
-
-                <div id={`${uid}-m-${branch.id}`} hidden={!isOpen}>
-                  <p className="mt-3 text-[0.85rem] leading-relaxed text-muted">
-                    {branch.description}
-                  </p>
-                  {branch.entries.length > 0 ? (
-                    <ul className="mt-2">
-                      {branch.entries.map((entry) => {
-                        const active =
-                          selected?.branch === branch.id &&
-                          selected.entryId === entry.id;
-                        return (
-                          <li key={entry.id}>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setSelected({ branch: branch.id, entryId: entry.id })
-                              }
-                              aria-pressed={active}
-                              className="flex w-full items-center justify-between gap-3 border-b border-line-soft py-2.5 text-left"
-                            >
-                              <span>
-                                <span className="block text-[0.9rem] font-medium">
-                                  {entry.name}
-                                </span>
-                                <span className="block text-[0.75rem] text-muted-soft">
-                                  {entry.role}
-                                </span>
-                              </span>
-                              <span aria-hidden="true" className="text-[0.8rem]">
-                                {active ? "−" : "+"}
-                              </span>
-                            </button>
-                            {active ? (
-                              <div className="border-b border-line-soft py-3">
-                                <p className="text-[0.875rem] leading-relaxed text-ink-soft">
-                                  {entry.note}
-                                </p>
-                                {entry.link ? (
-                                  <a
-                                    href={entry.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="link-underline mt-2 inline-block text-[0.8rem]"
-                                  >
-                                    {entry.link.replace(/^https?:\/\//, "")}
-                                    <span aria-hidden="true" className="ml-1">
-                                      ↗
-                                    </span>
-                                  </a>
-                                ) : null}
-                              </div>
-                            ) : null}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <p className="mt-2 border-l border-dashed border-line-strong pl-3 text-[0.8rem] leading-relaxed text-muted-soft">
-                      No entries yet. Waiting for real content.
-                    </p>
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-
-      {/* ---------- detail (desktop) ---------- */}
-      <aside className="hidden lg:col-span-4 lg:col-start-9 lg:block">
-        <div className="sticky top-28">
-          <div className="border border-line p-6">
-            <DetailPanel
-              entry={activeEntry}
-              branchLabel={activeBranch.label}
-              emptyHint={emptyHint}
-            />
-            <div className="mt-6 border-t border-line pt-4">
-              <p className="text-[0.75rem] leading-relaxed text-muted-soft">
-                Selections are local to this page. Nothing is tracked, and no
-                relationship is claimed beyond the note I wrote.
-              </p>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* ---------- mobile detail fallback ---------- */}
-      {activeEntry ? (
-        <div className="lg:hidden">
-          <DetailPanel
-            entry={activeEntry}
-            branchLabel={activeBranch.label}
-            emptyHint={emptyHint}
+          {/* soft ground shadow under the root system */}
+          <ellipse
+            cx="500"
+            cy="530"
+            rx="250"
+            ry="54"
+            fill={`url(#${uid}-ground)`}
+            className="tree-ground"
           />
+
+          {/* roots, drawn first */}
+          <g className="tree-limbs tree-limbs--roots">
+            {roots.map((d, i) => (
+              <path
+                key={d}
+                d={d}
+                pathLength={1}
+                className="tree-stroke tree-stroke--root"
+                style={{ animationDelay: `${0.05 + i * 0.09}s` }}
+              />
+            ))}
+          </g>
+
+          {/* trunk: a tapered wedge rather than a line, so it has weight */}
+          <path
+            d={`M ${TRUNK_X - 13} ${TRUNK_BASE}
+                C ${TRUNK_X - 18} 404, ${TRUNK_X - 15} 360, ${TRUNK_X - 9} 300
+                C ${TRUNK_X - 7} 282, ${TRUNK_X - 5} 262, ${TRUNK_X - 4} 244
+                L ${TRUNK_X + 4} 244
+                C ${TRUNK_X + 5} 262, ${TRUNK_X + 7} 282, ${TRUNK_X + 9} 300
+                C ${TRUNK_X + 15} 360, ${TRUNK_X + 18} 404, ${TRUNK_X + 13} ${TRUNK_BASE} Z`}
+            fill={`url(#${uid}-trunk)`}
+            className="tree-trunk"
+            style={{ animationDelay: "0.55s" }}
+          />
+
+          {/* branches */}
+          <g className="tree-limbs">
+            {limbs.map((limb, i) => (
+              <g key={limb.id}>
+                <path
+                  d={limb.d}
+                  pathLength={1}
+                  className="tree-stroke tree-stroke--branch"
+                  style={{ animationDelay: `${1.05 + i * 0.22}s` }}
+                />
+                {limb.twigs.map((d, j) => (
+                  <path
+                    key={d}
+                    d={d}
+                    pathLength={1}
+                    className="tree-stroke tree-stroke--twig"
+                    style={{ animationDelay: `${1.55 + i * 0.22 + j * 0.1}s` }}
+                  />
+                ))}
+              </g>
+            ))}
+          </g>
+
+          {/* leaves */}
+          <g className="tree-leaves">
+            {leaves.map(([x, y, rot, scale], i) => (
+              <path
+                key={`${x}-${y}`}
+                d="M 0 0 C 8 -10, 20 -9, 24 0 C 20 9, 8 10, 0 0 Z"
+                transform={`translate(${x} ${y}) rotate(${rot}) scale(${scale})`}
+                className="tree-leaf"
+                style={{ animationDelay: `${1.85 + i * 0.055}s` }}
+              />
+            ))}
+          </g>
+        </svg>
+      </div>
+
+      {/* ---------- root: me ---------- */}
+      <div className="tree-root">
+        <div className="tree-root-badge" aria-hidden="true">
+          {me ? (
+            <Image
+              src={me}
+              alt=""
+              fill
+              sizes="48px"
+              className="tree-root-photo"
+            />
+          ) : (
+            "ESG"
+          )}
         </div>
-      ) : null}
+        <p className="tree-root-label">Where it begins</p>
+        <p className="tree-root-words">Curiosity · Learning · Building</p>
+      </div>
+
+      {/* ---------- the three inspirations ---------- */}
+      <ul className="tree-tips">
+        {tips.map((tip) => {
+          const isOpen = open === tip.entry.id;
+          const panelId = `${uid}-panel-${tip.entry.id}`;
+          return (
+            <li
+              key={tip.entry.id}
+              className={`tree-tip tree-tip--${tip.align}`}
+              style={
+                {
+                  "--x": `${(tip.x / 1000) * 100}%`,
+                  "--y": `${(tip.y / 620) * 100}%`,
+                  "--delay": `${tip.delay}s`,
+                } as React.CSSProperties
+              }
+            >
+              <button
+                type="button"
+                className="tree-portrait"
+                data-filled={tip.entry.image ? "" : undefined}
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => setOpen(isOpen ? null : tip.entry.id)}
+              >
+                {tip.entry.image ? (
+                  <Image
+                    src={tip.entry.image}
+                    alt={tip.entry.imageAlt ?? tip.entry.name}
+                    fill
+                    sizes="(min-width: 900px) 118px, 84px"
+                    className="tree-portrait-img"
+                  />
+                ) : (
+                  <span className="tree-portrait-fallback">
+                    {tip.entry.name.charAt(0)}
+                  </span>
+                )}
+                <span className="sr-only">
+                  {isOpen ? "Hide details for" : "Show details for"}{" "}
+                  {tip.entry.name}
+                </span>
+              </button>
+
+              <div className="tree-tip-text">
+                <p className="tree-tip-name">{tip.entry.name}</p>
+                <p className="tree-tip-role">{tip.entry.role}</p>
+              </div>
+
+              <div
+                id={panelId}
+                className="tree-tip-panel"
+                hidden={!isOpen}
+              >
+                <p className="tree-tip-note">{tip.entry.note}</p>
+                {tip.entry.link ? (
+                  <a
+                    href={tip.entry.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="tree-tip-link"
+                  >
+                    {tip.entry.linkLabel ?? tip.entry.link}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
+                {tip.entry.imageCredit ? (
+                  <p className="tree-tip-credit">{tip.entry.imageCredit}</p>
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

@@ -669,105 +669,85 @@ a:hover > .frame,
 /* ---------- technology strip ---------- */
 
 /*
- * Below 768px the marquee becomes a static wrapped rail: the full list is
- * visible, inside the viewport, with no horizontal scroll and no animation
- * competing with reading. The moving version is desktop-only, where there is
- * room for it.
+ * A compact, continuously scrolling band of brand marks. Height is driven by
+ * the logo size rather than padding, so it stays slim on a phone.
+ *
+ * Why the old version looked broken: the track was shifted by -50% of its own
+ * width, but the two groups were allowed to wrap and did not have identical
+ * widths at every breakpoint, so each loop jumped. Here the track is
+ * `max-content`, both halves are `flex-shrink: 0`, and nothing wraps, which
+ * makes the halfway point exactly the start position.
  */
+.tech-strip {
+  background: var(--soft);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+  padding-block: 0.7rem;
+}
 
-/* Mobile: wrapped static rail, fully visible, never wider than the screen. */
 .marquee {
-  overflow: hidden;
   position: relative;
   max-width: 100%;
+  overflow: hidden;
+  /* soft edges so marks enter and leave instead of being chopped off */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 3.5rem,
+    #000 calc(100% - 3.5rem),
+    transparent
+  );
 }
 
 .marquee-track {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem 0;
-  width: 100%;
+  width: max-content;
+  animation: marquee-scroll 42s linear infinite;
 }
 
-.tech-item {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  padding: 0.2rem 0.5rem;
-  font-family: var(--font-display);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  color: var(--ink-soft);
-}
-
-.tech-dot {
-  width: 3px;
-  height: 3px;
-  margin-left: 0.5rem;
-  border-radius: 50%;
-  background: var(--line-strong);
-  flex-shrink: 0;
-}
-
-@media (min-width: 768px) {
-  .tech-item {
-    padding-inline: 1.25rem;
-    font-size: 0.85rem;
-  }
-
-  .tech-dot {
-    margin-left: 1.25rem;
-  }
+/* Pause on hover and on keyboard focus, without stopping the loop abruptly. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
 }
 
 .marquee-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-shrink: 0;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* the duplicated half of the loop is only needed by the moving version */
-.marquee-group[aria-hidden="true"] {
-  display: none;
+.tech-item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.45rem;
+  padding-inline: 1.05rem;
+  white-space: nowrap;
+  color: var(--ink-2);
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
 }
 
-@media (min-width: 768px) {
-  .marquee {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      #000 6rem,
-      #000 calc(100% - 6rem),
-      transparent
-    );
-  }
+/* Marks inherit the ink colour; a burgundy tint keeps the row from going flat. */
+.tech-logo {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+  fill: currentColor;
+  color: var(--brand);
+  opacity: 0.85;
+}
 
-  .marquee-track {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 0;
-    width: max-content;
-    animation: marquee-scroll 58s linear infinite;
-  }
-
-  .marquee-group {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .marquee-group[aria-hidden="true"] {
-    display: flex;
-  }
-
-  .marquee:hover .marquee-track {
-    animation-play-state: paused;
-  }
+.tech-name {
+  line-height: 1;
 }
 
 @keyframes marquee-scroll {
@@ -776,6 +756,53 @@ a:hover > .frame,
   }
   to {
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .tech-strip {
+    padding-block: 0.85rem;
+  }
+
+  .tech-item {
+    gap: 0.55rem;
+    padding-inline: 1.4rem;
+    font-size: 0.85rem;
+  }
+
+  .tech-logo {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+/*
+ * Reduced motion: no travel at all. The row becomes a single, wrapped,
+ * static list. The duplicate half is removed so nothing appears twice, and the
+ * whole set stays visible without horizontal scrolling.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    mask-image: none;
+    overflow: visible;
+  }
+
+  .marquee-track {
+    animation: none;
+    transform: none;
+    width: 100%;
+  }
+
+  .marquee-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-shrink: 1;
+    width: 100%;
+    row-gap: 0.5rem;
+  }
+
+  .marquee-group[aria-hidden="true"] {
+    display: none;
   }
 }
 
@@ -1370,22 +1397,547 @@ a:hover > .brand-mark {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .marquee-track {
-    animation: none !important;
-    transform: none !important;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center;
-    row-gap: 0.75rem;
-  }
-  .marquee {
-    mask-image: none;
-  }
-  .marquee-group[aria-hidden="true"] {
-    display: none;
-  }
   .reveal {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ============================================================
+   Inspiration tree
+   One illustration, two compositions: a wide tree on desktop and
+   a vertical spine on phones. Both grow on load via stroke-dash.
+   ============================================================ */
+
+.tree {
+  position: relative;
+  max-width: 62rem;
+  margin-inline: auto;
+}
+
+/* ---------- the drawing ---------- */
+
+.tree-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tree-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/*
+ * Every stroke is normalised with pathLength="1", so dasharray 1 1 and a
+ * dashoffset of 1 hides it completely. Animating the offset to 0 draws it.
+ * `backwards` holds the hidden state during each stroke's delay.
+ */
+.tree-stroke {
+  fill: none;
+  stroke: var(--brand);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation: tree-draw 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.tree-stroke--root {
+  stroke-width: 5;
+  stroke: var(--brand-ink);
+  opacity: 0.5;
+}
+
+.tree-stroke--branch {
+  stroke-width: 4.5;
+  opacity: 0.9;
+}
+
+.tree-stroke--twig {
+  stroke-width: 2.4;
+  opacity: 0.55;
+}
+
+@keyframes tree-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Trunk fades up from the root line, as if thickening from the base. */
+.tree-trunk {
+  transform-origin: 500px 470px;
+  transform: scaleY(0);
+  animation: tree-trunk-rise 700ms cubic-bezier(0.3, 0.7, 0.35, 1) both;
+}
+
+@keyframes tree-trunk-rise {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.tree-leaf {
+  fill: var(--brand);
+  fill-opacity: 0.16;
+  stroke: var(--brand);
+  stroke-opacity: 0.35;
+  stroke-width: 1.2;
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: tree-leaf-pop 620ms cubic-bezier(0.2, 0.8, 0.3, 1.1) both;
+}
+
+@keyframes tree-leaf-pop {
+  from {
+    opacity: 0;
+    scale: 0.2;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.tree-ground {
+  opacity: 0;
+  animation: tree-fade 800ms ease-out 0.1s both;
+}
+
+@keyframes tree-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- desktop composition ---------- */
+
+.tree {
+  min-height: 34rem;
+  padding-block: 0.5rem 1rem;
+}
+
+.tree-canvas {
+  position: relative;
+  aspect-ratio: 1000 / 620;
+  max-height: 40rem;
+}
+
+.tree-canvas .tree-svg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+.tree-root {
+  position: absolute;
+  left: 50%;
+  bottom: 0.4rem;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  text-align: center;
+  animation: tree-fade 700ms ease-out 1.05s both;
+}
+
+.tree-root-badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 0 6px var(--white), 0 2px 10px -4px rgba(105, 2, 2, 0.5);
+}
+
+.tree-root-photo {
+  object-fit: cover;
+  object-position: 50% 28%;
+}
+
+.tree-root-label {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--brand-ink);
+}
+
+.tree-root-words {
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+/* The three tips sit exactly on their branch endpoints. */
+.tree-tips {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 2;
+}
+
+.tree-tip {
+  position: absolute;
+  left: var(--x);
+  /*
+   * The portrait, not the card's top edge, must land on the branch tip.
+   * --shift is half the portrait plus the text above it; the centre branch
+   * reverses the order, so it needs its own value.
+   */
+  top: calc(var(--y) - var(--shift, 3.7rem));
+  width: 15rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: tree-tip-in 700ms cubic-bezier(0.2, 0.8, 0.3, 1) var(--delay) both;
+}
+
+@keyframes tree-tip-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/*
+ * Every portrait is centred on its branch tip, so the curve visibly ends at
+ * the face. Labels sit directly beneath, away from the trunk, which keeps the
+ * three names from colliding even when the descriptions open.
+ */
+.tree-tip--centre {
+  /* the centre branch ends high on the trunk; put the label above the portrait
+     so the name never sits on the branch lines */
+  flex-direction: column-reverse;
+  --shift: 6.6rem;
+}
+
+.tree-portrait {
+  position: relative;
+  display: block;
+  width: 7.4rem;
+  height: 7.4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white);
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px var(--hair-strong),
+    0 0 0 6px var(--white),
+    0 10px 26px -14px rgba(29, 29, 31, 0.35);
+  transition: box-shadow 240ms var(--ease), transform 240ms var(--ease);
+}
+
+.tree-portrait:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px var(--brand-line),
+    0 0 0 6px var(--white),
+    0 14px 30px -14px rgba(105, 2, 2, 0.45);
+}
+
+.tree-portrait:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 8px;
+}
+
+.tree-portrait[aria-expanded="true"] {
+  box-shadow:
+    0 0 0 2px var(--brand),
+    0 0 0 7px var(--white),
+    0 14px 30px -14px rgba(105, 2, 2, 0.45);
+}
+
+.tree-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border-radius: 50%;
+}
+
+.tree-portrait-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.tree-tip-name {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.tree-tip-role {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ink-3);
+}
+
+/* Detail panel: opens under the label, never over the artwork. */
+.tree-tip-panel {
+  margin-top: 0.15rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-card);
+  box-shadow: 0 10px 30px -20px rgba(29, 29, 31, 0.4);
+  text-align: left;
+}
+
+.tree-tip-note {
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.tree-tip-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brand-line);
+  padding-bottom: 1px;
+}
+
+.tree-tip-link:hover {
+  color: var(--brand-hover);
+  border-bottom-color: var(--brand-hover);
+}
+
+.tree-tip-credit {
+  margin-top: 0.55rem;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+
+/* ---------- mobile: a vertical spine, not a shrunken tree ---------- */
+
+@media (max-width: 899px) {
+  .tree {
+    min-height: 0;
+    padding: 0;
+  }
+
+  /* the wide drawing would be unreadable here, so it is replaced */
+  .tree-canvas {
+    display: none;
+  }
+
+  .tree-root {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.6rem;
+    text-align: left;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--hair);
+    margin-bottom: 0.2rem;
+  }
+
+  .tree-root-badge {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .tree-root-photo {
+  object-fit: cover;
+  object-position: 50% 28%;
+}
+
+.tree-root-label {
+    margin-top: 0;
+  }
+
+  /* Cards stack in one column against a drawn spine. */
+  .tree-tips {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-left: 2.6rem;
+  }
+
+  .tree-tips::before {
+    content: "";
+    position: absolute;
+    left: 0.72rem;
+    top: 0;
+    bottom: 1.2rem;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to bottom,
+      var(--brand-line),
+      var(--brand) 18%,
+      var(--brand) 88%,
+      transparent
+    );
+    transform-origin: top;
+    animation: tree-spine 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  @keyframes tree-spine {
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  .tree-tip,
+  .tree-tip--left,
+  .tree-tip--right,
+  .tree-tip--centre {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+    margin: 0;
+    padding: 1.05rem 0 1.05rem 0.2rem;
+    transform: none;
+    display: grid;
+    grid-template-columns: 4.4rem minmax(0, 1fr);
+    grid-template-areas:
+      "portrait text"
+      "panel panel";
+    align-items: center;
+    gap: 0.35rem 0.85rem;
+    align-items: start;
+    text-align: left;
+    border-bottom: 1px solid var(--hair-soft);
+    opacity: 0;
+    animation: tree-tip-in-m 600ms cubic-bezier(0.2, 0.8, 0.3, 1)
+      var(--delay) both;
+  }
+
+  /* the connector from the spine to each portrait */
+  .tree-tip::before {
+    content: "";
+    position: absolute;
+    left: -1.88rem;
+    top: 2.6rem;
+    width: 1.88rem;
+    height: 2px;
+    background: var(--brand-line);
+  }
+
+  @keyframes tree-tip-in-m {
+    from {
+      opacity: 0;
+      translate: 0 8px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  .tree-portrait {
+    grid-area: portrait;
+    width: 4.4rem;
+    height: 4.4rem;
+    box-shadow:
+      0 0 0 1px var(--hair-strong),
+      0 0 0 4px var(--white),
+      0 8px 18px -12px rgba(29, 29, 31, 0.35);
+  }
+
+  .tree-tip-text {
+    grid-area: text;
+    padding-top: 0.35rem;
+  }
+
+  .tree-tip-name {
+    font-size: 0.98rem;
+  }
+
+  .tree-tip-panel {
+    grid-area: panel;
+    margin-top: 0.7rem;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1100px) {
+  .tree-tip {
+    width: 12.5rem;
+  }
+
+  .tree-portrait {
+    width: 6.2rem;
+    height: 6.2rem;
+  }
+}
+
+/* ---------- reduced motion: show the finished tree ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-stroke,
+  .tree-trunk,
+  .tree-leaf,
+  .tree-ground,
+  .tree-root,
+  .tree-tip,
+  .tree-tips::before {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+    scale: none !important;
+  }
+
+  .tree-tip {
+    transform: translateX(-50%) !important;
+  }
+
+  .tree-tips::before {
+    transform: scaleY(1) !important;
+  }
+}
+
+@media (max-width: 899px) and (prefers-reduced-motion: reduce) {
+  .tree-tip {
+    transform: none !important;
   }
 }

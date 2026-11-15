@@ -67,10 +67,40 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   Verify with `document.documentElement.scrollWidth === clientWidth` per route.
 - Mobile hero order is CSS-only (`.hero-figure { order: -1 }`), so there is one
   copy of the hero markup. Portrait sits directly under the nav.
-- Below 768px the technology strip is a static wrapped rail; the marquee
-  animation is desktop-only.
+- The technology strip scrolls continuously at every width. Its loop is exact
+  because the track is `max-content` with two identical `flex-shrink: 0`
+  groups and a -50% translate; never let a half wrap or shrink. Only
+  `prefers-reduced-motion` turns it into a static wrapped list.
 - Tested widths: 320, 390, 430, 768, 1440. All 15 routes return 200 (404 route
   returns 404) with zero overflow.
+
+## Inspiration tree
+
+- `components/InspirationTree.tsx` is a client component: it may **not** import
+  modules that touch `node:fs`. Anything filesystem-based (the profile photo)
+  is resolved in `app/inspiration/page.tsx` and passed down as a prop. This
+  breaks the Turbopack build with "chunking context does not support external
+  modules (request: node:fs)" otherwise.
+- Drawing is one SVG in a 1000x620 viewBox; portraits are HTML buttons
+  absolutely positioned over the branch tips. `.tree-tip` uses
+  `top: calc(var(--y) - var(--shift))` and `translateX(-50%)` so the portrait
+  centre, not the card top, lands on the tip. The centre branch reverses the
+  column and sets `--shift: 6.6rem`. Verified dx 0 / dy <= 2.4px.
+- Growth uses `pathLength="1"` with `stroke-dasharray: 1 1` and
+  `stroke-dashoffset: 1 -> 0`. Use `animation-fill-mode: both`; `backwards`
+  overrides the shorthand's `forwards` and the strokes vanish again.
+- Below 900px the wide drawing is hidden and replaced by a CSS spine. Keep the
+  desktop canvas visible only above that breakpoint.
+
+## Profile photo
+
+- Drop the real photo at `public/images/profile.jpg` (or .png/.webp, any
+  capitalisation, or a single image inside `public/images/profile/`).
+  `lib/profilePhoto.ts` detects it at build time and the hero, the About page
+  and the inspiration tree root all switch from the designed placeholder
+  automatically. No code change, no props to thread.
+- The placeholder is a deliberate design, not a missing asset. Never invent or
+  generate a likeness of the owner.
 
 ## GitHub push status (audited)
 

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { site } from "@/lib/site";
+import { profilePhotoSrc } from "@/lib/profilePhoto";
 
 /**
  * Circular portrait.
@@ -9,11 +10,12 @@ import { site } from "@/lib/site";
  * composition is driven by `--size`, so the circle stays circular at every
  * breakpoint and any size is one variable.
  *
- * To use a real photo: drop it at `public/images/profile.jpg` and pass
- * `hasPortrait` (or set the default to true). Nothing else changes.
+ * To use the real photo: drop it at `public/images/profile.jpg` (or .png /
+ * .webp). `lib/profilePhoto.ts` detects it at build time and both this
+ * component and the inspiration tree switch over with no further edits.
  */
 export function Portrait({
-  hasPortrait = false,
+  hasPortrait,
   className = "",
   priority = false,
   sizes = "(min-width: 1024px) 26rem, (min-width: 640px) 60vw, 78vw",
@@ -23,6 +25,8 @@ export function Portrait({
   priority?: boolean;
   sizes?: string;
 }) {
+  const src = profilePhotoSrc();
+  const showPhoto = hasPortrait ?? Boolean(src);
   const initials = "EA";
 
   return (
@@ -31,10 +35,10 @@ export function Portrait({
       <span aria-hidden="true" className="portrait-field" />
 
       {/* the disc itself */}
-      <div className="portrait-disc" data-empty={!hasPortrait || undefined}>
-        {hasPortrait ? (
+      <div className="portrait-disc" data-empty={!showPhoto || undefined}>
+        {showPhoto && src ? (
           <Image
-            src="/images/profile.jpg"
+            src={src}
             alt={`${site.name}, portrait`}
             width={1000}
             height={1000}
@@ -61,7 +65,7 @@ export function Portrait({
       {/* offset accent dot */}
       <span aria-hidden="true" className="portrait-dot" />
 
-      {!hasPortrait ? (
+      {!showPhoto ? (
         <span className="sr-only">
           Portrait photograph of {site.name} to be added. The circular frame is
           ready for it.

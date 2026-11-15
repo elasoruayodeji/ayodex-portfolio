@@ -1,59 +1,57 @@
 import type { Metadata } from "next";
 import { InspirationTree } from "@/components/InspirationTree";
 import { Reveal } from "@/components/Reveal";
-import { branches, totalEntries } from "@/lib/inspiration";
+import { profilePhotoSrc } from "@/lib/profilePhoto";
 
 export const metadata: Metadata = {
   title: "Inspiration",
   description:
-    "A working map of the people, craft, works and ideas that shape how AYODEX Labs builds, organised as branches rather than a list.",
+    "The people whose work shapes how AYODEX Labs builds: craft, ambition, and engineering excellence. Growth rooted in curiosity, learning and building.",
   alternates: { canonical: "/inspiration" },
   openGraph: {
     title: "Inspiration | AYODEX Labs",
     description:
-      "A relationship map of influences: people, craft, works and ideas. Honest, editable, and free of invented names.",
+      "A tree of influences: the people and ideas that shape how I build, rooted in curiosity, learning and building.",
     url: "/inspiration",
     images: ["/og.png"],
   },
 };
 
 export default function InspirationPage() {
+  // Resolved on the server: the tree is a client component and cannot read the
+  // filesystem itself.
+  const me = profilePhotoSrc();
+
   return (
     <>
-      <section className="shell pt-12 pb-10 md:pt-16">
+      <section className="shell pt-12 pb-8 md:pt-16">
         <p className="eyebrow">Inspiration</p>
-        <div className="mt-4 grid gap-8 md:grid-cols-12">
+        <div className="mt-4 grid gap-6 md:grid-cols-12 md:items-end">
           <h1 className="display md:col-span-8">
             A map of what shaped the work.
           </h1>
           <div className="md:col-span-4 md:pb-2">
             <p className="lede">
-              Four branches (people, craft, works and ideas), each holding the
-              influences I keep returning to, and one honest sentence about why.
+              Every builder is shaped by the people, ideas and work that
+              challenge them to grow.
             </p>
           </div>
         </div>
-
-        <div className="mt-8 flex flex-wrap items-baseline gap-x-8 gap-y-2 border-t border-line pt-4 text-[0.8rem] text-muted">
-          <span>
-            {branches.length} branches ·{" "}
-            {totalEntries === 0
-              ? "entries being curated"
-              : `${totalEntries} entries`}
-          </span>
-          <span className="text-muted-soft">
-            No endorsements, no invented relationships.
-          </span>
-        </div>
       </section>
 
-      <section className="band-ivory band-y py-12 md:py-16">
+      <section
+        className="band-ivory band-y py-10 md:py-14"
+        aria-labelledby="tree-heading"
+      >
         <div className="shell">
-          <InspirationTree />
+          <h2 id="tree-heading" className="sr-only">
+            The inspiration tree: presence, roots and three inspirations
+          </h2>
+          <InspirationTree me={me} />
         </div>
       </section>
 
-      <section className="shell py-16 md:py-20">
+      <section className="shell py-14 md:py-20">
         <Reveal>
           <div className="grid gap-8 md:grid-cols-12">
             <div className="md:col-span-5">
@@ -73,15 +71,18 @@ export default function InspirationPage() {
                   a résumé of twelve shallow ones.
                 </p>
                 <p>
-                  This page is deliberately unfinished. An inspiration map
-                  filled with famous names and stock portraits would be easy to
-                  generate and worthless to read. The branches above are real;
-                  the entries are being chosen.
+                  None of the three people above knows me. They are here because
+                  their work set a standard I am still working towards, not
+                  because of any relationship or endorsement.
                 </p>
               </div>
             </div>
           </div>
         </Reveal>
+
+        <p className="accent mt-12 border-t border-line pt-6 text-[1.5rem] leading-tight text-brand md:mt-16 md:text-[1.8rem]">
+          Still learning. Still building. Still growing.
+        </p>
       </section>
     </>
   );

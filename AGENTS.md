@@ -40,3 +40,16 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `--muted-soft` is a *text* colour and must stay ≥4.5:1; it is not a
   decorative tint. A full-page contrast sweep is the check to re-run after
   touching colour tokens.
+
+## GitHub push status (audited)
+
+- Remote is configured: `origin` → https://github.com/elasoruayodeji/ayodex-portfolio.git
+- `portfolio-v2` descends from GitHub `main` (`d7040c2`); it fast-forwards, so
+  never `--force`.
+- **No write credential exists in this workspace.** `git push` returns
+  `remote: No anonymous write access.` Do not claim a push succeeded.
+  Authenticate with `gh auth login --web`, a fine-grained PAT, or SSH first.
+- `recovery/portfolio-v2-full.bundle` is a verified complete-history bundle;
+  `recovery/README.md` has the exact recovery routes. The bundle is gitignored.
+- Local branch `main` is a synthetic snapshot commit, not GitHub's `main`. Do
+  not push it.

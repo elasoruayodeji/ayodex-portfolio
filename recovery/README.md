@@ -56,7 +56,7 @@ git push -u origin portfolio-v2
 ## Route B — take the work with you and push from your own machine
 
 `recovery/portfolio-v2-full.bundle` is a complete, verified Git bundle of the
-branch (all 6 commits, full history, 63 tracked files). Download it, then:
+branch (all 7 commits, full history, 63 tracked files). Download it, then:
 
 ```bash
 git clone https://github.com/elasoruayodeji/ayodex-portfolio.git
@@ -66,7 +66,7 @@ git checkout portfolio-v2
 git push -u origin portfolio-v2
 ```
 
-The bundle's tip commit is `3352eb98d73489601065d2abf1505dddec451c6d`.
+The bundle's tip commit is `70c45ef2f33b24ccf5259dbb38f7e6e93357024c`.
 Verify before trusting it:
 
 ```bash
@@ -81,7 +81,7 @@ happens from your authenticated machine.
 ## What was verified in this workspace
 
 - `portfolio-v2` is a direct descendant of GitHub's `main` (`d7040c2`):
-  6 commits ahead, 0 behind — a clean fast-forward, so no force-push is needed.
+  7 commits ahead, 0 behind — a clean fast-forward, so no force-push is needed.
 - GitHub's `main` is untouched and still at `d7040c2`.
 - Working tree is clean; all portfolio work is in commits.
 - No `.env`, credential, `node_modules`, `.next` or `out/` file is tracked.

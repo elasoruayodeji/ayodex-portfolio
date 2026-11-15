@@ -89,8 +89,25 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Growth uses `pathLength="1"` with `stroke-dasharray: 1 1` and
   `stroke-dashoffset: 1 -> 0`. Use `animation-fill-mode: both`; `backwards`
   overrides the shorthand's `forwards` and the strokes vanish again.
-- Below 900px the wide drawing is hidden and replaced by a CSS spine. Keep the
-  desktop canvas visible only above that breakpoint.
+- There are **two** SVG compositions: `.tree-canvas--desktop` (1000x620) and
+  `.tree-canvas--mobile` (420x960, drawn tall with three limbs at three
+  heights). Both carry the same roots, trunk, limbs, twigs, leaves and people.
+- Never hide the mobile drawing. An earlier version did `display: none` below
+  900px and substituted a gradient line, which is exactly the bug the owner
+  reported. If a phone layout needs work, redraw the geometry, do not remove it.
+- `.tree-frame` owns the aspect ratio and is the containing block for every
+  percentage-positioned piece. Do not put `max-height` on the frame: capping
+  the height while the width stays fixed makes `preserveAspectRatio` letterbox
+  the artwork, and every portrait slides off its branch tip.
+- Portraits are absolutely centred on their tip (`translate(-50%, -50%)`), not
+  laid out in the text flow, so alignment does not depend on how the label
+  wraps. `--portrait` drives the size and the label offset together.
+- Below 900px the description panel is suppressed inside the drawing (it would
+  cover the next branch) and rendered once in `.tree-detail` under the tree,
+  driven by the same `open` state. Do not reintroduce in-tree panels on mobile.
+- `scripts/check-tree.mjs` and `scripts/check-motion.mjs` verify alignment,
+  overflow, growth timing and reduced motion at every breakpoint. Run them with
+  the preview server up after touching the tree.
 
 ## Profile photo
 

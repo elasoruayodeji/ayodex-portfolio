@@ -2,22 +2,43 @@
 
 /* ============================================================
    AYODEX Labs — V2 design system
-   Warm ivory, charcoal, stone. Editorial serif + humanist grotesk.
+   Warm editorial luxury. Forest, sage and citron used sparingly
+   over ivory paper, charcoal ink and stone hairlines.
    ============================================================ */
 
 :root {
-  --paper: #fbfaf6;
-  --ivory: #f3efe6;
-  --ivory-deep: #ece7db;
-  --stone: #e3ded2;
-  --ink: #1a1916;
-  --ink-soft: #34322c;
-  --muted: #6d685d;
-  --muted-soft: #8b8578;
-  --accent: #2e3a31;
-  --line: rgba(26, 25, 22, 0.12);
-  --line-soft: rgba(26, 25, 22, 0.07);
-  --line-strong: rgba(26, 25, 22, 0.28);
+  /* surfaces */
+  --paper: #faf8f3;
+  --white: #ffffff;
+  --ivory: #f4f1e7;
+  --ivory-deep: #ebe7da;
+  --stone: #ebe7da;
+  --sage: #d5e6cd;
+  --sage-soft: #edf4e6;
+
+  /* text */
+  --ink: #20211e;
+  --ink-soft: #33352f;
+  --muted: #5f6158;
+  /* small metadata must still clear 4.5:1, so "soft" is only marginally lighter */
+  --muted-soft: #6a6b62;
+
+  /* identity */
+  --forest: #2f6249;
+  --forest-deep: #21493a;
+  --forest-soft: #3d7a5c;
+  --citron: #d3e070;
+  --citron-deep: #b3c451;
+
+  /* lines */
+  --line: rgba(32, 33, 30, 0.13);
+  --line-soft: rgba(32, 33, 30, 0.07);
+  --line-strong: rgba(32, 33, 30, 0.3);
+  --line-forest: rgba(47, 98, 73, 0.32);
+
+  /* status */
+  --live: #357a52;
+  --concept: #a3924f;
 
   --measure: 62ch;
   --shell: 82rem;
@@ -28,19 +49,25 @@
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-white: var(--white);
   --color-ivory: var(--ivory);
   --color-ivory-deep: var(--ivory-deep);
   --color-stone: var(--stone);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-muted: var(--muted);
   --color-muted-soft: var(--muted-soft);
-  --color-accent: var(--accent);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-citron: var(--citron);
   --color-line: var(--line);
   --color-line-soft: var(--line-soft);
   --color-line-strong: var(--line-strong);
+  --color-line-forest: var(--line-forest);
 
-  --font-serif: var(--font-display), "Times New Roman", serif;
+  --font-serif: var(--font-display), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -106,43 +133,82 @@ hr {
 
 /* ---------- typography ---------- */
 
+/*
+ * Two faces, two jobs. Instrument Serif carries every editorial voice — the
+ * hero, section headings, project names, pull quotes. Manrope carries every
+ * functional one — navigation, body, buttons, labels, forms.
+ * The serif is never set below 1.25rem and never bold; its contrast comes from
+ * size, tight leading and green italic accents, not from weight.
+ */
+
 .display {
   font-family: var(--font-serif);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 0.98;
-  font-size: clamp(2.75rem, 7.4vw, 5.5rem);
+  letter-spacing: -0.028em;
+  line-height: 0.94;
+  font-size: clamp(2.85rem, 7.6vw, 5.9rem);
   text-wrap: balance;
+  color: var(--ink);
 }
 
 .display-sm {
   font-family: var(--font-serif);
   font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.04;
-  font-size: clamp(2rem, 3.6vw, 3rem);
+  letter-spacing: -0.022em;
+  line-height: 1.02;
+  font-size: clamp(2.05rem, 3.5vw, 3.1rem);
   text-wrap: balance;
+  color: var(--ink);
 }
 
 .heading {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.45rem, 2.1vw, 1.95rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+/* Project names, list titles — serif, medium weight optical size. */
+.title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 1.9vw, 1.72rem);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+}
+
+/* Small serif used for numerals, tags and one-line notes. */
+.serif-note {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+/* Green italic is the one recurring typographic accent. */
+.display .italic,
+.display-sm .italic,
+.heading .italic,
+.title .italic {
+  color: var(--forest);
+  font-style: italic;
 }
 
 .eyebrow {
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+  font-family: var(--font-sans);
+  font-size: 0.715rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--muted);
+  color: var(--forest);
 }
 
 .lede {
-  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
-  line-height: 1.6;
+  font-family: var(--font-sans);
+  font-size: clamp(1.0625rem, 1.35vw, 1.19rem);
+  line-height: 1.62;
+  letter-spacing: -0.005em;
   color: var(--ink-soft);
   max-width: var(--measure);
 }
@@ -151,10 +217,22 @@ hr {
   max-width: var(--measure);
   color: var(--ink-soft);
   margin-block: 0 1.15em;
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
 .prose-block > p:last-child {
   margin-bottom: 0;
+}
+
+/* Standing-index numerals: serif, citron-underlined, not bold sans. */
+.index-num {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--forest);
+  font-variant-numeric: lining-nums;
 }
 
 /* ---------- links ---------- */
@@ -183,7 +261,24 @@ hr {
 }
 
 .link-quiet:hover {
-  color: var(--ink);
+  color: var(--forest);
+}
+
+/* Inline text link in running copy. */
+.link-accent {
+  color: var(--forest);
+  text-decoration: none;
+  background-image: linear-gradient(var(--forest), var(--forest));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: background-size 300ms var(--ease), color 200ms var(--ease);
+}
+
+.link-accent:hover {
+  background-size: 0 1px;
+  background-position: 100% 100%;
+  color: var(--forest-deep);
 }
 
 /* ---------- buttons ---------- */
@@ -195,37 +290,53 @@ hr {
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  padding: 0.8rem 1.35rem;
-  border: 1px solid var(--ink);
+  letter-spacing: 0.005em;
+  padding: 0.82rem 1.4rem;
+  border: 1px solid var(--forest);
   border-radius: 2px;
-  background: var(--ink);
+  background: var(--forest);
   color: var(--paper);
   text-decoration: none;
   cursor: pointer;
   transition: background 220ms var(--ease), color 220ms var(--ease),
-    border-color 220ms var(--ease), transform 220ms var(--ease);
+    border-color 220ms var(--ease), transform 220ms var(--ease),
+    box-shadow 220ms var(--ease);
 }
 
 .btn:hover {
-  background: transparent;
-  color: var(--ink);
+  background: var(--forest-deep);
+  border-color: var(--forest-deep);
+  color: var(--white);
+  box-shadow: 0 1px 0 0 rgba(32, 33, 30, 0.06);
 }
 
 .btn:active {
   transform: translateY(1px);
+  box-shadow: none;
 }
 
 .btn-outline {
+  background: transparent;
+  color: var(--forest);
+  border-color: var(--line-forest);
+}
+
+.btn-outline:hover {
+  background: var(--sage);
+  color: var(--forest-deep);
+  border-color: var(--forest);
+}
+
+.btn-quiet {
   background: transparent;
   color: var(--ink);
   border-color: var(--line-strong);
 }
 
-.btn-outline:hover {
+.btn-quiet:hover {
   background: var(--ink);
-  color: var(--paper);
   border-color: var(--ink);
+  color: var(--paper);
 }
 
 .btn[disabled],
@@ -243,8 +354,26 @@ hr {
 /* ---------- panels / surfaces ---------- */
 
 .surface {
-  background: var(--ivory);
+  background: var(--white);
   border: 1px solid var(--line-soft);
+}
+
+/* Sage band used for short emphasis sections, never for whole pages. */
+.surface-sage {
+  background: var(--sage-soft);
+  border: 1px solid var(--line-soft);
+}
+
+/* White card on a sage or ivory band, to keep screenshots untinted. */
+.card-lift {
+  background: var(--white);
+  border: 1px solid var(--line-soft);
+  transition: border-color 240ms var(--ease), box-shadow 240ms var(--ease);
+}
+
+.card-lift:hover {
+  border-color: var(--line-forest);
+  box-shadow: 0 2px 0 -1px rgba(47, 98, 73, 0.14);
 }
 
 .frame {
@@ -315,9 +444,9 @@ hr {
 .select:focus,
 .textarea:focus {
   outline: none;
-  border-color: var(--ink);
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(26, 25, 22, 0.07);
+  border-color: var(--forest);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(47, 98, 73, 0.15);
 }
 
 .textarea {
@@ -342,10 +471,13 @@ hr {
 .textarea[aria-invalid="true"] {
   border-color: #8c3a2b;
   background: #fdf6f4;
+  box-shadow: 0 0 0 3px rgba(140, 58, 43, 0.09);
 }
 
 .field-error {
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
+  font-weight: 500;
   color: #8c3a2b;
   margin: 0;
 }
@@ -360,8 +492,42 @@ hr {
 
 .site-bar[data-stuck="true"] {
   border-bottom-color: var(--line);
-  background: rgba(251, 250, 246, 0.93);
+  background: rgba(250, 248, 243, 0.94);
   backdrop-filter: saturate(140%) blur(10px);
+}
+
+/* Nav link with a green rule that grows on hover — the site-wide active cue. */
+.nav-link {
+  position: relative;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 200ms var(--ease);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.55rem;
+  height: 1px;
+  width: 100%;
+  background: var(--forest);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 280ms var(--ease);
+}
+
+.nav-link:hover {
+  color: var(--ink);
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--ink);
 }
 
 /* ---------- marquee ---------- */
@@ -455,8 +621,395 @@ hr {
   transform: translateY(0);
 }
 
-.portrait-plate {
-  background: linear-gradient(168deg, var(--ivory-deep), var(--stone) 62%, #ded7c6);
+/* ---------- shared page furniture ---------- */
+
+.page-head {
+  padding-top: clamp(2rem, 4.5vw, 3.25rem);
+  padding-bottom: clamp(2rem, 4vw, 2.75rem);
+}
+
+/* Full-bleed sage band. Used for one section per page at most. */
+.band-sage {
+  background: var(--sage-soft);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.band-ivory {
+  background: var(--ivory);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Small tag / filter chip. Neutral by default, forest when selected. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  padding: 0.22rem 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.chip-active {
+  border-color: var(--forest);
+  color: var(--forest-deep);
+  background: var(--sage);
+}
+
+/* Closing call-to-action panel: white card with a citron edge. */
+.cta-panel {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.cta-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--citron);
+}
+
+/* Band with hairline rules top and bottom, no fill change. */
+.band-y {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Forest band for the strongest editorial section on a page. */
+.band-forest {
+  background: var(--forest);
+  color: var(--paper);
+}
+
+.eyebrow-invert,
+.band-forest .eyebrow {
+  color: var(--citron);
+}
+
+/* Numerals and rules inside the forest band take the citron accent. */
+.band-forest .index-num {
+  color: var(--citron);
+}
+
+/* serif headings inside the forest band must invert too */
+.band-forest .display-sm,
+.band-forest .display,
+.band-forest .title,
+.band-forest .heading {
+  color: var(--paper);
+}
+
+/* ---------- brand mark ---------- */
+
+.brand-mark {
+  display: flex;
+  width: 1.85rem;
+  height: 1.85rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--forest);
+  border-radius: 1px;
+  background: var(--sage-soft);
+  color: var(--forest-deep);
+  font-family: var(--font-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: background 240ms var(--ease), color 240ms var(--ease);
+}
+
+a:hover > .brand-mark {
+  background: var(--forest);
+  color: var(--paper);
+}
+
+.brand-word {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--ivory);
+  /* fine sage rule above, a quiet identity cue */
+  box-shadow: inset 0 1px 0 0 rgba(213, 230, 205, 0.95);
+}
+
+/* ---------- hero composition ---------- */
+
+.hero-shell {
+  position: relative;
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+  padding-bottom: clamp(2.75rem, 6vw, 4.5rem);
+}
+
+/*
+ * A single soft sage field behind the portrait side. Clipped to the section,
+ * so it can never cause horizontal scrolling.
+ */
+.hero-wash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(46%, 34rem);
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero-wash::before {
+  content: "";
+  position: absolute;
+  inset: 12% -20% 8% 10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 60% 40%,
+    rgba(213, 230, 205, 0.9) 0%,
+    rgba(237, 244, 230, 0.55) 55%,
+    transparent 72%
+  );
+}
+
+.hero-grid {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.hero-copy {
+  min-width: 0;
+}
+
+.hero-title {
+  /* keeps the last line from orphaning on narrow phones */
+  text-wrap: pretty;
+}
+
+.hero-figure {
+  /* on mobile the portrait sits above the foot note, not beside the headline */
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .hero-figure {
+    justify-content: flex-end;
+    padding-top: 0;
+  }
+}
+
+.hero-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 2rem;
+  margin-top: clamp(2.5rem, 5vw, 3.75rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+/* About page hero: smaller disc, same composition. */
+.about-hero {
+  padding-top: clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.about-hero-grid {
+  display: grid;
+  gap: 2.25rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.about-hero-figure {
+  display: flex;
+  justify-content: center;
+}
+
+.about-hero .portrait {
+  --size: clamp(11rem, 46vw, 15rem);
+}
+
+@media (min-width: 768px) {
+  .about-hero-grid {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: 3rem;
+  }
+
+  .about-hero-figure {
+    justify-content: flex-end;
+  }
+
+  .about-hero .portrait {
+    --size: clamp(13rem, 18vw, 15.5rem);
+  }
+}
+
+/* ---------- circular portrait ---------- */
+
+/*
+ * --size drives the disc. Everything else scales from it, so the frame is
+ * always a true circle and never squeezes into an ellipse.
+ */
+.portrait {
+  --size: clamp(13.5rem, 62vw, 21rem);
+  --ring: 1px;
+  position: relative;
+  /* aspect-ratio keeps a true circle even when the grid column is narrower */
+  width: min(var(--size), 100%);
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  isolation: isolate;
+}
+
+@media (min-width: 768px) {
+  .portrait {
+    --size: clamp(16rem, 26vw, 23rem);
+    margin-inline: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .portrait {
+    --size: 23.5rem;
+  }
+}
+
+/* Sage field, offset up-right: gives the disc something to sit on. */
+.portrait-field {
+  position: absolute;
+  inset: -7% -7% 5% 7%;
+  border-radius: 50%;
+  background: var(--sage);
+  z-index: -1;
+}
+
+.portrait-disc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--ivory-deep);
+  border: var(--ring) solid var(--line-forest);
+  /* the fine outer ring, drawn outside the crop */
+  box-shadow: 0 0 0 8px var(--paper), 0 0 0 9px rgba(47, 98, 73, 0.2);
+}
+
+@media (min-width: 768px) {
+  .portrait-disc {
+    box-shadow: 0 0 0 10px var(--paper), 0 0 0 11px rgba(47, 98, 73, 0.2);
+  }
+}
+
+.portrait-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+
+/* Designed placeholder: no rectangle, no stock face. */
+.portrait-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+      120% 120% at 32% 22%,
+      #f8f6ee 0%,
+      var(--sage) 46%,
+      #c3d9b8 100%
+    );
+}
+
+.portrait-initials {
+  font-family: var(--font-serif);
+  font-size: calc(var(--size) * 0.42);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--forest);
+  opacity: 0.5;
+  transform: translateY(-0.06em);
+  user-select: none;
+}
+
+.portrait-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 13%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding-inline: 12%;
+  text-align: center;
+}
+
+.portrait-caption-name {
+  font-family: var(--font-serif);
+  font-size: clamp(0.85rem, calc(var(--size) * 0.062), 1.05rem);
+  line-height: 1.2;
+  color: var(--forest-deep);
+}
+
+.portrait-caption-meta {
+  font-family: var(--font-sans);
+  font-size: clamp(0.56rem, calc(var(--size) * 0.032), 0.64rem);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--forest);
+  opacity: 0.75;
+}
+
+/* One citron dot, offset bottom-left — the small expressive detail. */
+.portrait-dot {
+  position: absolute;
+  width: calc(var(--size) * 0.13);
+  height: calc(var(--size) * 0.13);
+  border-radius: 50%;
+  background: var(--citron);
+  bottom: 3%;
+  left: -4%;
+  border: 3px solid var(--paper);
+  box-shadow: 0 0 0 1px rgba(47, 98, 73, 0.16);
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  /* desktop: dot sits at the disc's lower-left, clear of the text column */
+  .portrait-dot {
+    bottom: 6%;
+    left: -2%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

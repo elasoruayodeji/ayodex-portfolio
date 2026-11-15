@@ -41,7 +41,7 @@ export default function SupportPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-ivory">
+      <section className="band-sage">
         <div className="shell grid gap-12 py-14 md:grid-cols-12 md:gap-8 md:py-16">
           <div className="md:col-span-6">
             <h2 className="heading">Bank transfer</h2>
@@ -64,7 +64,7 @@ export default function SupportPage() {
               <div className="flex items-center justify-between gap-6 border-b border-line py-4">
                 <dt className="eyebrow">Account number</dt>
                 <dd className="flex items-center gap-3">
-                  <span className="text-[1.05rem] font-semibold tabular-nums tracking-[0.02em]">
+                  <span className="serif-note text-[1.2rem] tabular-nums tracking-[0.04em] text-forest-deep">
                     {site.bank.accountNumber}
                   </span>
                   <CopyButton value={site.bank.accountNumber} label="Copy number" />

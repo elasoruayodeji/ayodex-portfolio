@@ -55,15 +55,11 @@ export function SiteHeader() {
             className="group flex min-h-11 items-center gap-2.5 no-underline"
             aria-label="AYODEX Labs — home"
           >
-            <span
-              aria-hidden="true"
-              className="flex h-7 w-7 items-center justify-center border border-ink text-[0.6rem] font-semibold tracking-[0.08em]"
-              style={{ borderRadius: 1 }}
-            >
+            <span aria-hidden="true" className="brand-mark">
               AY
             </span>
-            <span className="text-[0.95rem] font-semibold tracking-[-0.01em]">
-              AYODEX Labs<span className="text-muted-soft">.</span>
+            <span className="brand-word">
+              AYODEX Labs<span className="text-forest">.</span>
             </span>
           </Link>
 
@@ -76,8 +72,7 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className="link-quiet inline-flex min-h-11 items-center text-[0.875rem] font-medium"
-                      style={active ? { color: "var(--ink)" } : undefined}
+                      className="nav-link inline-flex min-h-11 items-center text-[0.875rem] font-medium"
                     >
                       {item.label}
                     </Link>

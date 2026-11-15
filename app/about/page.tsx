@@ -94,14 +94,14 @@ const timeline = [
 export default function AboutPage() {
   return (
     <>
-      <section className="shell pt-12 md:pt-16">
+      <section className="about-hero shell">
         <p className="eyebrow">About</p>
-        <div className="mt-4 grid items-start gap-10 md:grid-cols-12 md:gap-8">
-          <h1 className="display md:col-span-7">
+        <div className="about-hero-grid">
+          <h1 className="display">
             I build the whole visible <span className="italic">thing.</span>
           </h1>
-          <div className="md:col-span-4 md:col-start-9">
-            <Portrait className="aspect-[4/5] w-full" />
+          <div className="about-hero-figure">
+            <Portrait />
           </div>
         </div>
 
@@ -133,7 +133,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-ivory py-16 md:py-20">
+      <section className="band-ivory py-16 md:py-20">
         <div className="shell grid gap-10 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-4">
             <h2 className="eyebrow">The short version</h2>
@@ -206,7 +206,7 @@ export default function AboutPage() {
                       0{i + 1}
                     </span>
                     <div>
-                      <h3 className="text-[1rem] font-semibold">{item.title}</h3>
+                      <h3 className="title text-[1.1rem]">{item.title}</h3>
                       <p className="mt-1 max-w-[54ch] text-[0.9rem] leading-relaxed text-muted">
                         {item.body}
                       </p>
@@ -219,7 +219,7 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      <section className="border-y border-line bg-ivory py-16 md:py-20">
+      <section className="band-ivory py-16 md:py-20">
         <div className="shell">
           <Reveal>
             <h2 className="eyebrow">Capabilities</h2>
@@ -231,7 +231,7 @@ export default function AboutPage() {
             {capabilities.map((group, i) => (
               <Reveal key={group.title} delay={i * 60}>
                 <div className="border-t border-line pt-4">
-                  <h3 className="text-[0.95rem] font-semibold">{group.title}</h3>
+                  <h3 className="title text-[1.05rem]">{group.title}</h3>
                   <ul className="mt-3 space-y-1.5">
                     {group.items.map((item) => (
                       <li key={item} className="text-[0.85rem] text-muted">
@@ -263,7 +263,7 @@ export default function AboutPage() {
                 <span className="text-[0.8rem] tabular-nums text-muted md:col-span-2">
                   {item.year}
                 </span>
-                <h3 className="text-[1.05rem] font-semibold md:col-span-4">
+                <h3 className="title text-[1.2rem] md:col-span-4">
                   {item.title}
                 </h3>
                 <p className="max-w-[56ch] text-[0.9rem] leading-relaxed text-muted md:col-span-6">
@@ -275,7 +275,7 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      <section className="border-t border-line bg-ivory py-16 md:py-20">
+      <section className="band-ivory py-16 md:py-20">
         <div className="shell">
           <Reveal>
             <div className="flex flex-wrap items-end justify-between gap-6">
@@ -316,7 +316,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className="mt-3 flex items-center justify-between gap-3">
-                    <h3 className="text-[0.9rem] font-semibold">
+                    <h3 className="title text-[1.05rem]">
                       <span className="link-underline">{project.name}</span>
                     </h3>
                     <StatusPill status={project.status} />

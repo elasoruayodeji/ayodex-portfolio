@@ -47,7 +47,7 @@ export default function InspirationPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-ivory py-12 md:py-16">
+      <section className="band-ivory band-y py-12 md:py-16">
         <div className="shell">
           <InspirationTree />
         </div>

@@ -1,19 +1,19 @@
 import type { ProjectStatus } from "@/lib/projects";
 
 const styles: Record<ProjectStatus, string> = {
-  Live: "border-ink text-ink",
-  "Live prototype": "border-ink text-ink",
-  "Concept build": "border-line-strong text-muted",
-  "Not deployed": "border-line-strong text-muted",
-  Paused: "border-line-strong text-muted",
+  Live: "border-forest/45 bg-sage-soft text-forest-deep",
+  "Live prototype": "border-forest/45 bg-sage-soft text-forest-deep",
+  "Concept build": "border-line-strong bg-white text-muted",
+  "Not deployed": "border-line-strong bg-white text-muted",
+  Paused: "border-line-strong bg-white text-muted",
 };
 
 const dot: Record<ProjectStatus, string> = {
-  Live: "bg-[#3f6b4a]",
-  "Live prototype": "bg-[#3f6b4a]",
-  "Concept build": "bg-[#a98b4f]",
-  "Not deployed": "bg-[#8b8578]",
-  Paused: "bg-[#8b8578]",
+  Live: "bg-[var(--live)]",
+  "Live prototype": "bg-[var(--live)]",
+  "Concept build": "bg-[var(--concept)]",
+  "Not deployed": "bg-[var(--muted-soft)]",
+  Paused: "bg-[var(--muted-soft)]",
 };
 
 export function StatusPill({ status }: { status: ProjectStatus }) {

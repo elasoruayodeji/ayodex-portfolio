@@ -28,7 +28,7 @@ export default function WorkPage() {
 
   return (
     <>
-      <section className="shell pt-12 pb-10 md:pt-16">
+      <section className="page-head shell">
         <p className="eyebrow">Work</p>
         <div className="mt-4 grid items-end gap-6 md:grid-cols-12">
           <h1 className="display md:col-span-8">
@@ -48,11 +48,10 @@ export default function WorkPage() {
           {categories.map((category) => (
             <span
               key={category}
-              className="border border-line px-2.5 py-1 text-[0.75rem] text-muted"
-              style={{ borderRadius: 2 }}
+              className={`chip ${category === "All" ? "chip-active" : ""}`}
             >
               {category}
-              <span className="ml-1.5 text-muted-soft">
+              <span className="ml-1.5 tabular-nums opacity-70">
                 {category === "All"
                   ? projects.length
                   : projects.filter((p) => p.tag === category).length}
@@ -86,26 +85,26 @@ export default function WorkPage() {
       </section>
 
       {/* ---------- the rest ---------- */}
-      <section className="border-t border-line bg-ivory py-16" aria-label="More projects">
+      <section className="band-sage py-16 md:py-20" aria-label="More projects">
         <div className="shell">
           <ul className="border-t border-line">
             {remaining.map((project) => (
               <Reveal as="li" key={project.slug}>
                 <Link
                   href={`/work/${project.slug}`}
-                  className="group grid gap-3 border-b border-line py-8 no-underline md:grid-cols-12 md:items-start md:gap-8"
+                  className="group grid gap-3 border-b border-line py-8 no-underline transition-colors duration-200 hover:border-forest md:grid-cols-12 md:items-start md:gap-8"
                 >
                   <div className="md:col-span-1">
-                    <span className="text-[0.75rem] tabular-nums text-muted-soft">
-                      0{projects.indexOf(project) + 1}
+                    <span className="index-num">
+                      {String(projects.indexOf(project) + 1).padStart(2, "0")}
                     </span>
                   </div>
 
                   <div className="md:col-span-3">
-                    <h2 className="text-[1.3rem] font-semibold leading-snug tracking-[-0.01em]">
+                    <h2 className="title">
                       <span className="link-underline">{project.name}</span>
                     </h2>
-                    <p className="mt-1.5 text-[0.75rem] uppercase tracking-[0.1em] text-muted-soft">
+                    <p className="mt-1.5 text-[0.75rem] uppercase tracking-[0.1em] text-muted">
                       {project.tag} · {project.year}
                     </p>
                   </div>
@@ -115,12 +114,10 @@ export default function WorkPage() {
                   </p>
 
                   <div className="flex flex-wrap items-center gap-2 md:col-span-3 md:justify-end">
-                    <span className="border border-line-strong px-2 py-0.5 text-[0.7rem] uppercase tracking-[0.1em] text-muted">
-                      {project.status}
-                    </span>
+                    <span className="chip">{project.status}</span>
                     <span
                       aria-hidden="true"
-                      className="text-[0.9rem] transition-transform duration-300 group-hover:translate-x-1"
+                      className="text-[0.9rem] text-forest transition-transform duration-300 group-hover:translate-x-1"
                     >
                       →
                     </span>
@@ -133,7 +130,7 @@ export default function WorkPage() {
       </section>
 
       <section className="shell py-16 md:py-20">
-        <div className="flex flex-col gap-6 border border-line p-8 md:flex-row md:items-center md:justify-between md:p-12">
+        <div className="cta-panel flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-12">
           <div>
             <h2 className="display-sm max-w-[24ch]">
               There is a project-shaped gap on this page.

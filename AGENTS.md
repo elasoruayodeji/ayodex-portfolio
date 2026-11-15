@@ -25,3 +25,18 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Preview must run the **production** build (`npm run build && npm run start`);
   the dev server's HMR websocket does not survive the preview proxy, so client
   components appear inert in dev.
+
+## Visual refinement pass (branch `portfolio-v2`)
+
+- Type roles: `.display` / `.display-sm` / `.title` / `.index-num` = Instrument
+  Serif; everything else Manrope. Never set the serif bold or below 1.25rem.
+  Green italics (`.display .italic`) are the one recurring type accent.
+- Botanicals: `--forest` buttons/links/eyebrows, `--sage` bands and fields,
+  `--citron` only on dark forest. One accent band per page.
+- Hero portrait is a true circle: `--size` + `aspect-ratio: 1/1` on both
+  `.portrait` and `.portrait-disc`. At 1024 the column is narrower than
+  23.5rem, so the disc sizes to the column — do not remove the aspect ratio or
+  it becomes an ellipse.
+- `--muted-soft` is a *text* colour and must stay ≥4.5:1; it is not a
+  decorative tint. A full-page contrast sweep is the check to re-run after
+  touching colour tokens.

@@ -74,7 +74,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-ivory">
+      <section className="band-ivory band-y">
         <div className="shell grid gap-12 py-14 md:grid-cols-12 md:gap-8 md:py-16">
           <div className="md:col-span-7">
             <h2 className="heading">Send a message</h2>

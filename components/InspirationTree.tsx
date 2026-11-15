@@ -31,9 +31,7 @@ function DetailPanel({
       <p className="eyebrow">{entry ? "Selected influence" : branchLabel}</p>
       {entry ? (
         <>
-          <h3 className="mt-2 text-[1.15rem] font-semibold leading-snug">
-            {entry.name}
-          </h3>
+          <h3 className="title mt-2 text-[1.25rem]">{entry.name}</h3>
           <p className="mt-0.5 text-[0.8rem] uppercase tracking-[0.1em] text-muted-soft">
             {entry.role}
           </p>
@@ -85,15 +83,11 @@ export function InspirationTree() {
           {/* root */}
           <li className="relative pl-0">
             <div className="flex items-center gap-4">
-              <span
-                aria-hidden="true"
-                className="flex h-9 w-9 shrink-0 items-center justify-center border border-ink text-[0.6rem] font-semibold tracking-[0.08em]"
-                style={{ borderRadius: 1 }}
-              >
+              <span aria-hidden="true" className="brand-mark h-9 w-9 text-[0.72rem]">
                 AY
               </span>
               <div>
-                <p className="text-[0.95rem] font-semibold">AYODEX Labs</p>
+                <p className="brand-word text-[1.05rem]">AYODEX Labs</p>
                 <p className="text-[0.75rem] text-muted">
                   Root — the practice these influences shaped
                 </p>
@@ -169,7 +163,7 @@ export function InspirationTree() {
                               className="absolute left-[0.28rem] top-[0.95rem] h-[5px] w-[5px] rounded-full"
                               style={{
                                 background: active
-                                  ? "var(--ink)"
+                                  ? "var(--forest)"
                                   : "var(--line-strong)",
                               }}
                             />
@@ -183,7 +177,7 @@ export function InspirationTree() {
                             >
                               <span
                                 className="text-[0.9rem] font-medium"
-                                style={{ color: active ? "var(--ink)" : undefined }}
+                                style={{ color: active ? "var(--forest)" : undefined }}
                               >
                                 {entry.name}
                               </span>
@@ -214,10 +208,10 @@ export function InspirationTree() {
           <li className="relative -ml-6 mb-6 pl-6">
             <span
               aria-hidden="true"
-              className="absolute left-0 top-2 h-2 w-2 rounded-full bg-ink"
+              className="absolute left-0 top-2 h-2 w-2 rounded-full bg-forest"
               style={{ transform: "translateX(-4.5px)" }}
             />
-            <p className="text-[0.9rem] font-semibold">AYODEX Labs</p>
+            <p className="brand-word text-[1rem]">AYODEX Labs</p>
             <p className="text-[0.75rem] text-muted">
               Root — influences below shaped this practice
             </p>

@@ -41,8 +41,8 @@ export default async function CaseStudyPage({ params }: Params) {
   return (
     <article>
       <header className="shell pt-10 md:pt-14">
-        <Link href="/work" className="link-quiet text-[0.85rem]">
-          <span aria-hidden="true">←</span> All work
+        <Link href="/work" className="link-quiet inline-flex min-h-9 items-center text-[0.85rem]">
+          <span aria-hidden="true" className="mr-1">←</span> All work
         </Link>
 
         <div className="mt-8 grid gap-8 md:grid-cols-12 md:items-end">
@@ -59,7 +59,7 @@ export default async function CaseStudyPage({ params }: Params) {
         </div>
 
         {project.relationship ? (
-          <p className="mt-6 border-l-2 border-line-strong pl-4 text-[0.8rem] text-muted">
+          <p className="mt-6 border-l-2 border-forest/40 pl-4 text-[0.8rem] text-muted">
             {project.relationship}
           </p>
         ) : null}
@@ -128,7 +128,7 @@ export default async function CaseStudyPage({ params }: Params) {
                   >
                     <span
                       aria-hidden="true"
-                      className="mt-2 h-1 w-3 shrink-0 bg-line-strong"
+                      className="mt-2 h-1 w-3 shrink-0 bg-forest/60"
                     />
                     <span>{feature}</span>
                   </li>
@@ -139,10 +139,10 @@ export default async function CaseStudyPage({ params }: Params) {
             {project.decisions.length ? (
               <Reveal>
                 <h2 className="heading mt-12">Decisions</h2>
-                <div className="mt-4 space-y-7 border-l border-line pl-6">
+                <div className="mt-4 space-y-7 border-l border-line-forest pl-6">
                   {project.decisions.map((decision) => (
                     <div key={decision.title}>
-                      <h3 className="text-[1rem] font-semibold">
+                      <h3 className="title text-[1.15rem]">
                         {decision.title}
                       </h3>
                       <p className="mt-1.5 max-w-[56ch] text-[0.925rem] leading-relaxed text-muted">
@@ -158,14 +158,14 @@ export default async function CaseStudyPage({ params }: Params) {
           <aside className="md:col-span-4 md:col-start-9">
             <div className="sticky top-28 border-t border-line pt-5">
               <h2 className="eyebrow">Links</h2>
-              <ul className="mt-3 space-y-3 text-[0.9rem]">
+              <ul className="mt-3 space-y-3 text-[0.9rem] text-forest">
                 {project.liveUrl ? (
                   <li>
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="link-underline"
+                      className="link-accent"
                     >
                       Visit the live site
                       <span aria-hidden="true" className="ml-1">
@@ -182,7 +182,7 @@ export default async function CaseStudyPage({ params }: Params) {
                       href={project.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="link-underline"
+                      className="link-accent"
                     >
                       Source on GitHub
                       <span aria-hidden="true" className="ml-1">
@@ -196,11 +196,7 @@ export default async function CaseStudyPage({ params }: Params) {
               <h2 className="eyebrow mt-8">Technology</h2>
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {project.stack.map((tech) => (
-                  <li
-                    key={tech}
-                    className="border border-line px-2 py-0.5 text-[0.75rem] text-muted"
-                    style={{ borderRadius: 2 }}
-                  >
+                  <li key={tech} className="chip">
                     {tech}
                   </li>
                 ))}
@@ -267,8 +263,8 @@ export default async function CaseStudyPage({ params }: Params) {
         </section>
       ) : null}
 
-      <section className="border-t border-line bg-ivory">
-        <div className="shell py-12">
+      <section className="band-ivory">
+        <div className="shell py-12 md:py-14">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="eyebrow">Next project</p>
@@ -292,7 +288,7 @@ export default async function CaseStudyPage({ params }: Params) {
               href={`mailto:${site.email}?subject=${encodeURIComponent(
                 `Question about ${project.name}`,
               )}`}
-              className="link-underline text-ink"
+              className="link-accent font-medium"
             >
               Email me
             </a>

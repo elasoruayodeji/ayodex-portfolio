@@ -37,9 +37,10 @@ weights used.
 
 | Role | Face | Size | Line height | Tracking |
 |---|---|---|---|---|
-| Display (h1) | Instrument Serif 400 | `clamp(2.3rem, 7.6vw, 5.1rem)` | 1.0 | -0.02em |
-| Section display | Instrument Serif 400 | `clamp(1.75rem, 3.4vw, 2.85rem)` | 1.06 | -0.015em |
-| Sub-heading | Instrument Serif 400 | `clamp(1.35rem, 2.2vw, 1.8rem)` | 1.18 | -0.01em |
+| Display (h1) | Instrument Serif 400 | `clamp(2.85rem, 7.6vw, 5.9rem)` | 0.94 | -0.028em |
+| Section display | Instrument Serif 400 | `clamp(2.05rem, 3.5vw, 3.1rem)` | 1.02 | -0.022em |
+| Project title (`.title`) | Instrument Serif 400 | `clamp(1.4rem, 1.9vw, 1.72rem)` | 1.10 | -0.012em |
+| Numeral (`.index-num`) | Instrument Serif 400 | 1.05rem | 1.0 | 0.02em |
 | Lede | Manrope 400 | `clamp(1.02rem, 1.3vw, 1.15rem)` | 1.62 | 0 |
 | Body | Manrope 400 | 1rem | 1.65 | 0 |
 | Small / meta | Manrope 500 | 0.8125–0.875rem | 1.55 | 0 |
@@ -48,27 +49,50 @@ weights used.
 Rules: no more than three weights visible in one viewport; body never below
 0.8rem; no heading above 1.15 line height; text measure capped at 62ch.
 
+**Where the serif is and is not used.** Serif: hero, every section heading,
+project names, decision titles, service names, numerals, the tagline as an
+italic one-liner. Manrope: navigation, body, ledes, buttons, chips, labels,
+forms, tables, metadata. The serif never goes below 1.25rem and is never set
+bold — its contrast comes from size, tight leading and forest-green italics.
+
 ---
 
 ## 2. Colour
 
-Warm, paper-first, no blue, no gold, no neon.
+Warm editorial luxury with botanical accents. Ivory and white stay dominant;
+forest carries identity; sage and citron are rationed.
 
 | Token | Value | Use |
 |---|---|---|
-| `--paper` | `#fbfaf6` | page background |
-| `--ivory` | `#f3efe6` | alternating section bands, footer |
-| `--ivory-deep` | `#ece7db` | portrait plate, hovers |
-| `--stone` | `#e3ded2` | dividers on plates, OG artwork |
-| `--ink` | `#1a1916` | text, buttons, inverted panels |
-| `--ink-soft` | `#34322c` | long-form body copy |
-| `--muted` | `#6d685d` | secondary copy (7.0:1 on paper) |
-| `--muted-soft` | `#8b8578` | micro-metadata only (never body) |
-| `--line` | `rgba(26,25,22,.12)` | hairlines |
-| `--line-strong` | `rgba(26,25,22,.28)` | input borders, emphasis rules |
+| `--paper` | `#faf8f3` | page background |
+| `--white` | `#ffffff` | cards, form fields, CTA panels |
+| `--ivory` | `#f4f1e7` | footer, banded sections |
+| `--ivory-deep` | `#ebe7da` | portrait disc base, hovers |
+| `--stone` | `#ebe7da` | dividers, OG artwork |
+| `--sage` | `#d5e6cd` | portrait field, selected chips, sage bands |
+| `--sage-soft` | `#edf4e6` | full-bleed sage bands |
+| `--ink` | `#20211e` | primary text |
+| `--ink-soft` | `#33352f` | long-form body copy |
+| `--muted` | `#63645c` | secondary copy |
+| `--muted-soft` | `#8a8b81` | micro-metadata only (never body) |
+| `--forest` | `#2f6249` | buttons, links, eyebrows, numerals (6.7:1 on paper) |
+| `--forest-deep` | `#21493a` | button hover, text on sage |
+| `--citron` | `#d3e070` | dots, rules and numerals on dark bands only |
+| `--line` | `rgba(32,33,30,.13)` | hairlines |
+| `--line-forest` | `rgba(47,98,73,.32)` | accent borders, input focus |
 
-Only two "status" hues appear, both desaturated: `#3f6b4a` (live) and
-`#a98b4f` (concept). They never appear as decoration.
+Rules that keep it from becoming decoration:
+
+- Forest appears on exactly one element per visual cluster — a button, a link,
+  an eyebrow, a numeral — never on both a heading and its body copy.
+- Sage is a *band* or a *field*, used at most once per page (twice on home).
+- Citron only reads as an accent on dark forest; on ivory it fails contrast and
+  is not used for text.
+- A solid forest band is reserved for the single strongest section on a page.
+- Body copy is never coloured.
+
+Status hues stay separate from identity: `--live: #357a52`,
+`--concept: #a3924f`. They appear only inside status marks.
 
 ---
 
@@ -123,7 +147,24 @@ any of them (`scrollWidth === clientWidth`).
 
 ---
 
-## 6. Imagery
+## 6. Hero portrait
+
+A true circle, not a rounded rectangle. `--size` drives the disc and
+`aspect-ratio: 1/1` guarantees a circle even when the grid column is narrower
+than the target size. Composition: a sage field offset up-and-right behind the
+disc, a hairline forest ring, a paper gap, then one citron dot at lower-left.
+
+- Desktop: 23.5rem (376px), right-aligned, vertically centred against the
+  headline block.
+- 1024: shrinks with the column but stays circular (346px measured).
+- Mobile: `clamp(13.5rem, 62vw, 21rem)` — 223px at 360, 242px at 390 — placed
+  below the copy so it never crowds the headline.
+- Placeholder: initials in Instrument Serif at 42% of the disc, over a soft
+  sage radial, with a serif name and uppercase location caption. No rectangle,
+  no stock face. Swapping in the real photo is one file
+  (`public/images/profile.jpg`) plus `hasPortrait`.
+
+## 7. Imagery
 
 - All project imagery is captured from live deployments or from existing repo
   assets. No stock photography is used as evidence.
@@ -135,7 +176,7 @@ any of them (`scrollWidth === clientWidth`).
 
 ---
 
-## 7. Inspiration map
+## 8. Inspiration map
 
 **Concept:** a "root and branches" attribution chart. AYODEX Labs sits at the
 root; influences branch into categories (people, craft, works, ideas), and each
@@ -154,19 +195,22 @@ entry is a leaf carrying one sentence about *why* it matters.
 
 ---
 
-## 8. Accessibility
+## 9. Accessibility
 
 - Skip link, single `<h1>` per route, ordered headings.
 - Focus-visible: 2px ink outline, 3px offset, everywhere.
 - Drawer and detail panels are keyboard operable; closed panels are `hidden`.
 - Form errors are announced with `aria-live` and linked by `aria-describedby`.
 - Motion respects `prefers-reduced-motion`; marquee becomes static.
-- Colour pairs checked: body 7.0:1+, muted-on-paper 7.0:1, meta 3.9:1 (only for
-  non-essential micro text ≥12px bold or decorative labels).
+- Colour pairs checked against `--paper` (#faf8f3): ink 16.1:1, ink-soft
+  12.4:1, muted 5.6:1, forest 6.7:1. Forest on white 7.1:1. Paper on forest
+  6.7:1 (button and band text pass AA for body size). Citron is never used as
+  text on a light surface. An automated sweep of every page confirms no
+  text/background pair below 4.5:1.
 
 ---
 
-## 9. SEO & structured data
+## 10. SEO & structured data
 
 - Per-route `title` template `%s — AYODEX Labs.`, unique descriptions, canonical
   paths against `https://ayodex-portfolio.vercel.app`.
@@ -179,7 +223,7 @@ entry is a leaf carrying one sentence about *why* it matters.
 
 ---
 
-## 10. Open questions carried from Phase 1
+## 11. Open questions carried from Phase 1
 
 - Aurelion: no repository or deployment found; not represented.
 - Tolu's Space and HMD Gadgets: engagement type unconfirmed, so no client claim

@@ -66,7 +66,7 @@ export default function HirePage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-ivory">
+      <section className="band-ivory band-y">
         <div className="shell grid gap-10 py-14 md:grid-cols-12 md:gap-8 md:py-16">
           <div className="md:col-span-7">
             <h2 className="heading">Project enquiry</h2>
@@ -89,7 +89,7 @@ export default function HirePage() {
                       {step.n}
                     </span>
                     <div>
-                      <h3 className="text-[0.9rem] font-semibold">{step.title}</h3>
+                      <h3 className="title text-[1.05rem]">{step.title}</h3>
                       <p className="mt-1 text-[0.85rem] leading-relaxed text-muted">
                         {step.body}
                       </p>

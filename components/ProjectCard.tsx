@@ -29,18 +29,21 @@ export function ProjectCard({
         </div>
 
         <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-line pt-3">
-          <span className="eyebrow">{project.tag}</span>
-          <span className="text-[0.75rem] tabular-nums text-muted-soft">
-            {project.year}
+          <span className="flex items-baseline gap-2.5">
+            <span className="index-num">{project.year}</span>
+            <span className="eyebrow">{project.tag}</span>
+          </span>
+          <span className="text-[0.72rem] uppercase tracking-[0.1em] text-muted-soft">
+            Case study
           </span>
         </div>
-        <h3 className="mt-2 text-[1.35rem] font-semibold leading-snug tracking-[-0.01em]">
+        <h3 className="title mt-2.5">
           <span className="link-underline">{project.name}</span>
         </h3>
         <p className="mt-2 max-w-[46ch] text-[0.925rem] leading-relaxed text-muted">
           {project.summary}
         </p>
-        <p className="mt-3 inline-flex items-center gap-1.5 text-[0.85rem] font-medium">
+        <p className="mt-3 inline-flex items-center gap-1.5 text-[0.85rem] font-medium text-forest">
           Read case study
           <span
             aria-hidden="true"

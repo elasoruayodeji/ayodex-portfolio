@@ -19,23 +19,19 @@ const startHere = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-line bg-ivory">
+    <footer className="site-footer">
       <div className="shell py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
             <Link href="/" className="inline-flex min-h-11 items-center gap-2.5 no-underline">
-              <span
-                aria-hidden="true"
-                className="flex h-7 w-7 items-center justify-center border border-ink text-[0.6rem] font-semibold tracking-[0.08em]"
-                style={{ borderRadius: 1 }}
-              >
+              <span aria-hidden="true" className="brand-mark">
                 AY
               </span>
-              <span className="text-[0.95rem] font-semibold">
-                AYODEX Labs<span className="text-muted-soft">.</span>
+              <span className="brand-word">
+                AYODEX Labs<span className="text-forest">.</span>
               </span>
             </Link>
-            <p className="display-sm mt-6 max-w-[22ch] text-[1.6rem] md:text-[1.85rem]">
+            <p className="serif-note mt-6 max-w-[24ch] text-[1.55rem] italic leading-tight text-forest md:text-[1.8rem]">
               I build. I design. I experiment.
             </p>
             <p className="mt-4 max-w-[34ch] text-[0.9rem] leading-relaxed text-muted">

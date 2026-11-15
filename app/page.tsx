@@ -55,18 +55,17 @@ export default function HomePage() {
   return (
     <>
       {/* ---------- hero ---------- */}
-      <section className="shell pt-10 pb-14 sm:pt-14 md:pb-20">
-        <div className="grid items-end gap-10 md:grid-cols-12 md:gap-8">
-          <div className="md:col-span-8">
+      <section className="hero-shell shell">
+        <span aria-hidden="true" className="hero-wash" />
+
+        <div className="hero-grid">
+          <div className="hero-copy">
             <p className="eyebrow flex items-center gap-3">
-              <span
-                aria-hidden="true"
-                className="inline-block h-px w-8 bg-line-strong"
-              />
+              <span aria-hidden="true" className="inline-block h-px w-8 bg-forest/50" />
               Independent developer · {site.location}
             </p>
 
-            <h1 className="display mt-6">
+            <h1 className="display hero-title mt-6">
               I build websites and
               <br className="hidden sm:block" /> digital work that has to
               <span className="italic"> hold up.</span>
@@ -91,16 +90,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="md:col-span-4">
-            <Portrait
-              className="aspect-[4/5] w-full max-w-[22rem] md:ml-auto"
-              priority
-            />
+          <div className="hero-figure">
+            <Portrait priority />
           </div>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-baseline gap-x-8 gap-y-3 border-t border-line pt-5">
-          <p className="font-[family-name:var(--font-serif)] text-[1.15rem] italic">
+        <div className="hero-foot">
+          <p className="serif-note text-[1.2rem] italic text-forest">
             {site.tagline}
           </p>
           <p className="text-[0.8rem] text-muted">
@@ -109,7 +105,7 @@ export default function HomePage() {
               href={site.whatsapp.primaryUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="link-underline"
+              className="link-accent"
             >
               WhatsApp
             </a>
@@ -159,9 +155,9 @@ export default function HomePage() {
         <div className="mt-16 grid gap-x-8 gap-y-10 border-t border-line pt-12 md:grid-cols-3">
           {other.map((project) => (
             <Reveal key={project.slug}>
-              <Link href={`/work/${project.slug}`} className="group block no-underline">
+              <Link href={`/work/${project.slug}`} className="group block min-h-11 no-underline">
                 <span className="eyebrow">{project.tag}</span>
-                <h3 className="mt-2 text-[1.05rem] font-semibold">
+                <h3 className="title mt-2 text-[1.22rem]">
                   <span className="link-underline">{project.name}</span>
                 </h3>
                 <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
@@ -175,7 +171,7 @@ export default function HomePage() {
 
       {/* ---------- about ---------- */}
       <section
-        className="border-y border-line bg-ivory py-20 md:py-28"
+        className="band-sage py-20 md:py-28"
         aria-labelledby="about-heading"
       >
         <div className="shell grid gap-12 md:grid-cols-12 md:gap-8">
@@ -220,7 +216,7 @@ export default function HomePage() {
                   <div key={label}>
                     <dt className="sr-only">{label}</dt>
                     <dd>
-                      <span className="block font-[family-name:var(--font-serif)] text-[1.75rem] leading-none">
+                      <span className="serif-note block text-[1.9rem] leading-none text-forest">
                         {value}
                       </span>
                       <span className="mt-1.5 block text-[0.75rem] uppercase tracking-[0.1em] text-muted">
@@ -257,11 +253,9 @@ export default function HomePage() {
             <Reveal key={service.n}>
               <div className="grid gap-3 border-b border-line py-7 md:grid-cols-12 md:gap-8">
                 <div className="md:col-span-1">
-                  <span className="text-[0.75rem] tabular-nums text-muted-soft">
-                    {service.n}
-                  </span>
+                  <span className="index-num">{service.n}</span>
                 </div>
-                <h3 className="text-[1.35rem] font-semibold tracking-[-0.01em] md:col-span-4">
+                <h3 className="title md:col-span-4">
                   {service.title}
                 </h3>
                 <p className="text-[0.925rem] leading-relaxed text-muted md:col-span-5">
@@ -280,7 +274,7 @@ export default function HomePage() {
         <Reveal>
           <p className="mt-8 text-[0.875rem] text-muted">
             Not sure where your project fits?{" "}
-            <Link href="/hire" className="link-underline text-ink">
+            <Link href="/hire" className="link-accent font-medium">
               Describe it anyway
             </Link>{" "}
             — the enquiry form has a category for that.
@@ -290,22 +284,13 @@ export default function HomePage() {
 
       {/* ---------- approach ---------- */}
       <section
-        className="border-y border-line bg-ink py-20 text-paper md:py-28"
+        className="band-forest py-20 md:py-28"
         aria-labelledby="approach-heading"
       >
         <div className="shell">
           <Reveal>
-            <p
-              className="eyebrow"
-              style={{ color: "rgba(251,250,246,0.55)" }}
-            >
-              How I work
-            </p>
-            <h2
-              id="approach-heading"
-              className="display-sm mt-3 max-w-[22ch]"
-              style={{ color: "var(--paper)" }}
-            >
+            <p className="eyebrow eyebrow-invert">How I work</p>
+            <h2 id="approach-heading" className="display-sm mt-3 max-w-[22ch] text-[var(--paper)]">
               Three rules that shape everything I ship.
             </h2>
           </Reveal>
@@ -313,23 +298,14 @@ export default function HomePage() {
           <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
             {approach.map((item, i) => (
               <Reveal key={item.title} delay={i * 70}>
-                <div
-                  className="border-t pt-5"
-                  style={{ borderColor: "rgba(251,250,246,0.18)" }}
-                >
-                  <span
-                    className="text-[0.7rem] tabular-nums"
-                    style={{ color: "rgba(251,250,246,0.45)" }}
-                  >
+                <div className="border-t border-[rgba(247,245,239,0.2)] pt-5">
+                  <span className="index-num text-[var(--citron)]">
                     0{i + 1}
                   </span>
-                  <h3 className="mt-2 text-[1.15rem] font-semibold">
+                  <h3 className="title mt-2.5 text-[1.25rem] text-[var(--paper)]">
                     {item.title}
                   </h3>
-                  <p
-                    className="mt-2 text-[0.9rem] leading-relaxed"
-                    style={{ color: "rgba(251,250,246,0.72)" }}
-                  >
+                  <p className="mt-2 text-[0.9rem] leading-relaxed text-[rgba(247,245,239,0.74)]">
                     {item.body}
                   </p>
                 </div>

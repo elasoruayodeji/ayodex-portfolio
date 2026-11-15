@@ -46,9 +46,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Remote is configured: `origin` → https://github.com/elasoruayodeji/ayodex-portfolio.git
 - `portfolio-v2` descends from GitHub `main` (`d7040c2`); it fast-forwards, so
   never `--force`.
-- **No write credential exists in this workspace.** `git push` returns
-  `remote: No anonymous write access.` Do not claim a push succeeded.
-  Authenticate with `gh auth login --web`, a fine-grained PAT, or SSH first.
+- Write access is now available via `gh` (account `elasoruayodeji`, `repo`
+  scope) with `gh auth setup-git` configuring the credential helper.
+- **`main` on GitHub is now the V2 rebuild** (`71ac6f9`), promoted by
+  fast-forward from `portfolio-v2`. The pre-promotion state is preserved on
+  branch `backup/main-before-portfolio-v2` (`d7040c2`). Do not reuse that
+  branch name.
 - `recovery/portfolio-v2-full.bundle` is a verified complete-history bundle;
   `recovery/README.md` has the exact recovery routes. The bundle is gitignored.
 - Local branch `main` is a synthetic snapshot commit, not GitHub's `main`. Do

@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AYODEX Labs — portfolio
 
-## Getting Started
+Personal portfolio of **Elasoru Solomon Ayodeji**, built as AYODEX Labs.
+_I build. I design. I experiment._
 
-First, run the development server:
+Live: https://ayodex-portfolio.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI | React 19 + TypeScript |
+| Styling | Tailwind CSS 4 + design tokens in `app/globals.css` |
+| Type | Instrument Serif (display) + Manrope (interface), via `next/font` |
+| Imagery | `next/image`, AVIF/WebP, explicit dimensions |
+| Forms | Client-side validation → prefilled WhatsApp click-to-chat |
+
+No backend, no database, no payment gateway. Contact and Hire build a
+URL-encoded WhatsApp message and open it; the visitor sends it themselves.
+Nothing on this site claims a message or a payment was received.
+
+## Routes
+
+```
+/                     Home
+/work                 All projects
+/work/[slug]          Case study (7 projects)
+/about                About
+/hire                 Project enquiry  → WhatsApp
+/contact              General contact  → WhatsApp
+/inspiration          Influence map (tree / mobile rail)
+/support              Bank transfer details + copy
+/not-found            404
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+SEO: per-route metadata, canonical URLs, Open Graph image generated at build
+time (`app/opengraph-image.tsx`), `sitemap.ts`, `robots.ts`, JSON-LD
+(`Person`, `WebSite`, `CreativeWork`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Everything about a project lives in `lib/projects.ts` — summary, role, stack,
+features, status, status note, live/repo URLs, cover, gallery, decisions.
+Adding or correcting a project is a data edit; no component changes needed.
 
-## Learn More
+Content rules the data model enforces:
 
-To learn more about Next.js, take a look at the following resources:
+- `status` plus `statusNote` on every project. Nothing is described as "live"
+  without a reachable deployment.
+- `decisions[]` holds only evidence-backed notes, not invented outcomes.
+- Tolu's Space and HMD Gadgets carry no client claim (engagement unconfirmed).
+- ICEEIT's checkout is described as a demo, because the repository says so.
+- VANTAGE is labelled a concept build; the company is fictional.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Inspiration map
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`lib/inspiration.ts` holds four branches (people, craft, works, ideas) with
+typed entries. The map renders as a connected tree on desktop and a vertical
+rail on mobile, with a detail panel for the selected node. Entries are empty on
+purpose — no invented names or stock portraits. Add an entry and it appears in
+both layouts.
 
-## Deploy on Vercel
+## Assets to supply
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| File | Purpose | Status |
+|---|---|---|
+| `public/images/profile.jpg` | Hero + About portrait | **Placeholder plate** — set `hasPortrait` in `components/Portrait.tsx` once supplied |
+| `lib/inspiration.ts` entries | Influences with real names + notes | Empty by design |
+| Extra project screenshots | Optional; add to `public/images/work/<slug>/` and a `gallery` entry | — |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Project imagery in `public/images/work/` is captured from the live deployments
+or taken from the existing repositories. No stock imagery is used as evidence.
+
+## Commands
+
+```bash
+npm run dev      # local development
+npm run build    # production build (all routes static)
+npm run start    # serve the production build
+npm run lint     # eslint
+```
+
+## Design notes
+
+See `DESIGN.md` for the typography pairing rationale, colour tokens, spacing
+system, responsive strategy, motion rules and accessibility decisions.
+
+## Footer
+
+Powered by AYODEX Labs.

@@ -1,263 +1,429 @@
-import Nav from "@/components/Nav";
-import ScrollRail from "@/components/ScrollRail";
-import ProgressBar from "@/components/ProgressBar";
-import Hero from "@/components/Hero";
-import { Section } from "@/components/Section";
-import Footer from "@/components/Footer";
 import Link from "next/link";
-import PinnedWork from "@/components/PinnedWork";
-
-const skills = [
-  {
-    title: "Web development",
-    items: [
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "React",
-      "Responsive design",
-      "Mobile navigation",
-      "E-commerce-style UI",
-      "Deployment",
-    ],
-  },
-  {
-    title: "Digital design",
-    items: [
-      "Canva",
-      "Promotional graphics",
-      "Social media visuals",
-      "Brand visuals",
-      "Typography & layout",
-      "Product presentation",
-    ],
-  },
-  {
-    title: "AI-assisted creative work",
-    items: [
-      "AI image generation",
-      "AI image editing",
-      "Prompt writing",
-      "Product & clothing visualization",
-      "Iterating on lighting, texture & fabric",
-    ],
-  },
-  {
-    title: "Content",
-    items: ["Promotional copy", "Brand messaging", "Product-focused content"],
-  },
-  {
-    title: "Tech & systems",
-    items: [
-      "Python",
-      "Java",
-      "Google Forms / Sheets",
-      "Apps Script",
-      "System design & flowcharts",
-      "Networking fundamentals",
-    ],
-  },
-];
-
-const learning = [
-  "React, in more depth",
-  "Voice / AI app architecture",
-  "Backend fundamentals",
-  "Advanced deployment workflows",
-];
+import { Portrait } from "@/components/Portrait";
+import { TechMarquee } from "@/components/TechMarquee";
+import { ProjectCard } from "@/components/ProjectCard";
+import { Reveal } from "@/components/Reveal";
+import { featuredProjects, projects } from "@/lib/projects";
+import { site, whatsappLink } from "@/lib/site";
 
 const services = [
-  ["Simple & landing page websites", "Web"],
-  ["Responsive frontend / e-commerce-style UI", "Web"],
-  ["Website deployment & fixes", "Web"],
-  ["Canva flyers & social graphics", "Design"],
-  ["AI-assisted product visuals", "AI + Design"],
-  ["Digital forms & feedback systems", "Systems"],
-  ["Promotional content & brand messaging", "Content"],
+  {
+    n: "01",
+    title: "Websites",
+    body: "Business, corporate, personal and landing pages — designed around your content, built to load fast and hold up on a phone.",
+    tags: ["Marketing sites", "Portfolios", "Landing pages"],
+  },
+  {
+    n: "02",
+    title: "Storefronts",
+    body: "E-commerce experiences with real product presentation, working cart and wishlist state, and a checkout that fits your payment reality.",
+    tags: ["Product grids", "Cart & wishlist", "WhatsApp orders"],
+  },
+  {
+    n: "03",
+    title: "Web applications",
+    body: "Interfaces for tools that need more than a page — data views, forms, dashboards, and the state management underneath them.",
+    tags: ["React & Next.js", "TypeScript", "Dashboards"],
+  },
+  {
+    n: "04",
+    title: "Redesigns & fixes",
+    body: "Existing sites that no longer match the business. Reworked typography, layout and mobile behaviour without starting from nothing.",
+    tags: ["Visual refresh", "Responsive repair", "Performance"],
+  },
 ];
 
-export default function Home() {
+const approach = [
+  {
+    title: "Design is part of the build",
+    body: "Type, spacing and hierarchy get decided at the same time as the component structure. A screen that is technically finished but visually generic is not finished.",
+  },
+  {
+    title: "Honest over impressive",
+    body: "If a checkout is a demo, the page says so. If a project is paused, it is labelled paused. Status notes are part of the design, not a disclaimer bolted on.",
+  },
+  {
+    title: "Light by default",
+    body: "Static pages, compressed images, no animation that fights the reader, and no dependency that earns less than its weight.",
+  },
+];
+
+export default function HomePage() {
+  const [lead, ...rest] = featuredProjects;
+  const other = projects.filter((p) => !p.featured).slice(0, 3);
+
   return (
     <>
-      <ProgressBar />
-      <Nav />
-      <ScrollRail />
+      {/* ---------- hero ---------- */}
+      <section className="shell pt-10 pb-14 sm:pt-14 md:pb-20">
+        <div className="grid items-end gap-10 md:grid-cols-12 md:gap-8">
+          <div className="md:col-span-8">
+            <p className="eyebrow flex items-center gap-3">
+              <span
+                aria-hidden="true"
+                className="inline-block h-px w-8 bg-line-strong"
+              />
+              Independent developer · {site.location}
+            </p>
 
-      <main>
-        <Hero />
+            <h1 className="display mt-6">
+              I build websites and
+              <br className="hidden sm:block" /> digital work that has to
+              <span className="italic"> hold up.</span>
+            </h1>
 
-        <Section id="intro" num="01" label="Who I am">
-          <h2 className="font-display font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-            A Computer Science student who&apos;d rather ship something than
-            talk about it.
-          </h2>
-          <p className="text-paper max-w-[60ch] mt-7 text-[1.1rem]">
-            I&apos;m currently studying Computer Science, and outside of
-            coursework I spend most of my time building — websites, brand
-            visuals, small automation tools, and a desktop AI assistant
-            I&apos;m developing from scratch. My work sits across three areas:
-            web development, digital design and AI-assisted creative work, tied
-            together by content that actually explains what something does.
-          </p>
-          <p className="text-paper-dim max-w-[60ch] mt-5 text-[1rem]">
-            I&apos;m still early in this. Some of what&apos;s below is solid,
-            practical experience. Some of it is genuinely still developing.
-            I&apos;ve tried to be honest about which is which, because
-            that&apos;s more useful to you than a resume that oversells.
-          </p>
-        </Section>
+            <p className="lede mt-7">
+              I&apos;m {site.name.split(" ")[0]} — building as{" "}
+              <strong className="font-semibold text-ink">AYODEX Labs</strong>.
+              Storefronts, corporate sites, web applications and the odd
+              experiment. Careful typography, working interfaces, and nothing
+              claimed that isn&apos;t true.
+            </p>
 
-        <Section id="skills" num="02" label="What I actually work with">
-          <h2 className="font-[family-name:var(--font-section)] font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-  Skills, sorted honestly — not everything, and not all at the same
-  level.
-</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-9 mt-12">
-            {skills.map((col) => (
-              <div key={col.title}>
-                <h3 className="text-gold text-[1rem] font-semibold mb-4">
-                  {col.title}
-                </h3>
-                <ul className="flex flex-wrap gap-2">
-                  {col.items.map((it) => (
-                    <li
-                      key={it}
-                      className="text-[0.85rem] px-3 py-1.5 border border-line rounded-full text-paper-dim"
-                    >
-                      {it}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            <div>
-              <h3 className="text-rust text-[1rem] font-semibold mb-4">
-                Currently learning
-              </h3>
-              <ul className="flex flex-wrap gap-2">
-                {learning.map((it) => (
-                  <li
-                    key={it}
-                    className="text-[0.85rem] px-3 py-1.5 border border-dashed border-line-strong rounded-full text-paper-dim"
-                  >
-                    {it}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </Section>
-
-        <PinnedWork />
-
-        <Section
-          id="building"
-          num="04"
-          label="Currently building"
-          className="bg-panel border-y border-line"
-        >
-          <h2 className="font-[family-name:var(--font-section)] font-bold text-[clamp(2rem,4.5vw,3.1rem)] max-w-[20ch] leading-[1.1]">
-  DEX — a desktop AI assistant, still very much in progress.
-</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
-            <div>
-              <span className="inline-block bg-rust text-paper text-[0.7rem] font-semibold px-2.5 py-1 rounded mb-4">
-                Experimental
-              </span>
-              <p className="text-paper-dim max-w-[52ch]">
-                DEX is a voice-activated desktop assistant with a floating orb
-                interface — built to listen, talk back, and run basic desktop
-                automation, rather than just answer questions in a chat window.
-              </p>
-              <div className="mt-6">
-                <div className="text-rust text-[0.75rem] mb-2">Built with</div>
-                <div className="text-paper-dim text-[0.95rem]">
-                  Python, PySide6 for the floating-orb UI, Vosk for speech
-                  recognition, and Groq for AI responses.
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="text-rust text-[0.75rem] mb-3">
-                What&apos;s next
-              </div>
-              <ul className="list-disc pl-5 text-paper-dim text-[0.92rem] space-y-1.5">
-                <li>Adding model fallback so a deprecated LLM doesn&apos;t break the pipeline</li>
-                <li>Moving from keyword matching to AI-routed command handling</li>
-                <li>Expanding what it can do on the desktop</li>
-                <li>General stability and speed improvements</li>
-              </ul>
-              <Link
-                href="/work/dex"
-                className="inline-block mt-6 text-gold text-[0.9rem] border-b border-transparent hover:border-gold"
-              >
-                Read the full story →
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <Link href="/work" className="btn">
+                See selected work
+                <span aria-hidden="true">→</span>
+              </Link>
+              <Link href="/hire" className="btn btn-outline">
+                Start a project
               </Link>
             </div>
           </div>
-        </Section>
 
-        <Section id="services" num="05" label="How I can help">
-          <h2 className="font-display font-bold text-[clamp(2.2rem,6vw,4rem)] max-w-[16ch] leading-[1.05]">
-  Have something to build? Let&apos;s talk.
-</h2>
+          <div className="md:col-span-4">
+            <Portrait
+              className="aspect-[4/5] w-full max-w-[22rem] md:ml-auto"
+              priority
+            />
+          </div>
+        </div>
 
-          <div className="mt-12 border-t border-line">
-            {services.map(([name, cat]) => (
-              <div
-                key={name}
-                className="flex justify-between items-baseline gap-4 py-4 border-b border-line"
-              >
-                <span className="text-[1rem]">{name}</span>
-                <span className="text-paper-dim text-[0.8rem] text-right">
-                  {cat}
-                </span>
-              </div>
+        <div className="mt-14 flex flex-wrap items-baseline gap-x-8 gap-y-3 border-t border-line pt-5">
+          <p className="font-[family-name:var(--font-serif)] text-[1.15rem] italic">
+            {site.tagline}
+          </p>
+          <p className="text-[0.8rem] text-muted">
+            Currently available for select projects ·{" "}
+            <a
+              href={site.whatsapp.primaryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline"
+            >
+              WhatsApp
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <TechMarquee />
+
+      {/* ---------- selected work ---------- */}
+      <section className="shell py-20 md:py-28" aria-labelledby="work-heading">
+        <Reveal>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="eyebrow">Selected work</p>
+              <h2 id="work-heading" className="display-sm mt-3 max-w-[24ch]">
+                Projects, presented at the stage they&apos;re actually in.
+              </h2>
+            </div>
+            <Link href="/work" className="link-quiet text-[0.875rem] font-medium">
+              All projects <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid gap-x-8 gap-y-14 lg:grid-cols-12">
+          <Reveal className="lg:col-span-7">
+            <ProjectCard
+              project={lead}
+              priority
+              sizes="(min-width: 1024px) 54vw, 100vw"
+            />
+          </Reveal>
+
+          <div className="flex flex-col gap-12 lg:col-span-5 lg:pt-24">
+            {rest.slice(0, 2).map((project, i) => (
+              <Reveal key={project.slug} delay={80 + i * 60}>
+                <ProjectCard
+                  project={project}
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                />
+              </Reveal>
             ))}
           </div>
-        </Section>
+        </div>
 
-        <Section id="contact" num="06" label="Get in touch">
-          <h2 className="font-display font-bold text-[clamp(2.2rem,6vw,4rem)] max-w-[16ch] leading-[1.05]">
-            Have something to build? Let&apos;s talk.
-          </h2>
-          <p className="text-paper-dim max-w-[58ch] mt-5 text-[1.05rem]">
-            I&apos;m looking for small, real projects to keep building on — not
-            just more portfolio pieces.
-          </p>
+        <div className="mt-16 grid gap-x-8 gap-y-10 border-t border-line pt-12 md:grid-cols-3">
+          {other.map((project) => (
+            <Reveal key={project.slug}>
+              <Link href={`/work/${project.slug}`} className="group block no-underline">
+                <span className="eyebrow">{project.tag}</span>
+                <h3 className="mt-2 text-[1.05rem] font-semibold">
+                  <span className="link-underline">{project.name}</span>
+                </h3>
+                <p className="mt-1.5 text-[0.875rem] leading-relaxed text-muted">
+                  {project.summary}
+                </p>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-          <div className="flex flex-wrap gap-x-10 gap-y-5 mt-10">
-            <a
-              href="https://github.com/elasoruayodeji"
-              target="_blank"
-              rel="noopener"
-              className="font-display text-[1.1rem] border-b border-line-strong pb-1.5 hover:text-gold hover:border-gold"
-            >
-              GitHub ↗
-            </a>
-            <a
-              href="mailto:elasoruayodeji@gmail.com"
-              className="font-display text-[1.1rem] border-b border-line-strong pb-1.5 hover:text-gold hover:border-gold"
-            >
-              elasoruayodeji@gmail.com
-            </a>
-            <a
-              href="https://wa.me/2348142485613"
-              target="_blank"
-              rel="noopener"
-              className="font-display text-[1.1rem] border-b border-line-strong pb-1.5 hover:text-gold hover:border-gold"
-            >
-              WhatsApp ↗
-            </a>
+      {/* ---------- about ---------- */}
+      <section
+        className="border-y border-line bg-ivory py-20 md:py-28"
+        aria-labelledby="about-heading"
+      >
+        <div className="shell grid gap-12 md:grid-cols-12 md:gap-8">
+          <div className="md:col-span-5">
+            <Reveal>
+              <p className="eyebrow">About</p>
+              <h2 id="about-heading" className="display-sm mt-3 max-w-[18ch]">
+                A small studio of one, with a long attention span.
+              </h2>
+              <Link href="/about" className="btn btn-outline btn-sm mt-7">
+                More about me
+              </Link>
+            </Reveal>
           </div>
-        </Section>
-      </main>
 
-      <Footer />
+          <div className="md:col-span-6 md:col-start-7">
+            <Reveal delay={80}>
+              <div className="prose-block text-[0.975rem]">
+                <p>
+                  I work across the whole visible surface of a product: the
+                  layout, the type, the components, the states, and the awkward
+                  edge cases where an interface stops behaving. Most of what I
+                  build runs in a browser. Some of it talks to an API, a
+                  spreadsheet, or a desktop voice pipeline.
+                </p>
+                <p>
+                  My background is technical rather than agency-trained. I
+                  learned by shipping things that had real constraints — a
+                  storefront that needed product video, a research tool that had
+                  to be honest about prediction error, a feedback system for a
+                  school with no server budget.
+                </p>
+              </div>
+
+              <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-line pt-6 sm:grid-cols-4">
+                {[
+                  ["7", "Case studies"],
+                  ["4", "Live deployments"],
+                  ["2025", "First shipped"],
+                  ["NG", "Based in Nigeria"],
+                ].map(([value, label]) => (
+                  <div key={label}>
+                    <dt className="sr-only">{label}</dt>
+                    <dd>
+                      <span className="block font-[family-name:var(--font-serif)] text-[1.75rem] leading-none">
+                        {value}
+                      </span>
+                      <span className="mt-1.5 block text-[0.75rem] uppercase tracking-[0.1em] text-muted">
+                        {label}
+                      </span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- services ---------- */}
+      <section className="shell py-20 md:py-28" aria-labelledby="services-heading">
+        <Reveal>
+          <div className="grid gap-6 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <p className="eyebrow">Services</p>
+              <h2 id="services-heading" className="display-sm mt-3 max-w-[20ch]">
+                What I can build for you.
+              </h2>
+            </div>
+            <p className="lede md:col-span-6 md:col-start-7 md:pt-2">
+              Every engagement starts with what the thing has to do, not what it
+              should look like. Scope stays small enough to finish properly.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 border-t border-line">
+          {services.map((service) => (
+            <Reveal key={service.n}>
+              <div className="grid gap-3 border-b border-line py-7 md:grid-cols-12 md:gap-8">
+                <div className="md:col-span-1">
+                  <span className="text-[0.75rem] tabular-nums text-muted-soft">
+                    {service.n}
+                  </span>
+                </div>
+                <h3 className="text-[1.35rem] font-semibold tracking-[-0.01em] md:col-span-4">
+                  {service.title}
+                </h3>
+                <p className="text-[0.925rem] leading-relaxed text-muted md:col-span-5">
+                  {service.body}
+                </p>
+                <ul className="flex flex-wrap gap-x-3 gap-y-1 text-[0.75rem] uppercase tracking-[0.08em] text-muted-soft md:col-span-2 md:justify-end">
+                  {service.tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal>
+          <p className="mt-8 text-[0.875rem] text-muted">
+            Not sure where your project fits?{" "}
+            <Link href="/hire" className="link-underline text-ink">
+              Describe it anyway
+            </Link>{" "}
+            — the enquiry form has a category for that.
+          </p>
+        </Reveal>
+      </section>
+
+      {/* ---------- approach ---------- */}
+      <section
+        className="border-y border-line bg-ink py-20 text-paper md:py-28"
+        aria-labelledby="approach-heading"
+      >
+        <div className="shell">
+          <Reveal>
+            <p
+              className="eyebrow"
+              style={{ color: "rgba(251,250,246,0.55)" }}
+            >
+              How I work
+            </p>
+            <h2
+              id="approach-heading"
+              className="display-sm mt-3 max-w-[22ch]"
+              style={{ color: "var(--paper)" }}
+            >
+              Three rules that shape everything I ship.
+            </h2>
+          </Reveal>
+
+          <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+            {approach.map((item, i) => (
+              <Reveal key={item.title} delay={i * 70}>
+                <div
+                  className="border-t pt-5"
+                  style={{ borderColor: "rgba(251,250,246,0.18)" }}
+                >
+                  <span
+                    className="text-[0.7rem] tabular-nums"
+                    style={{ color: "rgba(251,250,246,0.45)" }}
+                  >
+                    0{i + 1}
+                  </span>
+                  <h3 className="mt-2 text-[1.15rem] font-semibold">
+                    {item.title}
+                  </h3>
+                  <p
+                    className="mt-2 text-[0.9rem] leading-relaxed"
+                    style={{ color: "rgba(251,250,246,0.72)" }}
+                  >
+                    {item.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- contact ---------- */}
+      <section className="shell py-20 md:py-28" aria-labelledby="contact-heading">
+        <div className="grid gap-10 md:grid-cols-12 md:gap-8">
+          <div className="md:col-span-7">
+            <Reveal>
+              <p className="eyebrow">Contact</p>
+              <h2 id="contact-heading" className="display mt-4 max-w-[16ch]">
+                Have something worth building?
+              </h2>
+              <p className="lede mt-6">
+                Tell me what it needs to do and who it&apos;s for. If it&apos;s a
+                fit, I&apos;ll come back with a scope, a timeline and a price
+                before anything gets built.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/hire" className="btn">
+                  Start a project
+                </Link>
+                <a
+                  href={whatsappLink(
+                    "Hi Ayodeji — I found AYODEX Labs and wanted to ask about a project.",
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline"
+                >
+                  Message on WhatsApp
+                </a>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="md:col-span-4 md:col-start-9">
+            <Reveal delay={80}>
+              <dl className="space-y-4 border-t border-line pt-6 text-[0.9rem]">
+                <div>
+                  <dt className="eyebrow">Email</dt>
+                  <dd className="mt-1">
+                    <a href={`mailto:${site.email}`} className="link-underline">
+                      {site.email}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="eyebrow">WhatsApp</dt>
+                  <dd className="mt-1">
+                    <a
+                      href={site.whatsapp.primaryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-underline"
+                    >
+                      {site.whatsapp.primaryNumber}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="eyebrow">Elsewhere</dt>
+                  <dd className="mt-1">
+                    <a
+                      href={site.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-underline"
+                    >
+                      github.com/{site.githubHandle}
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+            </Reveal>
+          </div>
+        </div>
+
+        <Reveal>
+          <div className="mt-16 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-baseline sm:justify-between">
+            <p className="font-[family-name:var(--font-serif)] text-[clamp(1.6rem,3.4vw,2.4rem)] leading-tight">
+              I build. I design. I experiment.
+            </p>
+            <p className="text-[0.8rem] uppercase tracking-[0.14em] text-muted">
+              Nigeria · working remotely
+            </p>
+          </div>
+        </Reveal>
+      </section>
     </>
   );
 }

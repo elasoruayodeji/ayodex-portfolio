@@ -1523,17 +1523,36 @@ a:hover > .brand-mark {
 .tree {
   min-height: 34rem;
   padding-block: 0.5rem 1rem;
+  /* one token drives the face size and the label offset together */
+  --portrait: 7.4rem;
 }
 
-.tree-canvas {
+/*
+ * The frame is the drawing's exact box. Its aspect ratio is the only thing
+ * that defines the geometry: the SVG fills it, and every portrait is placed
+ * with a percentage of it. Do not add max-height here — capping the height
+ * while the width stays fixed breaks the ratio, and `preserveAspectRatio`
+ * then letterboxes the artwork inside the frame, so the portraits no longer
+ * land on their branch tips.
+ */
+.tree-frame {
   position: relative;
+  width: 100%;
   aspect-ratio: 1000 / 620;
-  max-height: 40rem;
+}
+
+/* Only one composition is ever displayed; see the breakpoints below. */
+.tree-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.tree-canvas--mobile {
+  display: none;
 }
 
 .tree-canvas .tree-svg {
-  position: absolute;
-  inset: 0;
+  width: 100%;
   height: 100%;
 }
 
@@ -1596,34 +1615,35 @@ a:hover > .brand-mark {
   z-index: 2;
 }
 
+/*
+ * The tip is an anchor, not a card: its `left`/`top` are exactly the branch
+ * endpoint, and the portrait is centred on that point with an absolute
+ * transform. Because the portrait no longer sits in the text flow, its centre
+ * lands on the tip regardless of how tall the name or theme wraps to. The
+ * padding only reserves space so the label starts below the face.
+ */
 .tree-tip {
   position: absolute;
   left: var(--x);
-  /*
-   * The portrait, not the card's top edge, must land on the branch tip.
-   * --shift is half the portrait plus the text above it; the centre branch
-   * reverses the order, so it needs its own value.
-   */
-  top: calc(var(--y) - var(--shift, 3.7rem));
+  top: var(--y);
   width: 15rem;
+  padding-top: calc(var(--portrait) / 2 + 0.45rem);
   transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
-  gap: 0.5rem;
   opacity: 0;
   animation: tree-tip-in 700ms cubic-bezier(0.2, 0.8, 0.3, 1) var(--delay) both;
 }
 
+/*
+ * The portrait carries its own centring transform, so the entrance must not
+ * scale the whole tip: scaling would move the face off its branch tip.
+ */
 @keyframes tree-tip-in {
   from {
     opacity: 0;
-    transform: translateX(-50%) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) scale(1);
   }
 }
 
@@ -1633,17 +1653,20 @@ a:hover > .brand-mark {
  * three names from colliding even when the descriptions open.
  */
 .tree-tip--centre {
-  /* the centre branch ends high on the trunk; put the label above the portrait
-     so the name never sits on the branch lines */
-  flex-direction: column-reverse;
-  --shift: 6.6rem;
+  /* the centre branch ends high on the trunk; put the label above the face so
+     the name never sits on the branch lines */
+  padding-top: 0;
+  padding-bottom: calc(var(--portrait) / 2 + 0.45rem);
 }
 
 .tree-portrait {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: block;
-  width: 7.4rem;
-  height: 7.4rem;
+  width: var(--portrait);
+  height: var(--portrait);
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -1658,7 +1681,7 @@ a:hover > .brand-mark {
 }
 
 .tree-portrait:hover {
-  transform: translateY(-2px);
+  transform: translate(-50%, -50%) translateY(-2px);
   box-shadow:
     0 0 0 1px var(--brand-line),
     0 0 0 6px var(--white),
@@ -1751,7 +1774,19 @@ a:hover > .brand-mark {
   color: var(--ink-3);
 }
 
-/* ---------- mobile: a vertical spine, not a shrunken tree ---------- */
+/* ---------- mobile: the same tree, drawn tall ---------- */
+
+/*
+ * Why the drawing vanished on phones: the desktop frame is 1000x620 (about
+ * 1.6:1 landscape). Scaled to a 390px column it would be 242px tall and the
+ * three portraits would collide, so the old build hid the canvas entirely
+ * (display: none) and substituted a gradient line. That is the bug this
+ * replaces.
+ *
+ * Instead there is a second SVG, drawn for a portrait frame (420x960), and the
+ * portraits are positioned on it with --mx/--my. Everything is preserved:
+ * roots, trunk, three limbs, twigs, leaves, all three faces.
+ */
 
 @media (max-width: 899px) {
   .tree {
@@ -1759,143 +1794,198 @@ a:hover > .brand-mark {
     padding: 0;
   }
 
-  /* the wide drawing would be unreadable here, so it is replaced */
-  .tree-canvas {
+  .tree-canvas--desktop {
     display: none;
   }
 
+  /*
+   * The mobile canvas defines the height of the whole section: its aspect
+   * ratio is what the absolutely positioned portraits are measured against.
+   */
+  /*
+   * The frame keeps the viewBox ratio so the SVG is never letterboxed (which
+   * would slide every portrait off its branch tip). The bottom breathing room
+   * for the root caption comes from padding inside the drawing area instead.
+   */
+  .tree-frame {
+    aspect-ratio: 420 / 960;
+  }
+
+  .tree-canvas--mobile {
+    display: block;
+  }
+
+  /* ---------- owner, in the roots at the base ---------- */
+
+  /*
+   * Anchored by its bottom edge just inside the root system, so a caption that
+   * wraps to two lines at 320px grows upward over the trunk rather than out of
+   * the bottom of the drawing. `padding-bottom` on the frame reserves the room.
+   */
   .tree-root {
-    position: static;
-    transform: none;
-    flex-direction: row;
+    position: absolute;
+    left: 50%;
+    top: auto;
+    bottom: 8%;
+    transform: translateX(-50%);
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: 0.6rem;
-    text-align: left;
-    padding-bottom: 1.1rem;
-    border-bottom: 1px solid var(--hair);
-    margin-bottom: 0.2rem;
+    justify-content: flex-end;
+    gap: 0.15rem;
+    text-align: center;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    z-index: 3;
   }
 
   .tree-root-badge {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px var(--white), 0 2px 10px -4px rgba(105, 2, 2, 0.5);
   }
 
-  .tree-root-photo {
-  object-fit: cover;
-  object-position: 50% 28%;
-}
-
-.tree-root-label {
-    margin-top: 0;
+  .tree-root-label {
+    margin-top: 0.3rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
   }
 
-  /* Cards stack in one column against a drawn spine. */
+  .tree-root-words {
+    font-size: 0.65rem;
+    line-height: 1.3;
+    max-width: 11rem;
+  }
+
+  /* ---------- portraits on the branch tips ---------- */
+
   .tree-tips {
-    position: relative;
-    inset: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding-left: 2.6rem;
-  }
-
-  .tree-tips::before {
-    content: "";
     position: absolute;
-    left: 0.72rem;
-    top: 0;
-    bottom: 1.2rem;
-    width: 2px;
-    border-radius: 2px;
-    background: linear-gradient(
-      to bottom,
-      var(--brand-line),
-      var(--brand) 18%,
-      var(--brand) 88%,
-      transparent
-    );
-    transform-origin: top;
-    animation: tree-spine 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    inset: 0;
+    display: block;
+    padding: 0;
+    z-index: 2;
   }
 
-  @keyframes tree-spine {
-    to {
-      transform: scaleY(1);
-    }
+  .tree {
+    /*
+     * Fluid face size: small enough for a 320px screen, large enough that the
+     * 768px tablet composition doesn't look like a giant trunk with stamps on
+     * it. The label offset is derived from the same token.
+     */
+    --portrait: clamp(4rem, 11.5vw, 6.4rem);
   }
 
   .tree-tip,
   .tree-tip--left,
   .tree-tip--right,
   .tree-tip--centre {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: auto;
-    margin: 0;
-    padding: 1.05rem 0 1.05rem 0.2rem;
-    transform: none;
-    display: grid;
-    grid-template-columns: 4.4rem minmax(0, 1fr);
-    grid-template-areas:
-      "portrait text"
-      "panel panel";
-    align-items: center;
-    gap: 0.35rem 0.85rem;
-    align-items: start;
-    text-align: left;
-    border-bottom: 1px solid var(--hair-soft);
-    opacity: 0;
-    animation: tree-tip-in-m 600ms cubic-bezier(0.2, 0.8, 0.3, 1)
-      var(--delay) both;
-  }
-
-  /* the connector from the spine to each portrait */
-  .tree-tip::before {
-    content: "";
     position: absolute;
-    left: -1.88rem;
-    top: 2.6rem;
-    width: 1.88rem;
-    height: 2px;
-    background: var(--brand-line);
-  }
-
-  @keyframes tree-tip-in-m {
-    from {
-      opacity: 0;
-      translate: 0 8px;
-    }
-    to {
-      opacity: 1;
-      translate: 0 0;
-    }
+    left: var(--mx);
+    top: var(--my);
+    width: 8rem;
+    margin: 0;
+    padding-top: calc(var(--portrait) / 2 + 0.3rem);
+    padding-bottom: 0;
+    transform: translateX(-50%);
+    text-align: center;
+    border: 0;
+    opacity: 0;
+    animation: tree-fade 500ms ease-out var(--delay) both;
   }
 
   .tree-portrait {
-    grid-area: portrait;
-    width: 4.4rem;
-    height: 4.4rem;
     box-shadow:
       0 0 0 1px var(--hair-strong),
       0 0 0 4px var(--white),
       0 8px 18px -12px rgba(29, 29, 31, 0.35);
   }
 
-  .tree-tip-text {
-    grid-area: text;
-    padding-top: 0.35rem;
-  }
-
   .tree-tip-name {
-    font-size: 0.98rem;
+    font-size: 0.92rem;
+    line-height: 1.2;
   }
 
+  .tree-tip-role {
+    font-size: 0.71rem;
+    line-height: 1.3;
+  }
+
+  /*
+   * Panels do not open inside the illustration on a phone: there is no room
+   * between the limbs, and an expanding card would cover the next branch. The
+   * description is rendered once, below the tree, in `.tree-detail`.
+   */
   .tree-tip-panel {
-    grid-area: panel;
-    margin-top: 0.7rem;
+    display: none;
+  }
+}
+
+/* ---------- the mobile detail card (below the tree) ---------- */
+
+.tree-detail {
+  margin-top: 1.1rem;
+  padding: 1rem 1.1rem;
+  background: var(--white);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-card);
+  box-shadow: 0 12px 30px -22px rgba(29, 29, 31, 0.45);
+  animation: tree-fade 260ms ease-out both;
+}
+
+.tree-detail-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.45rem;
+}
+
+.tree-detail-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tree-detail-role {
+  font-size: 0.74rem;
+  color: var(--ink-3);
+}
+
+.tree-detail-close {
+  flex-shrink: 0;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--ink-2);
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tree-detail-close:hover {
+  color: var(--brand);
+  border-color: var(--brand-line);
+}
+
+.tree-detail-empty {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+@media (min-width: 900px) {
+  .tree-detail {
+    display: none;
+  }
+}
+
+@media (max-width: 899px) {
+  /* on phones the card below the tree carries it; keep it inside the column */
+  .tree-detail {
+    margin-inline: 0;
   }
 }
 
@@ -1904,9 +1994,9 @@ a:hover > .brand-mark {
     width: 12.5rem;
   }
 
-  .tree-portrait {
-    width: 6.2rem;
-    height: 6.2rem;
+  /* the label offset is derived from this, so both stay in step */
+  .tree {
+    --portrait: 6.2rem;
   }
 }
 
@@ -1929,6 +2019,10 @@ a:hover > .brand-mark {
 
   .tree-tip {
     transform: translateX(-50%) !important;
+  }
+
+  .tree-portrait {
+    transform: translate(-50%, -50%) !important;
   }
 
   .tree-tips::before {

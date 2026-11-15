@@ -66,12 +66,15 @@ git checkout portfolio-v2
 git push -u origin portfolio-v2
 ```
 
-The bundle's tip commit is `70c45ef2f33b24ccf5259dbb38f7e6e93357024c`.
-Verify before trusting it:
+Check the bundle's tip and integrity before trusting it (do not rely on a
+commit SHA copied from a document — it changes whenever a commit is added):
 
 ```bash
 git bundle verify /path/to/portfolio-v2-full.bundle
+git bundle list-heads /path/to/portfolio-v2-full.bundle
 ```
+
+The tip must match `git rev-parse portfolio-v2` in this workspace.
 
 This route needs no credential in this workspace at all, because the push
 happens from your authenticated machine.

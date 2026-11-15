@@ -212,7 +212,9 @@ hr {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 700;
+  /* 600 rather than 700: at display sizes the extra weight closes up the
+     counters and reads heavier than the rest of the page. */
+  font-weight: 600;
   letter-spacing: -0.033em;
   line-height: 1.02;
   font-size: clamp(2.05rem, 6.2vw, 4.35rem);
